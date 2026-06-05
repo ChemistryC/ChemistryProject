@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titan Chemistry - The Interactive Periodic Table</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        orbitron: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        chemBlue: '#2563eb',
+                        chemSky: '#0284c7',
+                    },
+                    boxShadow: {
+                        'glowing-blue': '0 8px 30px rgba(37, 99, 235, 0.15)',
+                        'glowing-sky': '0 8px 30px rgba(2, 132, 199, 0.15)',
+                        'glowing-green': '0 8px 30px rgba(5, 150, 105, 0.15)',
+                        'glowing-pink': '0 8px 30px rgba(219, 39, 119, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+        .periodic-grid-scroll {
+            overflow-x: auto;
+            padding-bottom: 12px;
+            width: 100%;
+        }
+        .periodic-grid {
+            display: grid;
+            grid-template-columns: repeat(18, minmax(36px, 1fr));
+            gap: 4px;
+            min-width: 800px;
+        }
+        @media (min-width: 1280px) {
+            .periodic-grid {
+                grid-template-columns: repeat(18, minmax(42px, 1fr));
+                gap: 6px;
+                min-width: 900px;
+            }
+        }
+        .scanline {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(37, 99, 235, 0.04) 50%,
+                rgba(255,255,255,0)
+            );
+            background-size: 100% 4px;
+            animation: scanlineAnim 8s linear infinite;
+        }
+        @keyframes scanlineAnim {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        /* --- NEW: Text Outline Styles (Perfect Outer Stroke) --- */
+        .text-outline-blue {
+            color: white;
+            text-shadow: -2px -2px 0 #2563eb, 0 -2px 0 #2563eb, 2px -2px 0 #2563eb, 2px 0 0 #2563eb, 2px 2px 0 #2563eb, 0 2px 0 #2563eb, -2px 2px 0 #2563eb, -2px 0 0 #2563eb;
+        }
+        .text-outline-rose {
+            color: white;
+            text-shadow: -2px -2px 0 #e11d48, 0 -2px 0 #e11d48, 2px -2px 0 #e11d48, 2px 0 0 #e11d48, 2px 2px 0 #e11d48, 0 2px 0 #e11d48, -2px 2px 0 #e11d48, -2px 0 0 #e11d48;
+        }
+        .text-outline-emerald {
+            color: white;
+            text-shadow: -2px -2px 0 #059669, 0 -2px 0 #059669, 2px -2px 0 #059669, 2px 0 0 #059669, 2px 2px 0 #059669, 0 2px 0 #059669, -2px 2px 0 #059669, -2px 0 0 #059669;
+        }
+
+        /* --- IMPRESSIVE BACKGROUND ANIMATIONS --- */
+        @keyframes rotateSlow { 100% { transform: rotate(360deg); } }
+        @keyframes rotateSlowReverse { 100% { transform: rotate(-360deg); } }
+        .atomic-ring {
+            position: absolute; border-radius: 50%; border: 2px dashed rgba(37, 99, 235, 0.2);
+        }
+        
+        @keyframes pulseRing { 
+            0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.8; border-width: 8px; } 
+            100% { transform: translate(-50%, -50%) scale(3); opacity: 0; border-width: 1px; } 
+        }
+        .pulse-circle {
+            position: absolute; border-radius: 50%; border: solid rgba(225, 29, 72, 0.3);
+            animation: pulseRing 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        @keyframes panGrid { 0% { transform: translateY(0); } 100% { transform: translateY(40px); } }
+        .grid-bg {
+            position: absolute; inset: -40px;
+            background-image: linear-gradient(rgba(5, 150, 105, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(5, 150, 105, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: panGrid 3s infinite linear;
+        }
+
+        /* --- NEW: Cycling & Wobbling Animations (Classic) --- */
+        @keyframes wobbleCycle1 {
+            0%, 25% { opacity: 1; transform: scale(1) rotate(0deg); }
+            5%, 15% { transform: scale(1.05) rotate(4deg); }
+            10%, 20% { transform: scale(1.05) rotate(-4deg); }
+            30%, 100% { opacity: 0; transform: scale(0.5); }
+        }
+        @keyframes wobbleCycle2 {
+            0%, 30%, 65%, 100% { opacity: 0; transform: scale(0.5); }
+            33%, 60% { opacity: 1; transform: scale(1) rotate(0deg); }
+            40%, 50% { transform: scale(1.05) rotate(4deg); }
+            45%, 55% { transform: scale(1.05) rotate(-4deg); }
+        }
+        @keyframes wobbleCycle3 {
+            0%, 63% { opacity: 0; transform: scale(0.5); }
+            66%, 95% { opacity: 1; transform: scale(1) rotate(0deg); }
+            72%, 82% { transform: scale(1.05) rotate(4deg); }
+            77%, 87% { transform: scale(1.05) rotate(-4deg); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+
+        /* --- NEW: Fast Swap & Heartbeat (Time Attack) --- */
+        @keyframes fastSwap1 {
+            0%, 45% { opacity: 1; transform: scale(1); }
+            50%, 95% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fastSwap2 {
+            0%, 45% { opacity: 0; transform: scale(0.8); }
+            50%, 95% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.8); }
+        }
+        @keyframes urgentHeartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+        }
+        .animate-swap-fast-1 { animation: fastSwap1 1s infinite; }
+        .animate-swap-fast-2 { animation: fastSwap2 1s infinite; }
+        .animate-urgent-heartbeat { animation: urgentHeartbeat 1s infinite cubic-bezier(0.215, 0.61, 0.355, 1); }
+
+        /* Game option button states */
+        .option-btn.correct {
+            background-color: #ecfdf5 !important;
+            border-color: #10b981 !important;
+            color: #047857 !important;
+        }
+        .option-btn.wrong {
+            background-color: #fff1f2 !important;
+            border-color: #f43f5e !important;
+            color: #be123c !important;
+            opacity: 0.7;
+        }
+
+        /* --- NEW: Element Tooltip Pinned State --- */
+        .element-tooltip-container .tooltip-card {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .element-tooltip-container:hover .tooltip-card,
+        .element-tooltip-container.pinned .tooltip-card {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative flex flex-col">
+
+    <!-- Particle Canvas background -->
+    <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-50"></canvas>
+
+    <!-- Header & Navigation Bar -->
+    <header id="mainHeader" class="sticky top-0 z-50 backdrop-blur-md bg-white/75 border-b border-blue-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" onclick="navigateTo('view-home')" class="flex items-center gap-1.5 group">
+                <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/1%20Hydrogen.webp" class="w-12 h-12 sm:w-16 sm:h-16 object-contain group-hover:scale-110 transition-transform shrink-0 drop-shadow-md" style="filter: brightness(0) saturate(100%) invert(48%) sepia(93%) saturate(2335%) hue-rotate(167deg) brightness(104%) contrast(101%);" alt="Hydrogen Logo">
+                <div>
+                    <span class="font-orbitron font-extrabold text-xl tracking-wider bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 bg-clip-text text-transparent">TITAN CHEMISTRY</span>
+                    <span class="block text-xs text-slate-500 font-semibold uppercase tracking-widest leading-none">Database & Games</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-1">
+                <button onclick="navigateTo('view-home'); window.scrollTo(0,0);" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors rounded-full hover:bg-blue-50/50 flex items-center">
+                    <i class="fa-solid fa-house mr-1.5 text-sky-500"></i>Home
+                </button>
+                <button onclick="navigateTo('view-home'); setTimeout(() => document.getElementById('periodic-table-section').scrollIntoView({behavior: 'smooth', block: 'start'}), 50);" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors rounded-full hover:bg-blue-50/50 flex items-center">
+                    <i class="fa-solid fa-table-cells-large mr-1.5 text-blue-500"></i>Table
+                </button>
+                <button onclick="navigateTo('view-dex')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors rounded-full hover:bg-indigo-50/50 flex items-center">
+                    <i class="fa-solid fa-address-book mr-1.5 text-indigo-500"></i>Dex
+                </button>
+                <button onclick="navigateTo('view-games-hub')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors rounded-full hover:bg-amber-50/50 flex items-center">
+                    <i class="fa-solid fa-gamepad mr-1.5 text-amber-500"></i>Games
+                </button>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <button onclick="navigateTo('view-games-hub')" class="relative group hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full overflow-hidden font-orbitron font-bold text-sm tracking-wide bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-glowing-blue hover:shadow-lg hover:scale-[1.03] active:scale-95 transition-all">
+                    <span class="relative z-10 flex items-center gap-2">
+                        PLAY GAMES <i class="fa-solid fa-play text-xs text-white"></i>
+                    </span>
+                </button>
+                <button id="mobileMenuBtn" class="md:hidden p-2 text-slate-600 hover:text-blue-600 focus:outline-none" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden bg-white/95 border-b border-slate-200 backdrop-blur-lg px-4 py-4 space-y-2 shadow-lg">
+            <button onclick="navigateTo('view-home'); window.scrollTo(0,0);" class="w-full text-left px-4 py-3 rounded-full text-slate-700 hover:text-sky-600 hover:bg-blue-50/50 transition-colors font-medium">
+                <i class="fa-solid fa-house mr-2.5 text-sky-500"></i>Home
+            </button>
+            <button onclick="navigateTo('view-home'); setTimeout(() => document.getElementById('periodic-table-section').scrollIntoView({behavior: 'smooth', block: 'start'}), 50);" class="w-full text-left px-4 py-3 rounded-full text-slate-700 hover:text-sky-600 hover:bg-blue-50/50 transition-colors font-medium">
+                <i class="fa-solid fa-table-cells-large mr-2.5 text-blue-500"></i>Table
+            </button>
+            <button onclick="navigateTo('view-dex')" class="w-full text-left px-4 py-3 rounded-full text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-colors font-medium">
+                <i class="fa-solid fa-address-book mr-2.5 text-indigo-500"></i>Dex
+            </button>
+            <button onclick="navigateTo('view-games-hub')" class="w-full text-left px-4 py-3 rounded-full text-slate-700 hover:text-amber-600 hover:bg-amber-50/50 transition-colors font-medium">
+                <i class="fa-solid fa-gamepad mr-2.5 text-amber-500"></i>Games
+            </button>
+        </div>
+    </header>
+
+    <!-- Toast Notification Box -->
+    <div id="toastContainer" class="fixed top-24 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4"></div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-grow relative z-10">
+
+        <!-- ============================================== -->
+        <!-- VIEW: HOME (PERIODIC TABLE) -->
+        <!-- ============================================== -->
+        <main id="view-home" class="page-view block">
+            <!-- Hero / Intro -->
+            <section class="relative pt-8 pb-16 md:pt-16 md:pb-24 overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-5 space-y-6 text-center lg:text-left">
+                            <h1 class="font-orbitron font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-tight text-slate-900 mt-4">
+                                <span class="bg-gradient-to-r from-blue-600 via-cyan-400 to-blue-600 bg-clip-text text-transparent animate-text-gradient">Titan Chemistry</span>
+                            </h1>
+                            <p class="text-slate-600 text-xl sm:text-2xl max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                                Master the periodic table! Learn element properties and switch to the games tab to test your knowledge.
+                            </p>
+                            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                                <button onclick="navigateTo('view-games-hub')" class="px-12 py-4 rounded-full font-orbitron font-extrabold text-lg tracking-widest bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-glowing-blue hover:scale-105 transition-transform flex items-center gap-2">
+                                    PLAY!
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Visual: Element Image Collage -->
+                        <div class="lg:col-span-7 relative hidden md:block min-h-[400px]">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-blue-300/30 to-sky-300/30 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+                            <div class="relative w-full h-full pointer-events-none flex flex-row items-center justify-center z-20">
+                                <!-- Lithium Art (Left, Smaller) -->
+                                <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/3%20Lithium.webp" class="w-32 sm:w-48 lg:w-64 animate-float-slow drop-shadow-xl -mr-12 sm:-mr-20 lg:-mr-28 z-10">
+                                <!-- Hydrogen Art (Center, Bigger) -->
+                                <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/1%20Hydrogen.webp" class="w-48 sm:w-72 lg:w-96 animate-float-fast drop-shadow-2xl z-30">
+                                <!-- Beryllium Art (Right, Smaller) -->
+                                <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/4%20Beryllium.webp" class="w-32 sm:w-48 lg:w-64 animate-float drop-shadow-xl -ml-12 sm:-ml-20 lg:-ml-28 z-10">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Periodic Table -->
+            <section id="periodic-table-section" class="py-16 border-t border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+                        <div>
+                            <span class="text-xs font-bold text-sky-600 font-orbitron uppercase tracking-widest bg-sky-50 px-3 py-1.5 rounded-full border border-sky-200">Database</span>
+                            <h2 class="text-3xl sm:text-4xl font-orbitron font-extrabold mt-3 text-slate-900">Periodic Table</h2>
+                            <p class="text-slate-600 mt-2">Click any element to view its details.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start mt-8">
+                        
+                        <!-- Periodic Table Grid -->
+                        <div class="xl:col-span-8 min-w-0 periodic-grid-scroll pb-4">
+                            <div class="periodic-grid" id="periodicGrid">
+                                <!-- Elements rendered dynamically via JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Element Detailed Lore Inspector -->
+                        <div class="xl:col-span-4 w-full min-w-0" id="elementDetailsPanel">
+                            <div class="bg-white/90 backdrop-blur-sm border border-slate-200 rounded-3xl p-6 space-y-6 shadow-glowing-blue relative min-h-[480px]">
+                                <div class="scanline absolute inset-0 pointer-events-none opacity-15 rounded-3xl"></div>
+                                
+                                <div id="elementInspectorEmpty" class="h-full flex flex-col items-center justify-center text-center py-20">
+                                    <i class="fa-solid fa-circle-info text-blue-300 text-4xl mb-4 animate-pulse"></i>
+                                    <h4 class="font-orbitron font-bold text-slate-700">Inspect Element</h4>
+                                    <p class="text-xs text-slate-500 mt-2 px-6">Click any chemical block on the periodic table grid to see element bio, discoverer, and state.</p>
+                                </div>
+
+                                <div id="elementInspectorActive" class="hidden h-full">
+                                    <div class="flex flex-col sm:flex-row xl:flex-col 2xl:flex-row gap-6 lg:gap-8 h-full items-stretch">
+                                        <!-- Massive Element Image -->
+                                        <div id="inspectBadge" class="w-full sm:w-1/2 xl:w-full 2xl:w-1/2 rounded-3xl shadow-lg border border-slate-200 overflow-hidden shrink-0 bg-slate-50 min-h-[320px]">
+                                            <!-- Art image injected here -->
+                                        </div>
+                                        
+                                        <!-- All Details on the right (or bottom on mobile) -->
+                                        <div class="flex-1 min-w-0 flex flex-col justify-center py-2">
+                                            <h4 id="inspectName" class="font-orbitron font-extrabold text-3xl sm:text-4xl tracking-wide text-slate-800 truncate text-center sm:text-left xl:text-center 2xl:text-left">Hydrogen</h4>
+                                            <div class="text-center sm:text-left xl:text-center 2xl:text-left">
+                                                <span id="inspectCategory" class="inline-block px-3 py-1.5 text-[10px] sm:text-xs uppercase font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded-md mt-2 mb-6">
+                                                    REACTIVE NONMETAL
+                                                </span>
+                                            </div>
+                                            
+                                            <div class="grid grid-cols-1 gap-3 mb-6">
+                                                <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                                                    <span class="text-slate-500 font-medium text-xs uppercase tracking-wider">Atomic #</span>
+                                                    <span id="inspectAtomicNum" class="font-orbitron font-bold text-slate-800 text-base">1</span>
+                                                </div>
+                                                <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                                                    <span class="text-slate-500 font-medium text-xs uppercase tracking-wider">Weight</span>
+                                                    <span id="inspectWeight" class="font-orbitron font-bold text-slate-800 text-base">1.008 u</span>
+                                                </div>
+                                                <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                                                    <span class="text-slate-500 font-medium text-xs uppercase tracking-wider">Phase</span>
+                                                    <span id="inspectPhase" class="font-orbitron font-bold text-slate-800 text-base">Gas</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Bio Text -->
+                                            <div class="pt-2 flex-1">
+                                                <div class="flex justify-between items-center mb-2.5">
+                                                    <span class="block text-xs font-bold text-slate-500 uppercase tracking-widest"><i class="fa-solid fa-book-sparkles text-sky-500 mr-1.5"></i>Element Bio</span>
+                                                    <span class="text-[10px] text-slate-400 font-medium"><i class="fa-solid fa-user-astronaut mr-1"></i><span id="inspectDiscoverer">H. Cavendish</span></span>
+                                                </div>
+                                                <p id="inspectBio" class="text-sm sm:text-base text-slate-600 leading-relaxed"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ============================================== -->
+        <!-- VIEW: ELEMENT DEX -->
+        <!-- ============================================== -->
+        <main id="view-dex" class="page-view hidden py-16 bg-slate-50 min-h-screen">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-600 text-xs sm:text-sm font-semibold tracking-wide uppercase mb-4">
+                        <i class="fa-solid fa-book-journal-whills"></i> Element Database
+                    </div>
+                    <h2 class="font-orbitron font-extrabold text-4xl sm:text-5xl tracking-tight leading-tight text-slate-900 mb-6">
+                        The Chem-Dex
+                    </h2>
+                    <div class="relative max-w-2xl mx-auto">
+                        <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
+                        <input type="text" id="dexSearch" onkeyup="filterDex()" placeholder="Search elements by name, symbol, or atomic number..." class="w-full pl-14 pr-6 py-4 rounded-full border-2 border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all outline-none font-medium text-slate-700 shadow-sm text-sm sm:text-base bg-white">
+                    </div>
+                </div>
+
+                <div id="dexList" class="flex flex-col gap-4 max-h-[70vh] overflow-y-auto pr-2 pb-12 hide-scroll">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+
+        <!-- ============================================== -->
+        <!-- VIEW: GAMES HUB -->
+        <!-- ============================================== -->
+        <main id="view-games-hub" class="page-view hidden py-16 bg-slate-50 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="font-orbitron font-extrabold text-4xl sm:text-5xl tracking-tight leading-tight text-slate-900">
+                        Games Hub
+                    </h2>
+                    <p class="text-slate-600 text-base mt-4">
+                        Select a game mode to test your knowledge of the periodic table, or view your overall academic statistics.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    
+                    <!-- Classic Mode Card -->
+                    <div onclick="startGame('classic')" class="bg-gradient-to-b from-blue-300 via-blue-50 to-white border border-slate-200 rounded-3xl p-6 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-[480px] group relative overflow-hidden cursor-pointer">
+                        
+                        <!-- Impressive Atomic Rings -->
+                        <div class="absolute inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center opacity-60">
+                            <div class="atomic-ring w-64 h-64 border-[3px]" style="animation: rotateSlow 20s linear infinite;"></div>
+                            <div class="atomic-ring w-80 h-80 border-solid border-[1px] border-blue-500/20" style="animation: rotateSlowReverse 15s linear infinite;"></div>
+                            <div class="atomic-ring w-96 h-96 border-[4px] border-dotted" style="animation: rotateSlow 25s linear infinite;"></div>
+                        </div>
+
+                        <!-- Cycling & Wobbling Element Banner Art -->
+                        <div class="absolute -right-8 -top-8 w-64 h-64 pointer-events-none z-0 transition-transform duration-700 group-hover:scale-110">
+                            <!-- Hydrogen -->
+                            <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/1%20Hydrogen.webp" class="absolute inset-0 w-full h-full object-contain drop-shadow-2xl" style="animation: wobbleCycle1 9s infinite;" alt="Hydrogen">
+                            <!-- Helium -->
+                            <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/2%20Helium.webp" class="absolute inset-0 w-full h-full object-contain drop-shadow-2xl" style="animation: wobbleCycle2 9s infinite;" alt="Helium">
+                            <!-- Oxygen -->
+                            <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/8%20Oxygen.webp" class="absolute inset-0 w-full h-full object-contain drop-shadow-2xl" style="animation: wobbleCycle3 9s infinite;" alt="Oxygen">
+                        </div>
+                        
+                        <div class="relative z-10 flex flex-col h-full mt-auto justify-end">
+                            <div class="w-14 h-14 bg-white/40 backdrop-blur-md rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-inner border border-white/60 text-blue-800">
+                                <i class="fa-solid fa-gamepad"></i>
+                            </div>
+                            <!-- Arcade Style Title -->
+                            <h3 class="font-orbitron text-outline-blue text-4xl mb-3 drop-shadow-sm tracking-wide">Classic Mode</h3>
+                            <p class="text-slate-600 text-sm mb-8 max-w-[90%] font-bold">
+                                Identify elements in correct numerical order. You are given 3 lives. Take your time, but don't make mistakes!
+                            </p>
+                            <button class="w-max px-10 py-4 rounded-full font-orbitron font-black text-base tracking-widest bg-blue-600 text-white shadow-[0_8px_20px_rgba(37,99,235,0.4)] group-hover:bg-blue-500 group-hover:scale-110 transition-all pointer-events-none">
+                                PLAY CLASSIC
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Time Attack Mode Card -->
+                    <div onclick="startGame('time-attack')" class="bg-gradient-to-b from-rose-300 via-rose-50 to-white border border-slate-200 rounded-3xl p-6 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-[480px] group relative overflow-hidden cursor-pointer">
+                        
+                        <!-- Impressive Radar Pulses -->
+                        <div class="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-80">
+                            <div class="pulse-circle w-10 h-10 left-1/2 top-1/4 border-rose-500/40" style="animation-delay: 0s;"></div>
+                            <div class="pulse-circle w-10 h-10 left-1/2 top-1/4 border-rose-500/40" style="animation-delay: 0.5s;"></div>
+                            <div class="pulse-circle w-10 h-10 left-1/2 top-1/4 border-rose-500/40" style="animation-delay: 1s;"></div>
+                        </div>
+
+                        <!-- Rapid Swap & Heartbeat Banner Art -->
+                        <div class="absolute -right-4 -top-4 w-60 h-60 pointer-events-none z-0 transition-transform duration-700 group-hover:scale-110 animate-urgent-heartbeat">
+                            <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/11%20Sodium.webp" class="absolute inset-0 w-full h-full object-contain animate-swap-fast-2 drop-shadow-2xl" alt="Sodium">
+                            <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/3%20Lithium.webp" class="absolute inset-0 w-full h-full object-contain animate-swap-fast-1 drop-shadow-2xl" alt="Lithium">
+                        </div>
+                        
+                        <div class="relative z-10 flex flex-col h-full mt-auto justify-end">
+                            <div class="w-14 h-14 bg-white/40 backdrop-blur-md rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-inner border border-white/60 text-rose-900">
+                                <i class="fa-solid fa-stopwatch animate-pulse"></i>
+                            </div>
+                            <!-- Arcade Style Title -->
+                            <h3 class="font-orbitron text-outline-rose text-4xl mb-3 drop-shadow-sm tracking-wide">Time Attack</h3>
+                            <p class="text-slate-600 text-sm mb-8 max-w-[90%] font-bold">
+                                Think fast! 1 second per element. 0 lives. One single mistake or timeout ends the run. 
+                            </p>
+                            <button class="w-max px-10 py-4 rounded-full font-orbitron font-black text-base tracking-widest bg-rose-600 text-white shadow-[0_8px_20px_rgba(225,29,72,0.4)] group-hover:bg-rose-500 group-hover:scale-110 transition-all pointer-events-none">
+                                PLAY RUSH
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Card -->
+                    <div onclick="viewStats()" class="bg-gradient-to-b from-emerald-300 via-emerald-50 to-white border border-slate-200 rounded-3xl p-6 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-[480px] group relative overflow-hidden cursor-pointer">
+                        
+                        <!-- Holographic Grid -->
+                        <div class="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-50">
+                            <div class="grid-bg w-[200%] h-[200%] -left-1/4 -top-1/4"></div>
+                        </div>
+
+                        <!-- Banner Art -->
+                        <div class="absolute right-4 top-8 w-48 h-48 pointer-events-none z-0 opacity-40 transition-transform duration-700 flex items-center justify-center group-hover:scale-110 group-hover:opacity-60">
+                            <i class="fa-solid fa-chart-line text-9xl text-teal-900 drop-shadow-xl" style="animation: pulse 3s infinite;"></i>
+                        </div>
+                        
+                        <div class="relative z-10 flex flex-col h-full mt-auto justify-end">
+                            <div class="w-14 h-14 bg-white/40 backdrop-blur-md rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-inner border border-white/60 text-emerald-900">
+                                <i class="fa-solid fa-chart-pie"></i>
+                            </div>
+                            <!-- Arcade Style Title -->
+                            <h3 class="font-orbitron text-outline-emerald text-4xl mb-3 drop-shadow-sm tracking-wide">Statistics</h3>
+                            <p class="text-slate-600 text-sm mb-8 max-w-[90%] font-bold">
+                                View your historical data, max streaks, and highest unlocked elements.
+                            </p>
+                            <button class="w-max px-10 py-4 rounded-full font-orbitron font-black text-base tracking-widest bg-emerald-600 text-white shadow-[0_8px_20px_rgba(5,150,105,0.4)] group-hover:bg-emerald-500 group-hover:scale-110 transition-all pointer-events-none">
+                                VIEW STATS
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Stats Viewer Container (Hidden by default) -->
+                <div id="statsViewerContainer" class="hidden max-w-3xl mx-auto mt-12 bg-white rounded-3xl p-8 border border-slate-200 shadow-lg relative">
+                    <button onclick="document.getElementById('statsViewerContainer').classList.add('hidden')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 hover:text-slate-800">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                        <h3 class="font-orbitron font-extrabold text-2xl text-slate-800"><i class="fa-solid fa-chart-pie text-emerald-500 mr-2"></i> Statistics</h3>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Classic Stats -->
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-sm text-slate-700 bg-slate-100 px-3 py-1 rounded inline-block">Classic Mode</h4>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-center">
+                                    <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Max Streak</span>
+                                    <span id="statClassicStreak" class="font-orbitron font-extrabold text-2xl text-blue-600">0</span>
+                                </div>
+                                <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-center">
+                                    <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Avg Pulse</span>
+                                    <span id="statClassicPulse" class="font-orbitron font-extrabold text-2xl text-blue-600">0s</span>
+                                </div>
+                                <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-center">
+                                    <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Max Element</span>
+                                    <span id="statClassicElement" class="font-orbitron font-extrabold text-2xl text-blue-600">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Time Attack Stats -->
+                        <div class="space-y-3 pt-4 border-t border-slate-100">
+                            <h4 class="font-bold text-sm text-slate-700 bg-slate-100 px-3 py-1 rounded inline-block">Time Attack Mode</h4>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="bg-rose-50 border border-rose-100 p-4 rounded-xl text-center">
+                                    <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Max Streak</span>
+                                    <span id="statTimeAttackStreak" class="font-orbitron font-extrabold text-2xl text-rose-600">0</span>
+                                </div>
+                                <div class="bg-rose-50 border border-rose-100 p-4 rounded-xl text-center">
+                                    <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Avg Pulse</span>
+                                    <span id="statTimeAttackPulse" class="font-orbitron font-extrabold text-2xl text-rose-600">0s</span>
+                                </div>
+                                <div class="bg-rose-50 border border-rose-100 p-4 rounded-xl text-center">
+                                    <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Max Element</span>
+                                    <span id="statTimeAttackElement" class="font-orbitron font-extrabold text-2xl text-rose-600">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- ============================================== -->
+        <!-- VIEW: FULLSCREEN GAME -->
+        <!-- ============================================== -->
+        <main id="view-game-fullscreen" class="page-view hidden fixed inset-0 z-[100] bg-slate-50/90 backdrop-blur-xl flex flex-col w-screen h-[100dvh] overflow-hidden">
+            <!-- Fullscreen Back Button -->
+            <div class="absolute top-4 sm:top-6 left-4 sm:left-6 z-[110]">
+                <button onclick="exitFullscreenGame()" class="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md rounded-full shadow-md border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-white transition-all font-bold text-sm group">
+                    <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> <span class="hidden sm:inline">Leave Game</span>
+                </button>
+            </div>
+
+            <!-- Game Content Centered -->
+            <div class="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto px-4 sm:px-6 relative z-[105]">
+                
+                <!-- Game Board Wrapper -->
+                <div class="w-full bg-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-slate-200 relative">
+                    <div class="scanline absolute inset-0 pointer-events-none opacity-10 rounded-3xl"></div>
+
+                    <!-- Active Game UI -->
+                    <div id="activeGameContainer" class="flex flex-col h-full relative z-10">
+                        <!-- Game Header -->
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i id="gameModeIcon" class="fa-solid fa-gamepad text-blue-600 sm:text-lg animate-pulse"></i>
+                                <span id="gameModeLabel" class="font-orbitron font-bold text-xs sm:text-sm tracking-widest text-slate-500 uppercase">CLASSIC_MODE</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div id="gameHearts" class="flex gap-1 text-rose-500 text-sm sm:text-base"></div>
+                                <span id="gameScore" class="text-xs sm:text-sm font-mono px-3 py-1.5 bg-slate-100 text-slate-600 border border-slate-200 rounded-full font-bold">
+                                    Streak: 0
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Time Attack Bar -->
+                        <div id="timerBarWrapper" class="w-full h-2 bg-slate-100 rounded-full overflow-hidden mb-4 hidden">
+                            <div id="timerBarFill" class="h-full bg-rose-500 w-full"></div>
+                        </div>
+                        
+                        <!-- Timeline Showcase -->
+                        <div id="gameTimelineContainer" class="flex gap-2 overflow-x-auto hide-scroll pb-2 mb-4 scroll-smooth"></div>
+
+                        <!-- Question Text -->
+                        <div class="space-y-2 mb-8 flex-1 text-center py-4">
+                            <span class="block text-xs sm:text-sm text-slate-400 font-bold uppercase tracking-wider font-mono">WHICH ELEMENT IS NEXT?</span>
+                            <h3 id="gameQuestionText" class="text-3xl sm:text-4xl lg:text-5xl font-orbitron font-extrabold text-slate-800 mt-2 drop-shadow-sm">
+                                Identify Element #1
+                            </h3>
+                        </div>
+
+                        <!-- Options Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8" id="gameOptionsGrid"></div>
+
+                        <!-- Game Progress Tracker -->
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                            <span class="text-xs sm:text-sm text-slate-500 font-bold" id="gameProgressTracker">0/118 Elements</span>
+                            <div id="gameProgressBar" class="h-2 w-1/2 bg-slate-100 rounded-full overflow-hidden">
+                                <div id="gameProgressFill" class="h-full bg-emerald-500 w-0 transition-all duration-300"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Container -->
+                    <div id="gameOverContainer" class="hidden flex-col items-center justify-center text-center py-12 relative z-10">
+                        <div id="gameOverIconWrapper" class="w-24 h-24 bg-rose-50 text-rose-500 border border-rose-200 rounded-full flex items-center justify-center mx-auto text-5xl mb-6 shadow-sm">
+                            <i id="gameOverIcon" class="fa-solid fa-skull"></i>
+                        </div>
+                        <h3 id="gameOverTitle" class="font-orbitron font-extrabold text-4xl text-slate-800 mb-2">GAME OVER</h3>
+                        <p id="gameOverMsg" class="text-base text-slate-600 max-w-md mx-auto mt-2 mb-10"></p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center w-full">
+                            <button onclick="startGame(window.currentGameMode)" class="px-8 py-3.5 rounded-full font-orbitron font-bold text-sm tracking-wide bg-blue-600 hover:bg-blue-500 text-white shadow-glowing-blue transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-rotate-right mr-2"></i> Play Again
+                            </button>
+                            <button onclick="exitFullscreenGame(); viewStats();" class="px-8 py-3.5 rounded-full font-orbitron font-bold text-sm tracking-wide bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-chart-simple mr-2"></i> View Stats
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer id="mainFooter" class="bg-slate-900 border-t border-slate-800 text-slate-400 py-12 relative z-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 group">
+                        <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/1%20Hydrogen.webp" class="w-16 h-16 sm:w-20 sm:h-20 object-contain group-hover:scale-110 transition-transform shrink-0 drop-shadow-md" style="filter: brightness(0) saturate(100%) invert(67%) sepia(70%) saturate(2768%) hue-rotate(143deg) brightness(103%) contrast(105%);" alt="Hydrogen Logo">
+                        <span class="font-orbitron font-extrabold text-md tracking-wider text-white">TITAN CHEMISTRY</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Empowering educational adventure by transforming atomic interactions and chemical principles into a gorgeous interactive experience. 
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-orbitron font-bold text-xs text-white uppercase tracking-widest mb-4">Laboratory</h5>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><button onclick="navigateTo('view-home')" class="hover:text-sky-400 transition-colors">Periodic Table</button></li>
+                        <li><button onclick="navigateTo('view-home')" class="hover:text-sky-400 transition-colors">Element Inspector</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-orbitron font-bold text-xs text-white uppercase tracking-widest mb-4">Games</h5>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><button onclick="navigateTo('view-games-hub')" class="hover:text-sky-400 transition-colors">Game Modes</button></li>
+                        <li><button onclick="navigateTo('view-games-hub'); viewStats();" class="hover:text-sky-400 transition-colors">Statistics</button></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h5 class="font-orbitron font-bold text-xs text-white uppercase tracking-widest mb-4">Newsletter</h5>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Email address" class="bg-slate-800 border border-slate-700 rounded-full px-4 py-1.5 text-xs focus:outline-none focus:border-sky-500 w-full text-slate-200">
+                        <button onclick="subscribeNewsletter()" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-full text-xs font-bold font-orbitron">JOIN</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <span>&copy; 2026 Titan Chemistry Inc.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Audio Elements -->
+    <audio id="click-sound" src="https://raw.githubusercontent.com/ChemistryC/chemistryelements/main/sounds/click.mp3" preload="auto"></audio>
+    <audio id="correct-sound" src="https://raw.githubusercontent.com/ChemistryC/chemistryelements/main/sounds/correct.mp3" preload="auto"></audio>
+    <audio id="wrong-sound" src="https://raw.githubusercontent.com/ChemistryC/chemistryelements/main/sounds/wrong.mp3" preload="auto"></audio>
+    <audio id="win-sound" src="https://raw.githubusercontent.com/ChemistryC/chemistryelements/main/sounds/win.mp3" preload="auto"></audio>
+    <audio id="bg-music" src="https://raw.githubusercontent.com/ChemistryC/chemistryelements/main/sounds/practice%20mode/1.mp3" loop preload="auto"></audio>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // Data Structures - Full 118 Periodic Elements dynamically parsed
+        const elementsCSV = `1,H,Hydrogen,1.008,reactive-nonmetal,Gas\n2,He,Helium,4.002,noble-gas,Gas\n3,Li,Lithium,6.94,alkali-metal,Solid\n4,Be,Beryllium,9.012,alkaline-earth-metal,Solid\n5,B,Boron,10.81,metalloid,Solid\n6,C,Carbon,12.011,reactive-nonmetal,Solid\n7,N,Nitrogen,14.007,reactive-nonmetal,Gas\n8,O,Oxygen,15.999,reactive-nonmetal,Gas\n9,F,Fluorine,18.998,halogen,Gas\n10,Ne,Neon,20.180,noble-gas,Gas\n11,Na,Sodium,22.990,alkali-metal,Solid\n12,Mg,Magnesium,24.305,alkaline-earth-metal,Solid\n13,Al,Aluminum,26.982,post-transition-metal,Solid\n14,Si,Silicon,28.085,metalloid,Solid\n15,P,Phosphorus,30.974,reactive-nonmetal,Solid\n16,S,Sulfur,32.06,reactive-nonmetal,Solid\n17,Cl,Chlorine,35.45,halogen,Gas\n18,Ar,Argon,39.95,noble-gas,Gas\n19,K,Potassium,39.098,alkali-metal,Solid\n20,Ca,Calcium,40.078,alkaline-earth-metal,Solid\n21,Sc,Scandium,44.956,transition-metal,Solid\n22,Ti,Titanium,47.867,transition-metal,Solid\n23,V,Vanadium,50.942,transition-metal,Solid\n24,Cr,Chromium,51.996,transition-metal,Solid\n25,Mn,Manganese,54.938,transition-metal,Solid\n26,Fe,Iron,55.845,transition-metal,Solid\n27,Co,Cobalt,58.933,transition-metal,Solid\n28,Ni,Nickel,58.693,transition-metal,Solid\n29,Cu,Copper,63.546,transition-metal,Solid\n30,Zn,Zinc,65.38,transition-metal,Solid\n31,Ga,Gallium,69.723,post-transition-metal,Solid\n32,Ge,Germanium,72.630,metalloid,Solid\n33,As,Arsenic,74.922,metalloid,Solid\n34,Se,Selenium,78.971,reactive-nonmetal,Solid\n35,Br,Bromine,79.904,halogen,Liquid\n36,Kr,Krypton,83.798,noble-gas,Gas\n37,Rb,Rubidium,85.468,alkali-metal,Solid\n38,Sr,Strontium,87.62,alkaline-earth-metal,Solid\n39,Y,Yttrium,88.906,transition-metal,Solid\n40,Zr,Zirconium,91.224,transition-metal,Solid\n41,Nb,Niobium,92.906,transition-metal,Solid\n42,Mo,Molybdenum,95.95,transition-metal,Solid\n43,Tc,Technetium,98,transition-metal,Synthetic\n44,Ru,Ruthenium,101.07,transition-metal,Solid\n45,Rh,Rhodium,102.91,transition-metal,Solid\n46,Pd,Palladium,106.42,transition-metal,Solid\n47,Ag,Silver,107.87,transition-metal,Solid\n48,Cd,Cadmium,112.41,transition-metal,Solid\n49,In,Indium,114.82,post-transition-metal,Solid\n50,Sn,Tin,118.71,post-transition-metal,Solid\n51,Sb,Antimony,121.76,metalloid,Solid\n52,Te,Tellurium,127.60,metalloid,Solid\n53,I,Iodine,126.90,halogen,Solid\n54,Xe,Xenon,131.29,noble-gas,Gas\n55,Cs,Cesium,132.91,alkali-metal,Solid\n56,Ba,Barium,137.33,alkaline-earth-metal,Solid\n57,La,Lanthanum,138.91,lanthanide,Solid\n58,Ce,Cerium,140.12,lanthanide,Solid\n59,Pr,Praseodymium,140.91,lanthanide,Solid\n60,Nd,Neodymium,144.24,lanthanide,Solid\n61,Pm,Promethium,145,lanthanide,Synthetic\n62,Sm,Samarium,150.36,lanthanide,Solid\n63,Eu,Europium,151.96,lanthanide,Solid\n64,Gd,Gadolinium,157.25,lanthanide,Solid\n65,Tb,Terbium,158.93,lanthanide,Solid\n66,Dy,Dysprosium,162.50,lanthanide,Solid\n67,Ho,Holmium,164.93,lanthanide,Solid\n68,Er,Erbium,167.26,lanthanide,Solid\n69,Tm,Thulium,168.93,lanthanide,Solid\n70,Yb,Ytterbium,173.05,lanthanide,Solid\n71,Lu,Lutetium,174.97,lanthanide,Solid\n72,Hf,Hafnium,178.49,transition-metal,Solid\n73,Ta,Tantalum,180.95,transition-metal,Solid\n74,W,Tungsten,183.84,transition-metal,Solid\n75,Re,Rhenium,186.21,transition-metal,Solid\n76,Os,Osmium,190.23,transition-metal,Solid\n77,Ir,Iridium,192.22,transition-metal,Solid\n78,Pt,Platinum,195.08,transition-metal,Solid\n79,Au,Gold,196.97,transition-metal,Solid\n80,Hg,Mercury,200.59,transition-metal,Liquid\n81,Tl,Thallium,204.38,post-transition-metal,Solid\n82,Pb,Lead,207.2,post-transition-metal,Solid\n83,Bi,Bismuth,208.98,post-transition-metal,Solid\n84,Po,Polonium,209,post-transition-metal,Solid\n85,At,Astatine,210,halogen,Solid\n86,Rn,Radon,222,noble-gas,Gas\n87,Fr,Francium,223,alkali-metal,Solid\n88,Ra,Radium,226,alkaline-earth-metal,Solid\n89,Ac,Actinium,227,actinide,Solid\n90,Th,Thorium,232.04,actinide,Solid\n91,Pa,Protactinium,231.04,actinide,Solid\n92,U,Uranium,238.03,actinide,Solid\n93,Np,Neptunium,237,actinide,Synthetic\n94,Pu,Plutonium,244,actinide,Synthetic\n95,Am,Americium,243,actinide,Synthetic\n96,Cm,Curium,247,actinide,Synthetic\n97,Bk,Berkelium,247,actinide,Synthetic\n98,Cf,Californium,251,actinide,Synthetic\n99,Es,Einsteinium,252,actinide,Synthetic\n100,Fm,Fermium,257,actinide,Synthetic\n101,Md,Mendelevium,258,actinide,Synthetic\n102,No,Nobelium,259,actinide,Synthetic\n103,Lr,Lawrencium,266,actinide,Synthetic\n104,Rf,Rutherfordium,267,transition-metal,Synthetic\n105,Db,Dubnium,268,transition-metal,Synthetic\n106,Sg,Seaborgium,269,transition-metal,Synthetic\n107,Bh,Bohrium,270,transition-metal,Synthetic\n108,Hs,Hassium,277,transition-metal,Synthetic\n109,Mt,Meitnerium,278,unknown,Synthetic\n110,Ds,Darmstadtium,281,unknown,Synthetic\n111,Rg,Roentgenium,282,unknown,Synthetic\n112,Cn,Copernicium,285,transition-metal,Synthetic\n113,Nh,Nihonium,286,unknown,Synthetic\n114,Fl,Flerovium,289,unknown,Synthetic\n115,Mc,Moscovium,290,unknown,Synthetic\n116,Lv,Livermorium,293,unknown,Synthetic\n117,Ts,Tennessine,294,unknown,Synthetic\n118,Og,Oganesson,294,unknown,Synthetic`;
+
+        const customLore = {
+            "H": "Hydrogen is the lightweight champion of the cosmic arena. Making up roughly 75% of baryonic mass across stellar atmospheres, it is highly reactive and forms the absolute elemental building blocks for deep aquatic life.",
+            "He": "Incredibly light, inert, and buoyant. This noble gas serves to power anti-gravity flight sacs in rare, gaseous floating creatures.",
+            "Li": "A soft, silvery alkali metal. Incredibly useful for spark glands and high-charge energy storage cells inside electric creatures.",
+            "Be": "Relatively rare in the cosmos, but forms highly resilient structural nodes in creatures found deep in crystal caves.",
+            "C": "The master structural framework for organic life. Carbon's unique capacity to form diverse stable covalent bonds lets you construct complex skin shields, hard claws, and carbonized armor plates.",
+            "O": "A vital oxidizing agent supporting life. Vital in creating aerobic respiratory organs, combustion chambers, and clean water beasts.",
+            "Na": "A highly reactive alkali metal that explosive sparks on direct contact with fluid. Combines reliably with halogens to establish rich mineral bone armor.",
+            "Cl": "A greenish-yellow halogen gas that is extremely caustic. It can be tempered by bonding with alkaline elements to generate crystalline electrolyte cores.",
+            "Si": "A sparkling metalloid. It plays a foundational role in forming glass structures, high-frequency radar ears, and silicon-based computing brains.",
+            "Fe": "The heart of heavy industry. This magnetic transition metal produces ironclad plating, dense hammer fists, and high oxygen-transport blood networks.",
+            "Au": "A highly rare and non-reactive precious metal. Gold acts as a stellar conduit for high energy magic circles and glowing ornamental horns."
+        };
+
+        const elementDatabase = {};
+        const periodicLayout = [];
+        let orderedElements = [];
+
+        // Calculate accurate grid positioning
+        function getGridPosition(atomic) {
+            if (atomic === 1) return { r: 1, c: 1 };
+            if (atomic === 2) return { r: 1, c: 18 };
+            if (atomic >= 3 && atomic <= 4) return { r: 2, c: atomic - 2 };
+            if (atomic >= 5 && atomic <= 10) return { r: 2, c: atomic + 8 };
+            if (atomic >= 11 && atomic <= 12) return { r: 3, c: atomic - 10 };
+            if (atomic >= 13 && atomic <= 18) return { r: 3, c: atomic }; 
+            if (atomic >= 19 && atomic <= 36) return { r: 4, c: atomic - 18 };
+            if (atomic >= 37 && atomic <= 54) return { r: 5, c: atomic - 36 };
+            if (atomic >= 55 && atomic <= 56) return { r: 6, c: atomic - 54 };
+            if (atomic >= 57 && atomic <= 71) return { r: 9, c: atomic - 53 };
+            if (atomic >= 72 && atomic <= 86) return { r: 6, c: atomic - 68 }; 
+            if (atomic >= 87 && atomic <= 88) return { r: 7, c: atomic - 86 };
+            if (atomic >= 89 && atomic <= 103) return { r: 10, c: atomic - 85 };
+            if (atomic >= 104 && atomic <= 118) return { r: 7, c: atomic - 100 }; 
+            return { r: 1, c: 1 };
+        }
+
+        // Auto-parse elements
+        elementsCSV.split('\n').forEach(line => {
+            const [atomicStr, symbol, name, weight, group, phase] = line.trim().split(',');
+            if(!symbol) return;
+            const atomic = parseInt(atomicStr);
+            
+            elementDatabase[symbol] = {
+                symbol, name, atomic, weight, group, phase,
+                discoverer: "Historical/Scientific Data",
+                bio: customLore[symbol] || `A fascinating element categorized as a ${group.replace(/-/g, ' ')}. With an atomic weight of ${weight}, it plays a critical role in the chemical composition of the universe.`
+            };
+            periodicLayout.push({ symbol, ...getGridPosition(atomic) });
+        });
+
+        // Store ordered array for the games
+        orderedElements = Object.values(elementDatabase).sort((a,b) => a.atomic - b.atomic);
+
+        // Attach external Image URLs dynamically
+        const baseSquareUrl = "https://raw.githubusercontent.com/ChemistryC/chemistryelements/15620d67144ed1c448e1898e30bbfb9dd5e6f34f/";
+        const baseArtUrl = "https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/";
+
+        for (const key in elementDatabase) {
+            const el = elementDatabase[key];
+            el.imgSquare = `${baseSquareUrl}${el.atomic}.webp`;
+            el.imgArt = `${baseArtUrl}${el.atomic}%20${el.name}.webp`;
+        }
+
+        // ==========================================
+        //  REALISTIC TEXT-TO-SPEECH (TTS) LOGIC
+        // ==========================================
+        const ttsCache = {};
+        let currentTTSAudio = null;
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
+            return bytes.buffer;
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i));
+        }
+
+        function pcmToWav(pcm16, sampleRate) {
+            const numChannels = 1;
+            const byteRate = sampleRate * numChannels * 2;
+            const blockAlign = numChannels * 2;
+            const dataSize = pcm16.length * 2;
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+            
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(view, 8, 'WAVE');
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, 16, true);
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataSize, true);
+            
+            let offset = 44;
+            for (let i = 0; i < pcm16.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16[i], true);
+            }
+            return new Blob([view], { type: 'audio/wav' });
+        }
+
+        function playAudioBlob(blob) {
+            if (currentTTSAudio) {
+                currentTTSAudio.pause();
+                currentTTSAudio.currentTime = 0;
+            }
+            const url = URL.createObjectURL(blob);
+            currentTTSAudio = new Audio(url);
+            currentTTSAudio.play();
+        }
+
+        function stopTTS() {
+            if (currentTTSAudio) {
+                currentTTSAudio.pause();
+                currentTTSAudio.currentTime = 0;
+            }
+            window.speechSynthesis.cancel();
+        }
+
+        async function playTTS(text, voice = "Puck", style = "") {
+            const fullText = style ? `Say ${style}: ${text}` : text;
+            if (ttsCache[fullText]) {
+                playAudioBlob(ttsCache[fullText]);
+                return;
+            }
+
+            const payload = {
+                contents: [{ parts: [{ text: fullText }] }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } }
+                },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                if (part?.inlineData?.data && part?.inlineData?.mimeType) {
+                    const audioData = part.inlineData.data;
+                    const sampleRate = parseInt(part.inlineData.mimeType.match(/rate=(\d+)/)[1], 10);
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    ttsCache[fullText] = wavBlob;
+                    playAudioBlob(wavBlob);
+                }
+            } catch (e) {
+                console.warn("Gemini API TTS delayed, falling back to native browser TTS for speed.", e);
+                const utterance = new SpeechSynthesisUtterance(text);
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function playElementLore() {
+            const symbol = document.getElementById("inspectBadge").dataset.symbol;
+            if(symbol && elementDatabase[symbol]) {
+                playTTS(elementDatabase[symbol].bio, "Charon", "informatively");
+            }
+        }
+
+        // ==========================================
+        //  PAGE ROUTING (SPA LOGIC)
+        // ==========================================
+        function navigateTo(viewId) {
+            playSound('click');
+            const views = ['view-home', 'view-games-hub', 'view-game-intro', 'view-game-fullscreen', 'view-dex'];
+            
+            views.forEach(v => {
+                const el = document.getElementById(v);
+                if (el) {
+                    if(v === viewId) {
+                        el.classList.remove('hidden');
+                        if (v !== 'view-game-fullscreen') {
+                            el.classList.add('block');
+                        } else {
+                            el.classList.add('flex');
+                        }
+                    } else {
+                        el.classList.add('hidden');
+                        el.classList.remove('block');
+                        el.classList.remove('flex');
+                    }
+                }
+            });
+
+            const header = document.getElementById('mainHeader');
+            const footer = document.getElementById('mainFooter');
+            
+            if(viewId === 'view-game-fullscreen') {
+                header.classList.add('hidden');
+                footer.classList.add('hidden');
+                // Optional: Prevent background scrolling when in full screen game
+                document.body.style.overflow = 'hidden';
+            } else {
+                header.classList.remove('hidden');
+                footer.classList.remove('hidden');
+                document.body.style.overflow = 'auto';
+            }
+            
+            if(viewId !== 'view-home') {
+                window.scrollTo({top: 0, behavior: 'instant'});
+            }
+        }
+
+        // ==========================================
+        //  DEX LOGIC
+        // ==========================================
+        function renderDex(filter = "") {
+            const list = document.getElementById("dexList");
+            if(!list) return;
+            list.innerHTML = "";
+            const lowerFilter = filter.toLowerCase();
+
+            orderedElements.forEach(el => {
+                // Filter logic
+                if (filter && !el.name.toLowerCase().includes(lowerFilter) && !el.symbol.toLowerCase().includes(lowerFilter) && el.atomic.toString() !== lowerFilter) {
+                    return;
+                }
+
+                const card = document.createElement("div");
+                card.className = "flex items-center gap-4 sm:gap-6 bg-white p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer group";
+                card.onclick = () => {
+                    navigateTo('view-home');
+                    setTimeout(() => {
+                        document.getElementById('periodic-table-section').scrollIntoView({behavior: 'smooth', block: 'start'});
+                        inspectElement(el.symbol);
+                    }, 50);
+                };
+
+                card.innerHTML = `
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden group-hover:scale-105 transition-transform shadow-inner p-2">
+                        <img src="${el.imgSquare}" class="w-full h-full object-contain drop-shadow-sm" alt="${el.name}">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                            <h4 class="font-orbitron font-extrabold text-lg sm:text-xl text-slate-800 truncate">${el.name} <span class="text-slate-400 text-sm font-medium ml-1">#${el.atomic.toString().padStart(3, '0')}</span></h4>
+                            <span class="inline-block px-3 py-1 text-[10px] sm:text-xs uppercase font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-full whitespace-nowrap shrink-0">
+                                ${el.group.replace(/-/g, " ")}
+                            </span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-slate-500 mb-2">
+                            <span class="font-medium"><i class="fa-solid fa-weight-scale mr-1 opacity-70"></i>${el.weight}u</span>
+                            <span class="hidden sm:inline">&bull;</span>
+                            <span class="font-medium"><i class="fa-solid fa-temperature-half mr-1 opacity-70"></i>${el.phase}</span>
+                            <span class="hidden sm:inline">&bull;</span>
+                            <span class="font-medium truncate"><i class="fa-solid fa-flask mr-1 opacity-70"></i>${el.symbol}</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-600 truncate line-clamp-1">${el.bio}</p>
+                    </div>
+                    <div class="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center text-slate-300 group-hover:text-indigo-500 transition-colors bg-slate-50 rounded-full group-hover:bg-indigo-50">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+            
+            if(list.children.length === 0) {
+                list.innerHTML = `
+                    <div class="py-12 text-center">
+                        <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fa-solid fa-magnifying-glass-minus"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-lg text-slate-700">No Elements Found</h3>
+                        <p class="text-sm text-slate-500 mt-1">Try searching a different name or atomic number.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function filterDex() {
+            const val = document.getElementById("dexSearch").value;
+            renderDex(val);
+        }
+
+        // ==========================================
+        //  PERIODIC TABLE LOGIC
+        // ==========================================
+        function generatePeriodicTable() {
+            const tableContainer = document.getElementById("periodicGrid");
+            tableContainer.innerHTML = "";
+
+            for (let r = 1; r <= 10; r++) {
+                for (let c = 1; c <= 18; c++) {
+                    const matched = periodicLayout.find(item => item.r === r && item.c === c);
+
+                    if (matched) {
+                        const el = elementDatabase[matched.symbol];
+                        const btn = document.createElement("button");
+                        
+                        btn.className = `element-cell w-full aspect-square flex flex-col items-center justify-center transition-all transform hover:scale-[1.25] hover:z-10 relative group cursor-pointer`;
+                        btn.setAttribute("data-group", el.group);
+                        btn.setAttribute("data-symbol", el.symbol);
+                        btn.onclick = () => inspectElement(el.symbol);
+
+                        btn.innerHTML = `
+                            <img src="${el.imgSquare}" class="w-full h-full object-contain drop-shadow-sm group-hover:drop-shadow-xl" alt="${el.name}" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'w-full h-full border border-slate-200 bg-white rounded-lg flex items-center justify-center group-hover:border-blue-400 group-hover:shadow-lg transition-all\\'><span class=\\'font-orbitron font-extrabold text-xs sm:text-sm text-slate-400 group-hover:text-blue-500 transition-colors\\'>${el.symbol}</span></div>';">
+                        `;
+                        
+                        tableContainer.appendChild(btn);
+                    } else if (r === 6 && c === 3) {
+                        const marker = document.createElement("div");
+                        marker.className = "hidden sm:flex items-center justify-center text-[9px] font-bold text-slate-400 bg-slate-50 border border-slate-200 rounded-lg";
+                        marker.textContent = "57-71";
+                        tableContainer.appendChild(marker);
+                    } else if (r === 7 && c === 3) {
+                        const marker = document.createElement("div");
+                        marker.className = "hidden sm:flex items-center justify-center text-[9px] font-bold text-slate-400 bg-slate-50 border border-slate-200 rounded-lg";
+                        marker.textContent = "89-103";
+                        tableContainer.appendChild(marker);
+                    } else {
+                        const spacer = document.createElement("div");
+                        spacer.className = "hidden sm:block opacity-0 pointer-events-none";
+                        tableContainer.appendChild(spacer);
+                    }
+                }
+            }
+        }
+
+        function filterTable(group) {
+            const cells = document.querySelectorAll(".element-cell");
+            cells.forEach(c => {
+                if (group === "all" || c.getAttribute("data-group") === group) {
+                    c.style.opacity = "1";
+                    c.classList.remove("grayscale");
+                } else {
+                    c.style.opacity = "0.25";
+                    c.classList.add("grayscale");
+                }
+            });
+            showToast(`Filtering Periodic table by ${group.replace('-', ' ')}`, "blue");
+        }
+
+        function inspectElement(symbol) {
+            playSound('click');
+            const el = elementDatabase[symbol];
+            if (!el) return;
+
+            document.getElementById("elementInspectorEmpty").classList.add("hidden");
+            const active = document.getElementById("elementInspectorActive");
+            active.classList.remove("hidden");
+
+            document.getElementById("inspectName").textContent = el.name;
+            document.getElementById("inspectCategory").textContent = el.group.replace(/-/g, " ");
+            document.getElementById("inspectAtomicNum").textContent = el.atomic;
+            document.getElementById("inspectWeight").textContent = `${el.weight} u`;
+            document.getElementById("inspectPhase").textContent = el.phase;
+            document.getElementById("inspectDiscoverer").textContent = el.discoverer;
+            document.getElementById("inspectBio").textContent = el.bio;
+
+            const badge = document.getElementById("inspectBadge");
+            badge.dataset.symbol = symbol;
+            badge.innerHTML = `<img src="${el.imgArt}" class="w-full h-full object-cover" alt="${el.name}" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center bg-slate-100 text-slate-300 font-orbitron font-extrabold text-3xl\\'>${el.symbol}</div>';">`;
+            
+            // Scroll to view on mobile
+            if(window.innerWidth < 1280) {
+                document.getElementById('elementDetailsPanel').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+            }
+        }
+
+        function showToast(text, colorType = "blue") {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+
+            let borderAndBg = "bg-white border-slate-200 text-slate-800 shadow-lg";
+            let icon = "fa-info-circle text-blue-500";
+
+            if (colorType === "green") {
+                borderAndBg = "bg-emerald-50 border-emerald-300 text-slate-800 shadow-glowing-green";
+                icon = "fa-check-circle text-emerald-500";
+            } else if (colorType === "red") {
+                borderAndBg = "bg-rose-50 border-rose-300 text-slate-800";
+                icon = "fa-triangle-exclamation text-rose-500";
+            } else if (colorType === "yellow") {
+                borderAndBg = "bg-amber-50 border-amber-300 text-slate-800 shadow-glowing-yellow";
+                icon = "fa-lightbulb text-amber-500";
+            }
+
+            toast.className = `flex items-start gap-3 p-4 rounded-2xl border text-xs sm:text-sm font-medium backdrop-blur-md shadow-2xl transition-all duration-300 transform translate-x-12 opacity-0 select-none ${borderAndBg}`;
+            toast.style.pointerEvents = "auto";
+            toast.innerHTML = `
+                <i class="fa-solid ${icon} text-sm sm:text-base shrink-0 mt-0.5 animate-pulse"></i>
+                <div class="flex-1">${text}</div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 transition-colors shrink-0"><i class="fa-solid fa-xmark text-xs"></i></button>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => { toast.classList.remove("translate-x-12", "opacity-0"); }, 10);
+            setTimeout(() => {
+                toast.classList.add("translate-x-12", "opacity-0");
+                setTimeout(() => { toast.remove(); }, 300);
+            }, 3000);
+        }
+
+        function subscribeNewsletter() {
+            showToast("Subscription successful! Welcome to the scientific research unit.", "green");
+        }
+
+
+        // ==========================================
+        //  GAMES & STATS LOGIC
+        // ==========================================
+        
+        let currentGameMode = 'classic';
+        let currentAtomicIndex = 0;
+        let hearts = 3;
+        let streak = 0;
+        let maxStreak = 0;
+        let correctAnswers = 0;
+        let totalTime = 0;
+        let questionStartTime = 0;
+        let timeAttackTimer = null;
+        let isGameOver = false;
+        let awaitingNextRound = false;
+
+        function playSound(type) {
+            try {
+                let s = document.getElementById(`${type}-sound`);
+                if(s) {
+                    s.currentTime = 0;
+                    s.play().catch(e => { /* Silently catch if audio isn't allowed to play yet */ });
+                }
+            } catch(e) {}
+        }
+
+        function viewStats() {
+            playSound('click');
+            document.getElementById("statsViewerContainer").classList.remove("hidden");
+            document.getElementById('statsViewerContainer').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+            
+            // Read from local storage exactly as original files do
+            const cs = parseInt(localStorage.getItem('largestStreakMax')) || 0;
+            const cp = parseFloat(localStorage.getItem('pulseTimeMax')) || 0;
+            const ce = parseInt(localStorage.getItem('unlockedElementsMax')) || 0;
+
+            const ts = parseInt(localStorage.getItem('largestStreakTimeAttack')) || 0;
+            const tp = parseFloat(localStorage.getItem('pulseTimeTimeAttack')) || 0;
+            const te = parseInt(localStorage.getItem('unlockedElementsTimeAttack')) || 0;
+
+            document.getElementById('statClassicStreak').innerText = cs;
+            document.getElementById('statClassicPulse').innerText = cp > 0 ? cp.toFixed(2) + 's' : '0s';
+            document.getElementById('statClassicElement').innerText = ce;
+
+            document.getElementById('statTimeAttackStreak').innerText = ts;
+            document.getElementById('statTimeAttackPulse').innerText = tp > 0 ? tp.toFixed(2) + 's' : '0s';
+            document.getElementById('statTimeAttackElement').innerText = te;
+        }
+
+        function startGame(mode) {
+            playSound('click');
+            window.currentGameMode = mode;
+            currentAtomicIndex = 0;
+            hearts = 3;
+            streak = 0;
+            maxStreak = 0;
+            correctAnswers = 0;
+            totalTime = 0;
+            isGameOver = false;
+            awaitingNextRound = false;
+
+            navigateTo('view-game-fullscreen');
+            document.getElementById("activeGameContainer").classList.remove("hidden");
+            document.getElementById("gameOverContainer").classList.add("hidden");
+            document.getElementById("gameOverContainer").classList.remove("flex");
+            
+            // Clear Timeline container
+            document.getElementById("gameTimelineContainer").innerHTML = "";
+
+            const modeIcon = document.getElementById("gameModeIcon");
+            const modeLabel = document.getElementById("gameModeLabel");
+            const heartsUI = document.getElementById("gameHearts");
+            const timerUI = document.getElementById("timerBarWrapper");
+
+            if(window.currentGameMode === 'classic') {
+                modeIcon.className = "fa-solid fa-gamepad text-blue-600 sm:text-lg animate-pulse";
+                modeLabel.textContent = "CLASSIC MODE";
+                heartsUI.classList.remove("hidden");
+                timerUI.classList.add("hidden");
+            } else if (window.currentGameMode === 'time-attack') {
+                modeIcon.className = "fa-solid fa-stopwatch text-rose-600 sm:text-lg animate-pulse";
+                modeLabel.textContent = "TIME ATTACK";
+                heartsUI.classList.add("hidden");
+                timerUI.classList.remove("hidden");
+            }
+
+            updateHeartsUI();
+            
+            // Start Background Music
+            try {
+                let music = document.getElementById('bg-music');
+                if(music) {
+                    music.currentTime = 0;
+                    music.volume = 0.3; // Nice background volume
+                    music.play().catch(e => console.log('Audio autoplay prevented'));
+                }
+            } catch(e) {}
+
+            loadGameRound();
+        }
+
+        function exitFullscreenGame() {
+            clearTimeout(timeAttackTimer);
+            isGameOver = true; // Stop any pending logic
+            stopTTS(); // Stop any voiceovers currently playing
+            
+            // Stop Background Music
+            try {
+                let music = document.getElementById('bg-music');
+                if(music) music.pause();
+            } catch(e) {}
+
+            navigateTo('view-games-hub');
+        }
+
+        function updateHeartsUI() {
+            const container = document.getElementById("gameHearts");
+            container.innerHTML = "";
+            for(let i=0; i<3; i++) {
+                if(i < hearts) container.innerHTML += `<i class="fa-solid fa-heart animate-pulse drop-shadow-sm"></i>`;
+                else container.innerHTML += `<i class="fa-regular fa-heart opacity-30"></i>`;
+            }
+        }
+
+        function startTimerVisual() {
+            clearTimeout(timeAttackTimer);
+            const fill = document.getElementById("timerBarFill");
+            
+            // Reset bar instantly
+            fill.style.transition = "none";
+            fill.style.width = "100%";
+            
+            // Force browser reflow to apply the 100% before transitioning to 0
+            void fill.offsetWidth;
+            
+            // 1 Second for Time Attack
+            fill.style.transition = "width 1s linear";
+            fill.style.width = "0%";
+
+            timeAttackTimer = setTimeout(() => {
+                if(!isGameOver && !awaitingNextRound) {
+                    playSound('wrong');
+                    endGame(false, orderedElements[currentAtomicIndex]);
+                }
+            }, 1000);
+        }
+
+        function loadGameRound() {
+            if(isGameOver) return;
+            awaitingNextRound = false;
+            const targetElement = orderedElements[currentAtomicIndex];
+
+            // Update UI Counters
+            document.getElementById("gameScore").innerHTML = `Streak: <span class="${window.currentGameMode === 'classic' ? 'text-blue-600' : 'text-rose-600'}">${streak}</span>`;
+            document.getElementById("gameProgressTracker").textContent = `${currentAtomicIndex}/118 Elements`;
+            document.getElementById("gameProgressFill").style.width = `${(currentAtomicIndex/118)*100}%`;
+
+            // Question Text
+            document.getElementById("gameQuestionText").innerHTML = `Identify Element <span class="${window.currentGameMode === 'classic' ? 'text-blue-600' : 'text-rose-600'}">#${targetElement.atomic}</span>`;
+
+            // Generate Options (4 for Classic, 2 for Time Attack)
+            let numOptions = window.currentGameMode === 'time-attack' ? 2 : 4;
+            let options = [targetElement];
+            while(options.length < numOptions) {
+                let rand = orderedElements[Math.floor(Math.random() * orderedElements.length)];
+                if(!options.includes(rand)) options.push(rand);
+            }
+            // Shuffle
+            options.sort(() => Math.random() - 0.5);
+
+            // Render Option Buttons
+            const grid = document.getElementById("gameOptionsGrid");
+            grid.innerHTML = "";
+            
+            const btnHoverColors = window.currentGameMode === 'classic' ? 'hover:border-blue-400 group-hover:bg-blue-600 group-hover:border-blue-600 group-hover:text-blue-700' : 'hover:border-rose-400 group-hover:bg-rose-600 group-hover:border-rose-600 group-hover:text-rose-700';
+
+            options.forEach(opt => {
+                let btn = document.createElement("button");
+                btn.className = `option-btn w-full px-6 py-4 sm:py-5 bg-white border-2 border-slate-200 rounded-full text-left text-base sm:text-lg font-medium transition-all flex items-center gap-4 group ${window.currentGameMode === 'classic' ? 'hover:border-blue-400' : 'hover:border-rose-400'} hover:shadow-md`;
+                btn.innerHTML = `
+                    <span class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-50 border-2 border-slate-200 shadow-sm font-orbitron font-extrabold text-slate-500 text-lg flex items-center justify-center shrink-0 ${window.currentGameMode === 'classic' ? 'group-hover:bg-blue-600 group-hover:border-blue-600' : 'group-hover:bg-rose-600 group-hover:border-rose-600'} group-hover:text-white transition-colors">
+                        ${opt.symbol}
+                    </span> 
+                    <span class="text-slate-700 ${window.currentGameMode === 'classic' ? 'group-hover:text-blue-700' : 'group-hover:text-rose-700'} font-bold flex-1 truncate">${opt.name}</span>
+                `;
+                btn.onclick = () => handleAnswer(opt, targetElement, btn);
+                grid.appendChild(btn);
+            });
+
+            questionStartTime = Date.now();
+            if(window.currentGameMode === 'time-attack') {
+                startTimerVisual();
+            }
+        }
+
+        function handleAnswer(selected, correct, btn) {
+            if(isGameOver || awaitingNextRound) return;
+            
+            let timeTaken = (Date.now() - questionStartTime) / 1000;
+            
+            if(selected.atomic === correct.atomic) {
+                // CORRECT
+                clearTimeout(timeAttackTimer);
+                awaitingNextRound = true;
+                totalTime += timeTaken;
+                correctAnswers++;
+                streak++;
+                if(streak > maxStreak) maxStreak = streak;
+
+                // Add Element Image to timeline
+                let timeline = document.getElementById("gameTimelineContainer");
+                let imgWrapper = document.createElement("div");
+                imgWrapper.className = "w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-2xl border-2 border-emerald-400 overflow-hidden shadow-md bg-white animate-scale-up";
+                imgWrapper.innerHTML = `<img src="${correct.imgSquare}" class="w-full h-full object-contain" alt="${correct.name}">`;
+                timeline.appendChild(imgWrapper);
+                
+                // Scroll to extreme right to see newest addition
+                setTimeout(() => {
+                    timeline.scrollLeft = timeline.scrollWidth;
+                }, 50);
+                
+                playSound('correct');
+                btn.classList.add("correct");
+                currentAtomicIndex++;
+
+                if(currentAtomicIndex >= 118) {
+                    setTimeout(() => endGame(true, correct), 400);
+                } else {
+                    setTimeout(loadGameRound, 400);
+                }
+            } else {
+                // INCORRECT
+                playSound('wrong');
+                btn.classList.add("wrong");
+                streak = 0;
+                document.getElementById("gameScore").innerHTML = `Streak: <span class="${window.currentGameMode === 'classic' ? 'text-blue-600' : 'text-rose-600'}">0</span>`;
+
+                if(window.currentGameMode === 'classic') {
+                    hearts--;
+                    updateHeartsUI();
+                    if(hearts <= 0) {
+                        endGame(false, correct);
+                    }
+                    // If they have hearts left, let them try again on the same question
+                } else {
+                    // Time attack - Instant death
+                    clearTimeout(timeAttackTimer);
+                    endGame(false, correct);
+                }
+            }
+        }
+
+        function endGame(isWin, correctElement) {
+            isGameOver = true;
+            clearTimeout(timeAttackTimer);
+            saveStats();
+            
+            // Stop Background Music
+            try {
+                let music = document.getElementById('bg-music');
+                if(music) music.pause();
+            } catch(e) {}
+            
+            document.getElementById("activeGameContainer").classList.add("hidden");
+            const overScreen = document.getElementById("gameOverContainer");
+            overScreen.classList.remove("hidden");
+            overScreen.classList.add("flex"); // Force flex layout
+
+            const title = document.getElementById("gameOverTitle");
+            const msg = document.getElementById("gameOverMsg");
+            const iconWrap = document.getElementById("gameOverIconWrapper");
+            const icon = document.getElementById("gameOverIcon");
+
+            if(isWin) {
+                playSound('win');
+                title.textContent = "ACADEMY MASTER!";
+                title.className = "font-orbitron font-extrabold text-4xl text-emerald-600 mb-2";
+                msg.textContent = `Incredible! You correctly identified all 118 elements.`;
+                
+                iconWrap.className = "w-24 h-24 bg-emerald-50 text-emerald-500 border border-emerald-200 rounded-full flex items-center justify-center mx-auto text-5xl mb-6 shadow-glowing-green animate-bounce";
+                icon.className = "fa-solid fa-trophy";
+            } else {
+                title.textContent = "LAB FAILURE";
+                title.className = "font-orbitron font-extrabold text-4xl text-rose-600 mb-2";
+                
+                // Interactive Hover Card HTML
+                msg.innerHTML = `Incorrect! <br>The element was 
+                <div class="element-tooltip-container relative inline-block cursor-pointer mt-1" onclick="this.classList.toggle('pinned')">
+                    <b class="text-slate-800 font-bold bg-slate-100 hover:bg-slate-200 transition-colors px-4 py-1.5 rounded-full border border-slate-300 flex items-center gap-2 drop-shadow-sm">
+                        <i class="fa-solid fa-flask-vial text-rose-500"></i> ${correctElement.name}
+                    </b>
+                    
+                    <!-- Tooltip Hover Card -->
+                    <div class="tooltip-card absolute bottom-full left-1/2 sm:left-0 -translate-x-1/2 sm:translate-x-0 sm:-ml-6 mb-3 w-72 sm:w-[400px] bg-white rounded-3xl shadow-2xl border border-slate-200 p-5 z-50 pointer-events-none">
+                        <div class="flex items-center gap-4 border-b border-slate-100 pb-4 mb-4">
+                            <img src="${correctElement.imgSquare}" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm object-contain p-2 shrink-0">
+                            <div class="text-left flex-1 min-w-0">
+                                <div class="font-orbitron font-bold text-slate-800 text-2xl sm:text-3xl leading-tight truncate">${correctElement.name}</div>
+                                <div class="text-[10px] sm:text-xs text-sky-600 font-bold uppercase tracking-widest mt-1.5 truncate">${correctElement.group.replace(/-/g, ' ')}</div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 text-left">
+                            <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-100">
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider mb-0.5">Symbol</span>
+                                <span class="font-orbitron font-bold text-slate-700 text-sm sm:text-base">${correctElement.symbol}</span>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-100">
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider mb-0.5">Atomic #</span>
+                                <span class="font-orbitron font-bold text-slate-700 text-sm sm:text-base">${correctElement.atomic}</span>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-100">
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider mb-0.5">Weight</span>
+                                <span class="font-orbitron font-bold text-slate-700 text-sm sm:text-base">${correctElement.weight}u</span>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-100">
+                                <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider mb-0.5">Phase</span>
+                                <span class="font-orbitron font-bold text-slate-700 text-sm sm:text-base">${correctElement.phase}</span>
+                            </div>
+                        </div>
+                        <!-- Tooltip Triangle Pointer -->
+                        <div class="absolute top-full left-1/2 sm:left-14 -translate-x-1/2 border-8 border-transparent border-t-white drop-shadow-sm"></div>
+                    </div>
+                </div>`;
+                
+                iconWrap.className = "w-24 h-24 bg-rose-50 text-rose-500 border border-rose-200 rounded-full flex items-center justify-center mx-auto text-5xl mb-6 shadow-glowing-pink";
+                icon.className = "fa-solid fa-skull-crossbones";
+            }
+        }
+
+        function saveStats() {
+            // Average time per correct answer
+            let pulseTime = correctAnswers > 0 ? (totalTime / correctAnswers) : 0;
+            let elementsUnlocked = currentAtomicIndex;
+
+            if(window.currentGameMode === 'classic') {
+                let lsMax = parseInt(localStorage.getItem('largestStreakMax')) || 0;
+                let ptMax = parseFloat(localStorage.getItem('pulseTimeMax')) || Infinity;
+                let ueMax = parseInt(localStorage.getItem('unlockedElementsMax')) || 0;
+
+                if(maxStreak > lsMax) localStorage.setItem('largestStreakMax', maxStreak);
+                if(pulseTime > 0 && pulseTime < ptMax) localStorage.setItem('pulseTimeMax', pulseTime);
+                if(elementsUnlocked > ueMax) localStorage.setItem('unlockedElementsMax', elementsUnlocked);
+
+                let hist = JSON.parse(localStorage.getItem('gameHistory')) || [];
+                hist.push({largestStreak: maxStreak, pulseTime: pulseTime, unlockedElements: elementsUnlocked});
+                localStorage.setItem('gameHistory', JSON.stringify(hist));
+            } else if (window.currentGameMode === 'time-attack') {
+                let lsMax = parseInt(localStorage.getItem('largestStreakTimeAttack')) || 0;
+                let ptMax = parseFloat(localStorage.getItem('pulseTimeTimeAttack')) || Infinity;
+                let ueMax = parseInt(localStorage.getItem('unlockedElementsTimeAttack')) || 0;
+
+                if(maxStreak > lsMax) localStorage.setItem('largestStreakTimeAttack', maxStreak);
+                if(pulseTime > 0 && pulseTime < ptMax) localStorage.setItem('pulseTimeTimeAttack', pulseTime);
+                if(elementsUnlocked > ueMax) localStorage.setItem('unlockedElementsTimeAttack', elementsUnlocked);
+
+                let hist = JSON.parse(localStorage.getItem('timeAttackGameHistory')) || [];
+                hist.push({largestStreak: maxStreak, pulseTime: pulseTime, unlockedElements: elementsUnlocked});
+                localStorage.setItem('timeAttackGameHistory', JSON.stringify(hist));
+            }
+        }
+
+        // ==========================================
+        //  BACKGROUND PARTICLES
+        // ==========================================
+
+        const canvas = document.getElementById("particleCanvas");
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 2.5 + 1.5;
+                this.vx = (Math.random() - 0.5) * 0.45;
+                this.vy = (Math.random() - 0.5) * 0.45;
+                this.color = Math.random() > 0.5 ? '#3b82f6' : '#0284c7'; 
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(window.innerWidth / 15), 100);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        // Increased opacity multiplier to make lines much more visible
+                        ctx.strokeStyle = `rgba(37, 99, 235, ${0.35 * (1 - distance / 130)})`;
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Mobile Menu Toggling
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.onclick = () => {
+                mobileMenu.classList.toggle("hidden");
+            };
+            mobileMenu.querySelectorAll("button").forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add("hidden");
+                });
+            });
+        }
+
+        // Initialization
+        window.onload = function() {
+            resizeCanvas();
+            initParticles();
+            animate();
+            generatePeriodicTable();
+            renderDex(); // Initialize Dex
+            inspectElement("H"); // Initialize with Hydrogen loaded
+
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                initParticles();
+            });
+            
+            showToast("Welcome to Titan Chemistry! Navigate to the Games Tab to play.", "blue");
+        };
+    </script>
+</body>
+</html>
