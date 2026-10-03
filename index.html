@@ -1,183 +1,91 @@
 <!DOCTYPE html>
-
 <html lang="en" class="scroll-smooth">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Titan Chemistry - Dex & Games v12</title>
-
+    <title>Titan Chemistry</title>
     <!-- Tailwind CSS -->
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <!-- Google Fonts -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
-
     <!-- Font Awesome Icons -->
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    
-
     <script>
-
         tailwind.config = {
-
             theme: {
-
                 extend: {
-
                     fontFamily: {
-
                         sans: ['Nunito', 'sans-serif'],
-
                         orbitron: ['Outfit', 'sans-serif'],
-
                     },
-
                     colors: {
-
                         chemBlue: '#2563eb',
-
                         chemSky: '#0284c7',
-
                     },
-
                     boxShadow: {
-
                         'glowing-blue': '0 8px 30px rgba(37, 99, 235, 0.15)',
-
                         'glowing-sky': '0 8px 30px rgba(2, 132, 199, 0.15)',
-
                         'glowing-green': '0 8px 30px rgba(5, 150, 105, 0.15)',
-
                         'glowing-pink': '0 8px 30px rgba(219, 39, 119, 0.15)'
-
                     }
-
                 }
-
             }
-
         }
-
     </script>
-
     <style>
-
         body {
-
             font-family: 'Nunito', sans-serif;
-
             background-color: #f1f5f9;
-
             color: #1e293b;
-
             overflow-x: hidden;
-
         }
-
         ::-webkit-scrollbar {
-
             width: 8px;
-
         }
-
         ::-webkit-scrollbar-track {
-
             background: #f1f5f9;
-
         }
-
         ::-webkit-scrollbar-thumb {
-
             background: #cbd5e1;
-
             border-radius: 4px;
-
         }
-
         ::-webkit-scrollbar-thumb:hover {
-
             background: #3b82f6;
-
         }
-
         .periodic-grid-scroll {
-
             overflow-x: auto;
-
             padding-bottom: 12px;
-
             width: 100%;
-
         }
-
         .periodic-grid {
-
             display: grid;
-
             grid-template-columns: repeat(18, minmax(36px, 1fr));
-
             gap: 4px;
-
             min-width: 800px;
-
         }
-
         @media (min-width: 1280px) {
-
             .periodic-grid {
-
                 grid-template-columns: repeat(18, minmax(42px, 1fr));
-
                 gap: 6px;
-
                 min-width: 900px;
-
             }
-
         }
-
         .scanline {
-
             background: linear-gradient(
-
                 to bottom,
-
                 rgba(255,255,255,0),
-
                 rgba(37, 99, 235, 0.04) 50%,
-
                 rgba(255,255,255,0)
-
             );
-
             background-size: 100% 4px;
-
             animation: scanlineAnim 8s linear infinite;
-
         }
-
         @keyframes scanlineAnim {
-
             0% { background-position: 0 0; }
-
             100% { background-position: 0 100%; }
-
         }
-
-        
-
         /* Minimal frosted game interface: glass accents with strong readability */
         #view-game-fullscreen {
             background:
@@ -188,7 +96,6 @@
             overflow-y: auto;
             overscroll-behavior: contain;
         }
-
         .game-ambient-orb {
             position: absolute;
             border-radius: 9999px;
@@ -197,7 +104,6 @@
             pointer-events: none;
             animation: glassDrift 8s ease-in-out infinite alternate;
         }
-
         .game-glass-shell {
             background: rgba(255, 255, 255, 0.92);
             border: 1px solid rgba(255, 255, 255, 0.98);
@@ -208,28 +114,23 @@
             min-height: 590px;
             overflow: hidden;
         }
-
         #activeGameContainer,
         #gameOverContainer {
             height: 100%;
         }
-
         #activeGameContainer {
             overflow-y: auto;
             scrollbar-width: none;
         }
-
         #activeGameContainer::-webkit-scrollbar {
             display: none;
         }
-
         @media (max-height: 700px) {
             .game-glass-shell {
                 height: calc(100dvh - 88px);
                 min-height: 0;
             }
         }
-
         .game-glass-pill {
             background: rgba(255, 255, 255, 0.82);
             border: 1px solid rgba(148, 163, 184, 0.24);
@@ -237,7 +138,6 @@
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
-
         .game-option-glass {
             background: rgba(255, 255, 255, 0.96);
             border: 1px solid rgba(148, 163, 184, 0.30);
@@ -245,34 +145,29 @@
             -webkit-backdrop-filter: blur(8px);
             backdrop-filter: blur(8px);
         }
-
         .game-option-glass:hover {
             background: #ffffff;
             border-color: rgba(37, 99, 235, 0.50);
             transform: translateY(-2px);
             box-shadow: 0 16px 34px rgba(37, 99, 235, 0.14);
         }
-
         .game-option-symbol {
             background: #eff6ff;
             border: 1px solid #bfdbfe;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.95);
         }
-
         .option-btn.correct {
             background: linear-gradient(135deg, #2563eb, #38bdf8) !important;
             border-color: rgba(147, 197, 253, 0.95) !important;
             color: #ffffff !important;
             box-shadow: 0 14px 34px rgba(37, 99, 235, 0.30), 0 0 24px rgba(56, 189, 248, 0.28) !important;
         }
-
         .option-btn.wrong {
             background: #fff1f2 !important;
             border-color: #f43f5e !important;
             color: #be123c !important;
             opacity: 0.82;
         }
-
         .answer-history-stage {
             height: 172px;
             flex: 0 0 172px;
@@ -283,7 +178,6 @@
             padding-bottom: 0;
             position: relative;
         }
-
         .answer-history-scroll {
             display: grid;
             grid-auto-flow: column;
@@ -300,13 +194,11 @@
             touch-action: pan-x;
             scrollbar-width: none;
         }
-
         .answer-history-scroll::-webkit-scrollbar {
             display: none;
             width: 0;
             height: 0;
         }
-
         /* Overlay-only indicator: appearing never changes the image strip height. */
         .history-scrollbar {
             position: absolute;
@@ -322,13 +214,11 @@
             transition: opacity 140ms ease;
             overflow: hidden;
         }
-
         .answer-history-stage.scrollbar-visible .history-scrollbar,
         .answer-history-stage:hover .history-scrollbar,
         .answer-history-stage:focus-within .history-scrollbar {
             opacity: 1;
         }
-
         .history-scrollbar-thumb {
             display: block;
             height: 100%;
@@ -338,7 +228,6 @@
             background: rgba(71, 85, 105, 0.52);
             transition: width 80ms linear, transform 30ms linear;
         }
-
         .answer-history-item {
             width: 100%;
             aspect-ratio: 1;
@@ -353,7 +242,6 @@
             border-radius: 0;
             cursor: pointer;
         }
-
         .answer-history-item img {
             width: 120%;
             height: 120%;
@@ -362,24 +250,19 @@
             filter: drop-shadow(0 10px 12px rgba(15, 23, 42, 0.20));
             transition: transform 120ms ease, filter 120ms ease;
         }
-
         .answer-history-item:hover img {
             transform: translateY(-2px) scale(1.055);
             filter: drop-shadow(0 13px 15px rgba(37, 99, 235, 0.23));
         }
-
         .answer-history-item.is-new {
             animation: elementArrive 240ms cubic-bezier(0.22, 1.35, 0.5, 1) both;
         }
-
         .game-feedback-pop {
             animation: feedbackPop 150ms ease-out both;
         }
-
         #gameOptionsGrid {
             position: relative;
         }
-
         .correct-tile-ghost {
             position: absolute !important;
             z-index: 30;
@@ -395,82 +278,67 @@
             animation: correctTileFlash 460ms cubic-bezier(0.2, 0.75, 0.25, 1) forwards;
             transform-origin: center;
         }
-
         .correct-tile-ghost .game-option-symbol {
             background: rgba(255, 255, 255, 0.18) !important;
             border-color: rgba(255, 255, 255, 0.62) !important;
             color: #ffffff !important;
         }
-
         .correct-tile-ghost span {
             color: #ffffff !important;
         }
-
         @keyframes correctTileFlash {
             0% { opacity: 1; transform: scale(1); filter: brightness(1); }
             34% { opacity: 1; transform: scale(1.025); filter: brightness(1.12); }
             72% { opacity: 0.78; transform: scale(1.018); filter: brightness(1.05); }
             100% { opacity: 0; transform: scale(1.035); filter: brightness(1); }
         }
-
         @keyframes feedbackPop {
             0% { opacity: 0.35; transform: translateY(4px) scale(0.96); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
-
         @keyframes elementArrive {
             0% { opacity: 0; transform: translateY(14px) scale(0.72) rotate(-5deg); }
             65% { opacity: 1; transform: translateY(-3px) scale(1.08) rotate(1deg); }
             100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
         }
-
         @media (max-width: 640px) {
             #view-game-fullscreen {
                 overflow: hidden;
             }
-
             #view-game-fullscreen > .min-h\[100dvh\] {
                 align-items: flex-start;
                 padding: 68px 10px 10px;
             }
-
             .game-glass-shell {
                 height: calc(100dvh - 78px);
                 min-height: 0;
                 border-radius: 1.55rem;
                 padding: 14px;
             }
-
             #activeGameContainer {
                 padding-bottom: 2px;
             }
-
             .answer-history-stage {
                 height: 130px;
                 flex-basis: 130px;
             }
-
             .answer-history-scroll {
                 gap: 6px;
                 grid-auto-columns: calc((100% - 18px) / 4);
                 padding: 2px 2px 5px;
             }
-
             .answer-history-item img {
                 width: 124%;
                 height: 124%;
                 margin: -12% 0 0 -12%;
             }
-
             .game-options-lowered {
                 margin-top: 24px !important;
             }
-
             #gameOptionsGrid {
                 gap: 9px;
                 margin-bottom: 14px;
             }
-
             #gameOptionsGrid .option-btn {
                 min-height: 72px;
                 border-radius: 1.05rem;
@@ -478,11 +346,9 @@
                 grid-template-columns: 38px minmax(0, 1fr);
                 column-gap: 6px;
             }
-
             #gameOptionsGrid .option-btn > span[aria-hidden="true"] {
                 display: none;
             }
-
             #gameOptionsGrid .option-btn > span:nth-child(2) {
                 padding-left: 2px;
                 padding-right: 2px;
@@ -491,7 +357,6 @@
                 white-space: normal;
                 overflow-wrap: anywhere;
             }
-
             #gameOptionsGrid .game-option-symbol {
                 width: 38px;
                 height: 38px;
@@ -508,55 +373,34 @@
         #view-game-fullscreen .game-glass-shell div {
             font-weight: 400;
         }
-
         #gameModeLabel,
         #gameScore,
         #gameHearts,
         .game-option-symbol {
             font-weight: 500 !important;
         }
-
         .game-options-lowered {
             margin-top: 34px;
         }
-
         .audio-toggle-active {
             color: #2563eb;
         }
-
         @keyframes glassDrift {
             from { transform: translate3d(-12px, -8px, 0) scale(1); }
             to { transform: translate3d(18px, 12px, 0) scale(1.08); }
         }
-
-
-
         /* Hover card for game over screen */
-
         .element-hover-container .hover-card {
-
             opacity: 0;
-
             visibility: hidden;
-
             transform: scale(0.9) translateY(10px);
-
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
         }
-
         .element-hover-container.pinned .hover-card {
-
             opacity: 1;
-
             visibility: visible;
-
             transform: scale(1) translateY(0);
-
         }
-
-
-
         /* Dex: clearer element browsing plus saved player stats */
         .dex-hero {
             background:
@@ -587,7 +431,6 @@
             transition: transform 180ms ease;
         }
         .dex-element-card:hover img { transform: scale(1.07) translateY(-3px); }
-
         /* More vivid, artwork-forward game hub cards */
         .game-hub-card {
             min-height: 520px;
@@ -610,7 +453,6 @@
         }
         .game-hub-card > * { position: relative; z-index: 2; }
         .game-hub-art { position: absolute !important; z-index: 3 !important; }
-
         /* Rich but compact game result state */
         .result-element-art {
             width: min(230px, 54vw);
@@ -633,8 +475,6 @@
             #gameOverContainer { justify-content: flex-start; overflow-y: auto; padding-top: 6px !important; }
             .result-element-art { width: min(165px, 44vw); height: min(165px, 44vw); }
         }
-
-
         /* Keep modal navigation clear of the element card on phones. */
         @media (max-width: 640px) {
             #modalPrevButton,
@@ -644,13 +484,9 @@
                 height: 6rem;
                 opacity: 0.9;
             }
-
             #modalPrevButton { left: -0.15rem; }
             #modalNextButton { right: -0.15rem; }
         }
-
-    
-
         /* v12: premium game-mode selection while preserving the established colors. */
         #view-games-hub {
             position: relative;
@@ -661,12 +497,10 @@
                 radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.12), transparent 32%),
                 #f1f5f9;
         }
-
         .games-hub-stage {
             position: relative;
             isolation: isolate;
         }
-
         .games-hub-ambient {
             position: absolute;
             inset: -80px -10vw auto;
@@ -679,13 +513,11 @@
                 radial-gradient(circle at 25% 38%, rgba(14, 165, 233, 0.24), transparent 26%),
                 radial-gradient(circle at 74% 32%, rgba(244, 63, 94, 0.18), transparent 25%);
         }
-
         .games-hub-heading {
             max-width: 760px;
             margin: 0 auto 42px;
             text-align: center;
         }
-
         .games-hub-kicker {
             display: inline-flex;
             align-items: center;
@@ -699,7 +531,6 @@
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
         }
-
         .games-mode-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -707,7 +538,6 @@
             max-width: 1120px;
             margin: 0 auto;
         }
-
         .game-hub-card {
             --card-deep: #2563eb;
             --card-mid: #38bdf8;
@@ -729,13 +559,11 @@
                 inset 0 1px 0 rgba(255,255,255,0.68);
             transition: transform 180ms ease, box-shadow 180ms ease;
         }
-
         .game-hub-card--time {
             --card-deep: #e11d48;
             --card-mid: #f472b6;
             --card-soft: #ffedd5;
         }
-
         .game-hub-card--dex {
             --card-deep: #059669;
             --card-mid: #2dd4bf;
@@ -743,7 +571,6 @@
             grid-column: 1 / -1;
             min-height: 330px;
         }
-
         .game-hub-card:hover {
             transform: translateY(-8px) scale(1.008);
             box-shadow:
@@ -751,7 +578,6 @@
                 0 0 42px color-mix(in srgb, var(--card-mid) 24%, transparent),
                 inset 0 1px 0 rgba(255,255,255,0.78);
         }
-
         .game-hub-card::before {
             content: "";
             position: absolute;
@@ -765,11 +591,9 @@
             background-position: -220% 0, 0 0, 0 0;
             transition: background-position 700ms ease;
         }
-
         .game-hub-card:hover::before {
             background-position: 220% 0, 0 0, 0 0;
         }
-
         .game-hub-card::after {
             content: "";
             position: absolute;
@@ -778,7 +602,6 @@
             pointer-events: none;
             background: linear-gradient(to top, rgba(255,255,255,.98), rgba(255,255,255,.90) 64%, rgba(255,255,255,0));
         }
-
         .game-hub-index {
             position: absolute;
             top: 20px;
@@ -792,7 +615,6 @@
             z-index: 0;
             user-select: none;
         }
-
         .game-hub-art {
             position: absolute !important;
             top: 32px;
@@ -803,30 +625,25 @@
             filter: drop-shadow(0 28px 30px rgba(15,23,42,.28));
             transition: transform 260ms cubic-bezier(.2,.8,.2,1), filter 260ms ease;
         }
-
         .game-hub-card:hover .game-hub-art {
             transform: translateY(-8px) scale(1.07) rotate(2deg);
             filter: drop-shadow(0 34px 34px rgba(15,23,42,.32));
         }
-
         .game-hub-card--dex .game-hub-art {
             width: 290px;
             height: 290px;
             top: 15px;
             right: 42px;
         }
-
         .game-hub-content {
             position: relative;
             z-index: 5;
             margin-top: auto;
             max-width: 100%;
         }
-
         .game-hub-card--dex .game-hub-content {
             max-width: 62%;
         }
-
         .game-hub-mode-row {
             display: flex;
             align-items: center;
@@ -834,7 +651,6 @@
             gap: 9px;
             margin-bottom: 14px;
         }
-
         .game-hub-mode-chip,
         .game-hub-rule-chip {
             display: inline-flex;
@@ -848,20 +664,17 @@
             letter-spacing: .06em;
             text-transform: uppercase;
         }
-
         .game-hub-mode-chip {
             color: var(--card-deep);
             background: rgba(255,255,255,.94);
             border: 1px solid rgba(255,255,255,.92);
             box-shadow: 0 8px 18px rgba(15,23,42,.08);
         }
-
         .game-hub-rule-chip {
             color: #475569;
             background: rgba(248,250,252,.76);
             border: 1px solid rgba(203,213,225,.66);
         }
-
         .game-hub-title {
             margin: 0 0 10px;
             color: #0f172a;
@@ -871,7 +684,6 @@
             line-height: .96;
             letter-spacing: -0.045em;
         }
-
         .game-hub-description {
             max-width: 34rem;
             margin: 0 0 18px;
@@ -879,14 +691,12 @@
             font-size: .94rem;
             line-height: 1.55;
         }
-
         .game-hub-features {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 20px;
         }
-
         .game-hub-feature {
             display: inline-flex;
             align-items: center;
@@ -898,7 +708,6 @@
             border: 1px solid rgba(203,213,225,.58);
             font-size: .76rem;
         }
-
         .game-hub-cta {
             width: 100%;
             min-height: 54px;
@@ -913,12 +722,10 @@
             box-shadow: 0 14px 30px color-mix(in srgb, var(--card-deep) 30%, transparent);
             transition: transform 140ms ease, filter 140ms ease;
         }
-
         .game-hub-card:hover .game-hub-cta {
             transform: translateY(-2px);
             filter: brightness(1.08);
         }
-
         .game-hub-cta-icon {
             width: 34px;
             height: 34px;
@@ -927,7 +734,6 @@
             border-radius: 999px;
             background: rgba(255,255,255,.18);
         }
-
         @media (max-width: 780px) {
             .games-mode-grid {
                 grid-template-columns: 1fr;
@@ -956,7 +762,6 @@
                 font-size: 2.55rem;
             }
         }
-
         @media (max-width: 420px) {
             #view-games-hub { padding-top: 2.5rem; padding-bottom: 3rem; }
             .games-hub-heading { margin-bottom: 28px; }
@@ -981,19 +786,16 @@
             .game-hub-feature { padding: 7px 9px; font-size: .7rem; }
             .game-hub-cta { min-height: 50px; padding: 0 16px; }
         }
-
         /* v12: the new option appears instantly; only its background/glow animates. */
         #gameOptionsGrid .option-btn {
             position: relative;
             isolation: isolate;
             overflow: hidden;
         }
-
         #gameOptionsGrid .option-btn > * {
             position: relative;
             z-index: 2;
         }
-
         #gameOptionsGrid .option-btn.next-answer-glow::after {
             content: "";
             position: absolute;
@@ -1004,31 +806,26 @@
             background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 58%, #67e8f9 100%);
             animation: nextAnswerBlueWash 520ms cubic-bezier(.2,.75,.25,1) forwards;
         }
-
         #gameOptionsGrid .option-btn.next-answer-glow {
             border-color: rgba(147, 197, 253, .95);
             animation: nextAnswerTileGlow 520ms cubic-bezier(.2,.75,.25,1) forwards;
         }
-
         #gameOptionsGrid .option-btn.next-answer-glow .game-option-symbol {
             color: #fff;
             background: rgba(255,255,255,.18);
             border-color: rgba(255,255,255,.60);
             animation: nextAnswerSymbolColor 520ms steps(1, end) forwards;
         }
-
         #gameOptionsGrid .option-btn.next-answer-glow > span:nth-child(2) {
             opacity: 1 !important;
             color: #fff;
             animation: nextAnswerTextColor 520ms steps(1, end) forwards;
         }
-
         @keyframes nextAnswerBlueWash {
             0% { opacity: 1; transform: scale(1); }
             62% { opacity: .94; transform: scale(1.01); }
             100% { opacity: 0; transform: scale(1.025); }
         }
-
         @keyframes nextAnswerTileGlow {
             0% {
                 transform: scale(1.018);
@@ -1044,12 +841,10 @@
                 border-color: rgba(148,163,184,.30);
             }
         }
-
         @keyframes nextAnswerTextColor {
             0%, 88% { color: #fff; }
             100% { color: #1e293b; }
         }
-
         @keyframes nextAnswerSymbolColor {
             0%, 88% {
                 color: #fff;
@@ -1062,326 +857,211 @@
                 border-color: #bfdbfe;
             }
         }
-
     </style>
-
+<style>
+/* A quieter visual system, shared by every view. */
+:root{--ink:#202c38;--muted:#75808b;--blue:#3469db;--paper:#fafaf7;--line:#e6e8e6}
+body{background:var(--paper);color:var(--ink);font-family:'Nunito',sans-serif}
+button,a,input,select{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,[role=button]:focus-visible{outline:3px solid #3469db;outline-offset:5px}
+#particleCanvas{display:none}
+#mainHeader{background:rgba(250,250,247,.96);border-color:var(--line);box-shadow:none;backdrop-filter:blur(12px)}
+#mainHeader>div:first-child{height:80px;max-width:1240px}
+#mainHeader a>img{display:none}
+#mainHeader a>div>span:first-child{font-size:18px;font-weight:700;letter-spacing:-.5px;color:var(--ink)}
+#mainHeader a>div>span:last-child{display:none}
+#mainHeader nav{gap:5px;background:#eeefeb;padding:4px;border-radius:12px}
+#mainHeader nav button{border-radius:9px;padding:9px 20px}
+#mainHeader nav i{display:none}
+#mainHeader nav button.is-current{background:white;color:var(--ink);box-shadow:0 1px 3px #00000008}
+#mainHeader button[onclick="navigateTo('view-games-hub')"].relative{border-radius:10px;box-shadow:none;background:var(--ink);font-weight:600;letter-spacing:0}
+.font-orbitron{font-family:'Outfit',sans-serif;letter-spacing:-.025em}
+.clean-hero{max-width:1240px;margin:auto;padding:64px 32px 60px;display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:70px}
+.clean-eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.clean-hero h1{font-family:'Outfit',sans-serif;font-size:clamp(42px,5vw,66px);font-weight:500;line-height:1.08;letter-spacing:-.055em;margin:23px 0}
+.clean-hero h1 span{color:var(--blue)}
+.clean-hero p{font-size:16px;color:var(--muted)}
+.clean-actions{display:flex;align-items:center;gap:26px;margin-top:30px;font-size:13px}
+.clean-primary{background:var(--blue);color:white;border-radius:10px;padding:14px 20px;font-weight:600;display:flex;gap:30px;align-items:center}
+.clean-actions a{color:var(--ink)}
+.clean-actions a span{margin-left:10px}
+.clean-feature{background:#edf1f6;border:1px solid #e3e8ee;border-radius:24px;padding:24px;position:relative;text-align:left;transition:background .2s,transform .2s}
+.clean-feature:hover{background:#e7edf5;transform:translateY(-3px)}
+.clean-feature-top,.clean-feature-bottom{display:flex;align-items:center;justify-content:space-between}
+.clean-feature-top{font-size:10px;color:#7a8899;letter-spacing:.15em}
+.clean-feature-top>span:last-child{font-size:20px}
+.clean-feature img{height:235px;width:100%;object-fit:contain;margin:3px 0 10px;filter:drop-shadow(0 12px 12px #263e6115)}
+.clean-feature-bottom strong{font-size:20px;font-weight:600;display:block}
+.clean-feature-bottom small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.clean-symbol{font-family:'Outfit',sans-serif;font-size:42px;color:var(--blue);line-height:1}
+#periodic-table-section{padding:34px 0 48px;border-color:var(--line)}
+#periodic-table-section h2{font-size:28px;font-weight:500;margin-top:0;letter-spacing:-.035em}
+#periodic-table-section h2+p{font-size:13px;color:var(--muted)}
+#periodic-table-section .mb-10{margin-bottom:25px}
+#periodic-table-section .text-xs.bg-sky-50{display:none}
+#tableSortSelect{box-shadow:none;border-radius:9px;font-weight:400;font-size:12px}
+.periodic-grid{gap:5px}
+.periodic-grid>div{box-shadow:none!important;transition:transform .15s}
+.periodic-grid img{border-radius:8px}
+#view-games-hub{background:var(--paper);padding-top:48px;min-height:calc(100vh - 140px)}
+.games-hub-ambient,.game-hub-card::before,.game-hub-card::after{display:none}
+.games-hub-heading{text-align:left;margin-bottom:32px}
+.games-hub-heading h1{font-weight:500;font-size:44px;margin-top:10px}
+.games-hub-heading p{font-size:14px;color:var(--muted)}
+.games-hub-kicker{background:none;border:0;box-shadow:none;padding:0;color:var(--muted);font-size:10px}
+.games-hub-kicker i{display:none}
+.games-mode-grid{gap:20px;grid-template-columns:repeat(3,minmax(0,1fr));max-width:none}
+.game-hub-card--dex{grid-column:auto;min-height:390px}
+.game-hub-card--dex .game-hub-content{max-width:100%}
+.game-hub-card--dex .game-hub-art{width:165px;height:165px;top:25px;right:20px}
+.game-hub-card{min-height:390px;border:1px solid var(--line);border-radius:20px;box-shadow:none;background:#edf1f6;padding:24px;transform:none}
+.game-hub-card--time{background:#f6eee8}
+.game-hub-card--dex{background:#edf1e9}
+.game-hub-card:hover{transform:translateY(-4px);box-shadow:0 12px 24px #202c3808;border-color:#ccd3d8}
+.game-hub-art{width:165px;height:165px;top:25px;right:20px;filter:drop-shadow(0 8px 10px #202c3814);animation:none}
+.game-hub-index{font-size:12px;opacity:.45;letter-spacing:.08em;top:24px;left:24px}
+.game-hub-content{padding-top:175px}
+.game-hub-mode-row,.game-hub-features{display:none}
+.game-hub-title{font-size:28px;font-weight:500;margin:0 0 8px;letter-spacing:-.035em}
+.game-hub-description{font-size:13px;line-height:1.6;color:#697582;min-height:0;margin-bottom:24px}
+.game-hub-cta{background:white!important;color:var(--ink)!important;border:1px solid #ffffffaa;border-radius:10px;box-shadow:none!important;padding:12px 16px;min-height:46px;margin-top:0}
+.game-hub-cta span{font-weight:500;letter-spacing:0}
+.game-hub-cta-icon{background:none!important;color:inherit!important;width:24px;height:24px;box-shadow:none}
+.dex-hero{background:var(--paper);border-color:var(--line);padding:44px 0 30px}
+.dex-hero h1{font-size:44px;font-weight:500}
+.dex-hero .inline-flex{background:none;border:0;padding:0;font-size:10px;color:var(--muted)}
+.dex-card{background:white;border:1px solid var(--line);box-shadow:none;backdrop-filter:none;border-radius:14px}
+.dex-element-card{background:white;border:1px solid var(--line);box-shadow:none;border-radius:16px}
+.dex-element-card:hover{box-shadow:0 8px 20px #202c3808;transform:translateY(-3px)}
+#view-dex>section:nth-child(2)>div:first-child{display:none}
+#view-game-fullscreen{background:#f0f2f4}
+.game-ambient-orb{display:none}
+.game-glass-shell{background:white;border:1px solid var(--line);box-shadow:0 15px 50px #202c3808;backdrop-filter:none;border-radius:24px}
+.game-glass-pill,.game-option-glass{box-shadow:none;backdrop-filter:none}
+.game-option-glass{background:#fafbfC;border-color:#e4e8ee}
+.game-option-glass:hover{box-shadow:none}
+#elementModal>div.absolute{background:#182536b8;backdrop-filter:blur(16px)}
+#modalContentWrapper h2{font-family:'Outfit',sans-serif;font-weight:500;letter-spacing:-.03em;text-shadow:none;filter:none;margin-bottom:20px}
+footer{background:transparent!important;border-color:var(--line)!important;box-shadow:none!important}
+footer p{font-size:11px}
+@media(max-width:767px){.clean-hero{padding:36px 20px;gap:24px;grid-template-columns:1fr}.clean-hero h1{font-size:44px}.clean-feature{padding:18px}.clean-feature img{height:170px}.clean-actions{margin-top:24px}.clean-feature-bottom strong{font-size:18px}#mainHeader>div:first-child{height:68px}#periodic-table-section{padding-top:28px}.game-hub-card{min-height:350px}.games-hub-heading h1,.dex-hero h1{font-size:36px}.game-hub-content{padding-top:165px}}
+@media(max-width:767px){.games-mode-grid{grid-template-columns:1fr}.game-hub-card--dex{min-height:350px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
-
 <body class="min-h-screen relative flex flex-col">
-
-
-
     <!-- Particle Canvas background (Subtle) -->
-
     <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-15"></canvas>
-
-
-
     <!-- Header & Navigation Bar -->
-
     <header id="mainHeader" class="sticky top-0 z-50 backdrop-blur-md bg-white/75 border-b border-blue-100 shadow-sm transition-all duration-300">
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-
             <a href="#" onclick="navigateTo('view-home')" class="flex items-center gap-3 group">
-
                 <!-- Pure white logo without placeholder -->
-
                 <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/1%20Hydrogen.webp" class="w-12 h-12 object-contain group-hover:scale-105 transition-transform drop-shadow-md" style="filter: brightness(0) saturate(100%) invert(80%) sepia(80%) saturate(1000%) hue-rotate(150deg);" alt="Hydrogen Logo">
-
                 <div>
-
                     <!-- Simple blue text, no gradient -->
-
-                    <span class="font-orbitron font-extrabold text-xl tracking-wider text-blue-600">TITAN CHEMISTRY</span>
-
-                    <span class="block text-xs text-slate-500 font-semibold uppercase tracking-widest leading-none">Database & Games</span>
-
+                    <span class="font-orbitron font-extrabold text-xl tracking-wider text-blue-600">Titan Chemistry</span>
+                    <span class="block text-xs text-slate-500 font-semibold uppercase tracking-widest leading-none">Explore · Learn · Play</span>
                 </div>
-
             </a>
-
-
-
             <nav class="hidden md:flex items-center gap-2">
-
                 <button onclick="navigateTo('view-home')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors rounded-full hover:bg-blue-50/50 flex items-center">
-
                     <i class="fa-solid fa-table-cells-large mr-1.5 text-sky-500"></i>Table
-
                 </button>
-
                 <button onclick="navigateTo('view-games-hub')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors rounded-full hover:bg-amber-50/50 flex items-center">
-
                     <i class="fa-solid fa-gamepad mr-1.5 text-amber-500"></i>Games
-
                 </button>
-
                 <button onclick="navigateTo('view-dex')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors rounded-full hover:bg-blue-50/70 flex items-center">
                     <i class="fa-solid fa-book-atlas mr-1.5 text-blue-500"></i>Dex
                 </button>
-
             </nav>
-
-
-
             <div class="flex items-center gap-3">
-
                 <button onclick="navigateTo('view-games-hub')" class="relative group hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full overflow-hidden font-orbitron font-bold text-sm tracking-wide bg-blue-600 text-white shadow-glowing-blue hover:shadow-lg hover:scale-[1.03] active:scale-95 transition-all">
-
                     <span class="relative z-10 flex items-center gap-2">
-
-                        PLAY GAMES <i class="fa-solid fa-play text-xs text-white"></i>
-
+                        Play <i class="fa-solid fa-play text-xs text-white"></i>
                     </span>
-
                 </button>
-
                 <!-- Hamburger Button -->
-
                 <button id="mobileMenuBtn" class="md:hidden p-2 text-slate-600 hover:text-blue-600 focus:outline-none" aria-label="Toggle Menu">
-
                     <i class="fa-solid fa-bars text-xl"></i>
-
                 </button>
-
             </div>
-
         </div>
-
-
-
         <!-- Mobile Menu -->
-
         <div id="mobileMenu" class="hidden md:hidden bg-white/95 border-b border-slate-200 backdrop-blur-lg px-4 py-4 space-y-2 shadow-lg absolute w-full left-0 top-full">
-
             <button onclick="navigateTo('view-home'); document.getElementById('mobileMenu').classList.add('hidden');" class="w-full text-left px-4 py-3 rounded-xl text-slate-700 hover:text-sky-600 hover:bg-blue-50/50 transition-colors font-medium">
-
                 <i class="fa-solid fa-table-cells-large mr-2.5 text-sky-500"></i>Table
-
             </button>
-
             <button onclick="navigateTo('view-games-hub'); document.getElementById('mobileMenu').classList.add('hidden');" class="w-full text-left px-4 py-3 rounded-xl text-slate-700 hover:text-amber-600 hover:bg-amber-50/50 transition-colors font-medium">
-
                 <i class="fa-solid fa-gamepad mr-2.5 text-amber-500"></i>Games
-
             </button>
-
             <button onclick="navigateTo('view-dex'); document.getElementById('mobileMenu').classList.add('hidden');" class="w-full text-left px-4 py-3 rounded-xl text-slate-700 hover:text-blue-600 hover:bg-blue-50/70 transition-colors font-medium">
                 <i class="fa-solid fa-book-atlas mr-2.5 text-blue-500"></i>Dex
             </button>
-
         </div>
-
     </header>
-
-
-
     <!-- UNIVERSAL ELEMENT MODAL (Matches Reference Image Exactly) -->
-
     <div id="elementModal" class="fixed inset-0 z-[9999] hidden items-center justify-center" onclick="closeElementModal()">
-
         <!-- Heavy Blurred Bright Backdrop matching reference image gradient -->
-
         <div class="absolute inset-0 bg-gradient-to-r from-slate-300/60 via-slate-200/60 to-orange-100/60 backdrop-blur-md transition-opacity"></div>
-
-
-
         <!-- Minimal Close Button -->
-
         <button onclick="event.stopPropagation(); closeElementModal()" class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center text-white hover:text-white/80 transition-colors text-3xl z-50 drop-shadow-md">
-
             <i class="fa-solid fa-xmark"></i>
-
         </button>
-
-
-
         <button id="modalPrevButton" onclick="event.stopPropagation(); navigateElement(-1)" class="absolute left-0 sm:left-8 top-1/2 -translate-y-1/2 w-11 sm:w-16 h-24 sm:h-32 flex items-center justify-center text-white hover:text-white/80 hover:-translate-x-1 sm:hover:-translate-x-2 transition-all text-4xl sm:text-7xl z-50 drop-shadow-md">
-
             <i class="fa-solid fa-angle-left"></i>
-
         </button>
-
-
-
         <button id="modalNextButton" onclick="event.stopPropagation(); navigateElement(1)" class="absolute right-0 sm:right-8 top-1/2 -translate-y-1/2 w-11 sm:w-16 h-24 sm:h-32 flex items-center justify-center text-white hover:text-white/80 hover:translate-x-1 sm:hover:translate-x-2 transition-all text-4xl sm:text-7xl z-50 drop-shadow-md">
-
             <i class="fa-solid fa-angle-right"></i>
-
         </button>
-
-
-
         <!-- Pure Floating Content -->
-
         <div class="relative z-10 flex flex-col items-center text-center w-full max-w-3xl px-8" id="modalContentWrapper" onclick="event.stopPropagation()">
-
             <!-- Populated dynamically by JS -->
-
         </div>
-
     </div>
-
-
-
     <!-- MAIN CONTENT AREA -->
-
     <div class="flex-grow relative z-10">
-
-
-
         <!-- ============================================== -->
-
         <!-- VIEW: HOME (PERIODIC TABLE) -->
-
         <!-- ============================================== -->
-
         <main id="view-home" class="page-view block">
-
-            <!-- Hero / Intro -->
-
-            <section class="relative pt-8 pb-16 md:pt-16 md:pb-24">
-
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-
-                        <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
-
-                            <h1 class="font-orbitron font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-tight text-slate-900">
-
-                                Explore the Elements of <br>
-
-                                <!-- Simple blue text, no gradient -->
-
-                                <span class="text-blue-600">Titan Chemistry</span>
-
-                            </h1>
-
-                            <p class="text-slate-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
-
-                                Master the periodic table! Discover elements, learn their properties, and switch over to the games tab to test your knowledge.
-
-                            </p>
-
-                            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
-
-                                <button onclick="navigateTo('view-games-hub')" class="px-10 py-4 rounded-full font-orbitron font-black text-lg tracking-widest bg-blue-600 text-white shadow-glowing-blue hover:scale-105 transition-transform flex items-center gap-2">
-
-                                    PLAY!
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Right Visual: 3 Floating Elements without placeholders -->
-
-                        <div class="lg:col-span-6 relative hidden md:flex items-center justify-center min-h-[300px]">
-
-                             <!-- Beryllium -->
-
-                             <div class="animate-[float-medium_3s_ease-in-out_infinite] absolute left-6 z-10">
-
-                                <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/4%20Beryllium.webp" class="w-40 h-40 lg:w-48 lg:h-48 object-contain drop-shadow-xl">
-
-                             </div>
-
-                             
-
-                             <!-- Hydrogen (Largest, Center) -->
-
-                             <div class="animate-[float-slow_4s_ease-in-out_infinite] relative z-20">
-
-                                <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/1%20Hydrogen.webp" class="w-64 h-64 lg:w-80 lg:h-80 object-contain drop-shadow-2xl">
-
-                             </div>
-
-                             
-
-                             <!-- Lithium -->
-
-                             <div class="animate-[float-medium_3.5s_ease-in-out_infinite_1s] absolute right-6 z-10">
-
-                                <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/3%20Lithium.webp" class="w-40 h-40 lg:w-48 lg:h-48 object-contain drop-shadow-xl">
-
-                             </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-
+            <section class="clean-hero">
+ <div class="clean-hero-copy"><span class="clean-eyebrow">118 elements. Endless discovery.</span>
+ <h1>A little curiosity.<br><span>A whole universe.</span></h1>
+ <p>Explore the elements. Find your streak.</p>
+ <div class="clean-actions"><button class="clean-primary" onclick="navigateTo('view-games-hub')">Let's play <span aria-hidden="true">↗</span></button><a href="#periodic-table-section">Explore the table <span aria-hidden="true">↓</span></a></div></div>
+ <button class="clean-feature" onclick="openElementModal(1)" aria-label="Explore Hydrogen">
+ <span class="clean-feature-top"><span>ELEMENT / 001</span><span>↗</span></span>
+ <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/1%20Hydrogen.webp" alt="Hydrogen character">
+ <span class="clean-feature-bottom"><span><strong>Hydrogen</strong><small>Where it all begins</small></span><span class="clean-symbol">H</span></span></button>
+</section>
             <!-- Periodic Table (Top Layout) -->
-
             <section id="periodic-table-section" class="py-16 border-t border-slate-200">
-
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
                     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
-
                         <div>
-
                             <span class="text-xs font-bold text-sky-600 font-orbitron uppercase tracking-widest bg-sky-50 px-3 py-1.5 rounded-full border border-sky-200">Encyclopedia</span>
-
-                            <h2 class="text-3xl sm:text-4xl font-orbitron font-extrabold mt-3 text-slate-900">Interactive Periodic Table</h2>
-
-                            <p class="text-slate-600 mt-2">Click any element to reveal its scientific properties and lore.</p>
-
+                            <h2 class="text-3xl sm:text-4xl font-orbitron font-extrabold mt-3 text-slate-900">The periodic table</h2>
+                            <p class="text-slate-600 mt-2">Pick an element. Take a closer look.</p>
                         </div>
-
                         <div class="flex items-center gap-2">
-
-                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Sort Layout:</span>
-
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Layout</span>
                             <select id="tableSortSelect" onchange="sortPeriodicTable(this.value)" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 font-semibold shadow-sm outline-none">
-
-                                <option value="standard">Standard Grid</option>
-
+                                <option value="standard">Periodic</option>
                                 <option value="alphabetical">Name (A-Z)</option>
-
                                 <option value="weight">Atomic Weight</option>
-
                             </select>
-
                         </div>
-
                     </div>
-
-
-
                     <!-- Periodic Table Grid (No white background wrapping it) -->
-
                     <div class="periodic-grid-scroll">
-
                         <div class="periodic-grid" id="periodicGrid">
-
                             <!-- Elements rendered dynamically via JavaScript -->
-
                         </div>
-
                     </div>
-
                 </div>
-
             </section>
-
         </main>
-
-
-
-
-
-
         <!-- ============================================== -->
         <!-- VIEW: DEX -->
         <!-- ============================================== -->
@@ -1393,8 +1073,8 @@
                             <span class="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-blue-600 bg-white/70 border border-blue-200 rounded-full px-3 py-1.5">
                                 <i class="fa-solid fa-book-atlas"></i> Element Dex
                             </span>
-                            <h1 class="font-orbitron text-4xl sm:text-6xl text-slate-900 mt-4">Your chemistry collection</h1>
-                            <p class="text-slate-600 max-w-2xl mt-3">Browse every element with larger artwork, clearer details, and your saved game progress in one place.</p>
+                            <h1 class="font-orbitron text-4xl sm:text-6xl text-slate-900 mt-4">Your collection</h1>
+                            <p class="text-slate-600 max-w-2xl mt-3">Every element. Your progress.</p>
                         </div>
                         <div class="dex-card rounded-3xl p-4 sm:p-5 grid grid-cols-3 gap-3 w-full lg:w-auto lg:min-w-[440px]">
                             <div class="text-center px-2"><span class="block text-[10px] uppercase tracking-wider text-slate-400">Best reached</span><strong id="dexOverallReached" class="block text-2xl text-blue-600 mt-1">0</strong></div>
@@ -1426,7 +1106,7 @@
                 <div class="flex flex-col sm:flex-row gap-3 mb-7">
                     <label class="dex-card rounded-2xl px-4 h-12 flex items-center gap-3 flex-1">
                         <i class="fa-solid fa-magnifying-glass text-blue-500"></i>
-                        <input id="dexSearch" oninput="renderDex()" type="search" placeholder="Search name, symbol, or atomic number" class="w-full bg-transparent outline-none text-slate-700 placeholder:text-slate-400">
+                        <input id="dexSearch" oninput="renderDex()" type="search" placeholder="Find an element…" class="w-full bg-transparent outline-none text-slate-700 placeholder:text-slate-400">
                     </label>
                     <select id="dexGroupFilter" onchange="renderDex()" class="dex-card rounded-2xl px-4 h-12 outline-none text-slate-700">
                         <option value="all">All families</option>
@@ -1445,26 +1125,19 @@
                 <div id="dexGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5"></div>
             </section>
         </main>
-
         <!-- ============================================== -->
-
         <!-- VIEW: GAMES HUB -->
-
         <!-- ============================================== -->
-
         <main id="view-games-hub" class="page-view hidden py-16 min-h-screen">
-
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="games-hub-ambient" aria-hidden="true"></div>
-
                 <div class="games-hub-heading">
                     <span class="games-hub-kicker text-xs uppercase tracking-[0.18em]">
-                        <i class="fa-solid fa-atom"></i> Titan Challenges
+                        <i class="fa-solid fa-atom"></i> PLAY & LEARN
                     </span>
-                    <h1 class="font-orbitron text-4xl sm:text-5xl text-slate-900 mt-5 tracking-tight">Choose your mode</h1>
-                    <p class="text-slate-600 mt-3 text-sm sm:text-base">Build your element streak, race the clock, or explore everything you have discovered.</p>
+                    <h1 class="font-orbitron text-4xl sm:text-5xl text-slate-900 mt-5 tracking-tight">Find your flow.</h1>
+                    <p class="text-slate-600 mt-3 text-sm sm:text-base">A little practice goes a long way.</p>
                 </div>
-
                 <div class="games-mode-grid">
                     <div onclick="startActiveGame('classic')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();startActiveGame('classic')}" role="button" tabindex="0" class="game-hub-card game-hub-card--classic cursor-pointer group">
                         <span class="game-hub-index" aria-hidden="true">01</span>
@@ -1476,20 +1149,19 @@
                                 <span class="game-hub-mode-chip"><i class="fa-solid fa-gamepad"></i> Classic</span>
                                 <span class="game-hub-rule-chip"><i class="fa-solid fa-heart"></i> 3 lives</span>
                             </div>
-                            <h2 class="game-hub-title">Classic Mode</h2>
-                            <p class="game-hub-description">Arrange all 118 elements in sequence. Wrong choices cost a life, but the current question stays in place.</p>
+                            <h2 class="game-hub-title">Classic</h2>
+                            <p class="game-hub-description">118 elements. Three lives. Your pace.</p>
                             <div class="game-hub-features">
                                 <span class="game-hub-feature"><i class="fa-solid fa-layer-group text-blue-500"></i> 4 choices</span>
                                 <span class="game-hub-feature"><i class="fa-solid fa-infinity text-blue-500"></i> No timer</span>
                                 <span class="game-hub-feature"><i class="fa-solid fa-chart-line text-blue-500"></i> Save streaks</span>
                             </div>
                             <button type="button" class="game-hub-cta">
-                                <span class="font-orbitron tracking-[0.14em] text-sm">START CLASSIC</span>
+                                <span class="font-orbitron tracking-[0.14em] text-sm">Play Classic</span>
                                 <span class="game-hub-cta-icon"><i class="fa-solid fa-arrow-right"></i></span>
                             </button>
                         </div>
                     </div>
-
                     <div onclick="startActiveGame('time-attack')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();startActiveGame('time-attack')}" role="button" tabindex="0" class="game-hub-card game-hub-card--time cursor-pointer group">
                         <span class="game-hub-index" aria-hidden="true">02</span>
                         <div class="game-hub-art animate-[pulse_1s_cubic-bezier(0.4,0,0.6,1)_infinite]">
@@ -1501,19 +1173,18 @@
                                 <span class="game-hub-rule-chip"><i class="fa-solid fa-stopwatch"></i> 1 second</span>
                             </div>
                             <h2 class="game-hub-title">Time Attack</h2>
-                            <p class="game-hub-description">A rapid 50/50 run. Every correct answer raises the reward tone; one miss ends the streak.</p>
+                            <p class="game-hub-description">Two choices. One second. Keep going.</p>
                             <div class="game-hub-features">
                                 <span class="game-hub-feature"><i class="fa-solid fa-code-compare text-rose-500"></i> 2 choices</span>
                                 <span class="game-hub-feature"><i class="fa-solid fa-skull text-rose-500"></i> Sudden death</span>
                                 <span class="game-hub-feature"><i class="fa-solid fa-music text-rose-500"></i> Rising notes</span>
                             </div>
                             <button type="button" class="game-hub-cta">
-                                <span class="font-orbitron tracking-[0.14em] text-sm">START ATTACK</span>
+                                <span class="font-orbitron tracking-[0.14em] text-sm">Play Time Attack</span>
                                 <span class="game-hub-cta-icon"><i class="fa-solid fa-arrow-right"></i></span>
                             </button>
                         </div>
                     </div>
-
                     <div onclick="navigateTo('view-dex')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('view-dex')}" role="button" tabindex="0" class="game-hub-card game-hub-card--dex cursor-pointer group">
                         <span class="game-hub-index" aria-hidden="true">DEX</span>
                         <div class="game-hub-art animate-[float-medium_4s_ease-in-out_infinite]">
@@ -1525,139 +1196,76 @@
                                 <span class="game-hub-rule-chip"><i class="fa-solid fa-table-cells"></i> 118 elements</span>
                             </div>
                             <h2 class="game-hub-title">Element Dex</h2>
-                            <p class="game-hub-description">Browse larger element artwork, inspect clear atomic data, filter families, and check your saved game records.</p>
+                            <p class="game-hub-description">Meet all 118 elements.</p>
                             <div class="game-hub-features">
                                 <span class="game-hub-feature"><i class="fa-solid fa-magnifying-glass text-emerald-600"></i> Search</span>
                                 <span class="game-hub-feature"><i class="fa-solid fa-filter text-emerald-600"></i> Families</span>
                                 <span class="game-hub-feature"><i class="fa-solid fa-chart-pie text-emerald-600"></i> Stats</span>
                             </div>
                             <button type="button" class="game-hub-cta">
-                                <span class="font-orbitron tracking-[0.14em] text-sm">OPEN THE DEX</span>
+                                <span class="font-orbitron tracking-[0.14em] text-sm">Explore collection</span>
                                 <span class="game-hub-cta-icon"><i class="fa-solid fa-arrow-right"></i></span>
                             </button>
                         </div>
                     </div>
                 </div>
-
                 <!-- Stats Viewer Container (Hidden by default) -->
-
                 <div id="statsViewerContainer" class="hidden max-w-3xl mx-auto mt-12 bg-white rounded-3xl p-8 border border-slate-200 shadow-lg relative">
-
                     <button onclick="document.getElementById('statsViewerContainer').classList.add('hidden')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 hover:text-slate-800">
-
                         <i class="fa-solid fa-xmark"></i>
-
                     </button>
-
                     <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
-
                         <h3 class="font-orbitron font-extrabold text-2xl text-slate-800"><i class="fa-solid fa-chart-pie text-emerald-500 mr-2"></i> Player Statistics</h3>
-
                     </div>
-
-                    
-
                     <div class="space-y-6">
-
                         <!-- Classic Stats -->
-
                         <div class="space-y-3">
-
-                            <h4 class="font-bold text-sm text-slate-700 bg-slate-100 px-3 py-1 rounded inline-block">Classic Mode</h4>
-
+                            <h4 class="font-bold text-sm text-slate-700 bg-slate-100 px-3 py-1 rounded inline-block">Classic</h4>
                             <div class="grid grid-cols-3 gap-4">
-
                                 <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-center">
-
                                     <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Max Streak</span>
-
                                     <span id="statClassicStreak" class="font-orbitron font-extrabold text-2xl text-blue-600">0</span>
-
                                 </div>
-
                                 <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-center">
-
                                     <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Avg Pulse</span>
-
                                     <span id="statClassicPulse" class="font-orbitron font-extrabold text-2xl text-blue-600">0s</span>
-
                                 </div>
-
                                 <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-center">
-
                                     <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Max Element</span>
-
                                     <span id="statClassicElement" class="font-orbitron font-extrabold text-2xl text-blue-600">0</span>
-
                                 </div>
-
                             </div>
-
                         </div>
-
-
-
                         <!-- Time Attack Stats -->
-
                         <div class="space-y-3 pt-4 border-t border-slate-100">
-
                             <h4 class="font-bold text-sm text-slate-700 bg-slate-100 px-3 py-1 rounded inline-block">Time Attack Mode</h4>
-
                             <div class="grid grid-cols-3 gap-4">
-
                                 <div class="bg-rose-50 border border-rose-100 p-4 rounded-xl text-center">
-
                                     <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Max Streak</span>
-
                                     <span id="statTimeAttackStreak" class="font-orbitron font-extrabold text-2xl text-rose-600">0</span>
-
                                 </div>
-
                                 <div class="bg-rose-50 border border-rose-100 p-4 rounded-xl text-center">
-
                                     <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Avg Pulse</span>
-
                                     <span id="statTimeAttackPulse" class="font-orbitron font-extrabold text-2xl text-rose-600">0s</span>
-
                                 </div>
-
                                 <div class="bg-rose-50 border border-rose-100 p-4 rounded-xl text-center">
-
                                     <span class="block text-[10px] text-slate-500 font-bold uppercase mb-1">Max Element</span>
-
                                     <span id="statTimeAttackElement" class="font-orbitron font-extrabold text-2xl text-rose-600">0</span>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
-
-
             </div>
-
         </main>
-
-
-
         <!-- ============================================== -->
-
         <!-- VIEW: FULLSCREEN GAME -->
-
         <!-- ============================================== -->
-
         <main id="view-game-fullscreen" class="page-view hidden fixed inset-0 z-[100] flex-col w-screen min-h-[100dvh]">
-
             <!-- Soft background atmosphere; the game itself stays readable -->
             <div class="game-ambient-orb w-72 h-72 bg-blue-400/70 -top-20 -left-24"></div>
             <div class="game-ambient-orb w-80 h-80 bg-orange-300/60 -bottom-28 -right-20" style="animation-delay: -3s;"></div>
             <div class="game-ambient-orb w-56 h-56 bg-sky-200/70 top-1/3 right-[12%]" style="animation-delay: -5s;"></div>
-
             <!-- The only navigation visible while playing -->
             <div class="fixed top-4 sm:top-6 left-4 sm:left-6 z-[110]">
                 <button onclick="exitFullscreenGame()" aria-label="Back to games" class="game-glass-pill flex items-center justify-center w-11 h-11 sm:w-auto sm:h-auto sm:px-4 sm:py-2.5 rounded-full text-slate-700 hover:text-blue-600 hover:bg-white transition-all text-sm">
@@ -1670,27 +1278,21 @@
                     <i id="audioToggleIcon" class="fa-solid fa-volume-high"></i>
                 </button>
             </div>
-
             <!-- Game content has its own scrolling space and cannot be covered by the site footer -->
             <div class="min-h-[100dvh] w-full max-w-4xl mx-auto px-4 sm:px-8 pt-20 pb-6 sm:pt-24 sm:pb-10 flex items-center justify-center relative z-[105]">
-
                 <div class="game-glass-shell w-full max-w-3xl rounded-[2rem] sm:rounded-[2.5rem] p-5 sm:p-8 md:p-10 relative flex flex-col">
-
                     <!-- Active Game UI -->
                     <div id="activeGameContainer" class="flex flex-col relative z-10 w-full">
-
                         <!-- Minimal status, kept in the top-right -->
                         <div class="flex items-center justify-end gap-2 sm:gap-3 shrink-0">
                             <span id="gameModeLabel" class="game-glass-pill font-orbitron text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3.5 py-2 rounded-full text-slate-600 whitespace-nowrap">CLASSIC MODE</span>
                             <span id="gameScore" class="game-glass-pill text-[10px] sm:text-xs px-3.5 py-2 rounded-full text-slate-600 whitespace-nowrap">Streak: 0</span>
                             <div id="gameHearts" class="game-glass-pill flex gap-1 px-3 py-2 rounded-full text-rose-500 text-xs sm:text-sm"></div>
                         </div>
-
                         <!-- Time Attack Bar -->
                         <div id="timerBarWrapper" class="w-full h-2 bg-slate-200 rounded-full overflow-hidden mt-4 hidden shrink-0">
                             <div id="timerBarFill" class="h-full bg-rose-500 w-full"></div>
                         </div>
-
                         <!-- The instruction and instant feedback stay above the selected images -->
                         <div class="text-center pt-5 sm:pt-6 pb-1 shrink-0 flex flex-col justify-center items-center">
                             <h2 class="text-lg sm:text-2xl font-orbitron text-slate-900 tracking-tight">
@@ -1700,18 +1302,15 @@
                                 Start!
                             </div>
                         </div>
-
                         <!-- Fixed-size history strip: four larger bare images, then horizontal scrolling -->
                         <div id="answerHistoryWrapper" class="answer-history-stage">
                             <div id="answerHistory" class="answer-history-scroll" aria-label="Selected element history" tabindex="0"></div>
                             <div class="history-scrollbar" aria-hidden="true"><span id="historyScrollbarThumb" class="history-scrollbar-thumb"></span></div>
                         </div>
-
                         <!-- Bright, lightly frosted choices -->
                         <div class="game-options-lowered grid gap-3 sm:gap-4 mb-7 w-full" id="gameOptionsGrid">
                             <!-- Buttons injected dynamically -->
                         </div>
-
                         <!-- Progress stays pinned at the very bottom -->
                         <div class="flex items-center gap-4 shrink-0 mt-auto pt-3">
                             <span class="text-[10px] sm:text-xs text-slate-500 whitespace-nowrap" id="gameProgressTracker">0/118</span>
@@ -1720,7 +1319,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Result state with correct element, run preview, and share card -->
                     <div id="gameOverContainer" class="hidden flex-col items-center text-center py-3 sm:py-5 relative z-10 w-full h-full">
                         <h3 id="gameOverTitle" class="font-orbitron text-4xl sm:text-5xl text-slate-900 mb-1">Wrong!</h3>
@@ -1747,267 +1345,93 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </main>
-
-
-
     </div>
-
-
-
     <!-- FOOTER -->
-
-    <footer id="mainFooter" class="bg-slate-900 border-t border-slate-800 text-slate-400 py-12 relative z-10 mt-auto">
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-
-                <div class="space-y-4">
-
-                    <div class="flex items-center gap-3">
-
-                        <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/1%20Hydrogen.webp" class="w-10 h-10 object-contain drop-shadow-md" style="filter: brightness(0) saturate(100%) invert(80%) sepia(80%) saturate(1000%) hue-rotate(150deg);" alt="Hydrogen Logo">
-
-                        <span class="font-orbitron font-extrabold text-md tracking-wider text-white">TITAN CHEMISTRY</span>
-
-                    </div>
-
-                    <p class="text-xs text-slate-400 leading-relaxed">
-
-                        Empowering educational adventure by transforming atomic interactions and chemical principles into a gorgeous interactive experience. 
-
-                    </p>
-
-                </div>
-
-                <div>
-
-                    <h5 class="font-orbitron font-bold text-xs text-white uppercase tracking-widest mb-4">Laboratory</h5>
-
-                    <ul class="space-y-2 text-xs text-slate-400">
-
-                        <li><button onclick="navigateTo('view-home')" class="hover:text-sky-400 transition-colors">Interactive Periodic Table</button></li>
-
-                        <li><button onclick="navigateTo('view-home')" class="hover:text-sky-400 transition-colors">Element Inspector</button></li>
-
-                    </ul>
-
-                </div>
-
-                <div>
-
-                    <h5 class="font-orbitron font-bold text-xs text-white uppercase tracking-widest mb-4">Academy Hub</h5>
-
-                    <ul class="space-y-2 text-xs text-slate-400">
-
-                        <li><button onclick="navigateTo('view-games-hub')" class="hover:text-sky-400 transition-colors">Academic Games</button></li>
-
-                        <li><button onclick="navigateTo('view-games-hub'); viewStats();" class="hover:text-sky-400 transition-colors">Player Stats</button></li>
-
-                    </ul>
-
-                </div>
-
-                <div class="space-y-4">
-
-                    <h5 class="font-orbitron font-bold text-xs text-white uppercase tracking-widest mb-4">Get Lab Reports</h5>
-
-                    <div class="flex gap-2">
-
-                        <input type="email" placeholder="Researcher email" class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-sky-500 w-full text-slate-200">
-
-                        <button class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold font-orbitron">JOIN</button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-
-                <span>&copy; 2026 Titan Chemistry Inc. Designed for education and fun.</span>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-
+    <footer id="mainFooter" style="padding:22px 32px;border-top:1px solid #e6e8e6"><div style="max-width:1176px;margin:auto;display:flex;justify-content:space-between;font-size:11px;color:#75808b"><span>Titan Chemistry</span><span>Stay curious.</span></div></footer>
     <!-- Audio is controlled by the single sound button in the game. -->
     <audio id="click-sound" src="https://raw.githubusercontent.com/ChemistryC/chemistryelements/main/sounds/click.mp3" preload="auto"></audio>
     <audio id="wrong-sound" src="https://raw.githubusercontent.com/ChemistryC/chemistryelements/main/sounds/wrong.mp3" preload="auto"></audio>
     <audio id="win-sound" src="https://raw.githubusercontent.com/ChemistryC/chemistryelements/main/sounds/win.mp3" preload="auto"></audio>
     <audio id="bg-music" preload="metadata"></audio>
-
-
-
     <script>
-
         function navigateTo(viewId) {
-
             playSound('click');
-
             const isFullscreenGame = viewId === 'view-game-fullscreen';
             if(viewId === 'view-dex') { refreshDexStats(); renderDex(); }
             const header = document.getElementById('mainHeader');
             const footer = document.getElementById('mainFooter');
             const mobileMenu = document.getElementById('mobileMenu');
-
             document.querySelectorAll('.page-view').forEach(el => {
-
                 el.classList.add('hidden');
-
                 el.classList.remove('block', 'flex');
-
             });
-
             // During the active game, show only the dedicated back button.
             if (header) header.classList.toggle('hidden', isFullscreenGame);
             if (footer) footer.classList.toggle('hidden', isFullscreenGame);
             if (mobileMenu) mobileMenu.classList.add('hidden');
             document.body.style.overflow = isFullscreenGame ? 'hidden' : 'auto';
-
             const target = document.getElementById(viewId);
-
             if (target) {
-
                 target.classList.remove('hidden');
-
                 if(!isFullscreenGame) {
-
                     target.classList.add('block');
-
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-
                 } else {
-
                     target.classList.add('flex');
                     target.scrollTop = 0;
-
                 }
-
             }
-
         }
-
-
-
         // Data Structures - Full 118 Periodic Elements
-
         const elementsCSV = `1,H,Hydrogen,1.008,reactive-nonmetal,Gas\n2,He,Helium,4.002,noble-gas,Gas\n3,Li,Lithium,6.94,alkali-metal,Solid\n4,Be,Beryllium,9.012,alkaline-earth-metal,Solid\n5,B,Boron,10.81,metalloid,Solid\n6,C,Carbon,12.011,reactive-nonmetal,Solid\n7,N,Nitrogen,14.007,reactive-nonmetal,Gas\n8,O,Oxygen,15.999,reactive-nonmetal,Gas\n9,F,Fluorine,18.998,halogen,Gas\n10,Ne,Neon,20.180,noble-gas,Gas\n11,Na,Sodium,22.990,alkali-metal,Solid\n12,Mg,Magnesium,24.305,alkaline-earth-metal,Solid\n13,Al,Aluminum,26.982,post-transition-metal,Solid\n14,Si,Silicon,28.085,metalloid,Solid\n15,P,Phosphorus,30.974,reactive-nonmetal,Solid\n16,S,Sulfur,32.06,reactive-nonmetal,Solid\n17,Cl,Chlorine,35.45,halogen,Gas\n18,Ar,Argon,39.95,noble-gas,Gas\n19,K,Potassium,39.098,alkali-metal,Solid\n20,Ca,Calcium,40.078,alkaline-earth-metal,Solid\n21,Sc,Scandium,44.956,transition-metal,Solid\n22,Ti,Titanium,47.867,transition-metal,Solid\n23,V,Vanadium,50.942,transition-metal,Solid\n24,Cr,Chromium,51.996,transition-metal,Solid\n25,Mn,Manganese,54.938,transition-metal,Solid\n26,Fe,Iron,55.845,transition-metal,Solid\n27,Co,Cobalt,58.933,transition-metal,Solid\n28,Ni,Nickel,58.693,transition-metal,Solid\n29,Cu,Copper,63.546,transition-metal,Solid\n30,Zn,Zinc,65.38,transition-metal,Solid\n31,Ga,Gallium,69.723,post-transition-metal,Solid\n32,Ge,Germanium,72.630,metalloid,Solid\n33,As,Arsenic,74.922,metalloid,Solid\n34,Se,Selenium,78.971,reactive-nonmetal,Solid\n35,Br,Bromine,79.904,halogen,Liquid\n36,Kr,Krypton,83.798,noble-gas,Gas\n37,Rb,Rubidium,85.468,alkali-metal,Solid\n38,Sr,Strontium,87.62,alkaline-earth-metal,Solid\n39,Y,Yttrium,88.906,transition-metal,Solid\n40,Zr,Zirconium,91.224,transition-metal,Solid\n41,Nb,Niobium,92.906,transition-metal,Solid\n42,Mo,Molybdenum,95.95,transition-metal,Solid\n43,Tc,Technetium,98,transition-metal,Synthetic\n44,Ru,Ruthenium,101.07,transition-metal,Solid\n45,Rh,Rhodium,102.91,transition-metal,Solid\n46,Pd,Palladium,106.42,transition-metal,Solid\n47,Ag,Silver,107.87,transition-metal,Solid\n48,Cd,Cadmium,112.41,transition-metal,Solid\n49,In,Indium,114.82,post-transition-metal,Solid\n50,Sn,Tin,118.71,post-transition-metal,Solid\n51,Sb,Antimony,121.76,metalloid,Solid\n52,Te,Tellurium,127.60,metalloid,Solid\n53,I,Iodine,126.90,halogen,Solid\n54,Xe,Xenon,131.29,noble-gas,Gas\n55,Cs,Cesium,132.91,alkali-metal,Solid\n56,Ba,Barium,137.33,alkaline-earth-metal,Solid\n57,La,Lanthanum,138.91,lanthanide,Solid\n58,Ce,Cerium,140.12,lanthanide,Solid\n59,Pr,Praseodymium,140.91,lanthanide,Solid\n60,Nd,Neodymium,144.24,lanthanide,Solid\n61,Pm,Promethium,145,lanthanide,Synthetic\n62,Sm,Samarium,150.36,lanthanide,Solid\n63,Eu,Europium,151.96,lanthanide,Solid\n64,Gd,Gadolinium,157.25,lanthanide,Solid\n65,Tb,Terbium,158.93,lanthanide,Solid\n66,Dy,Dysprosium,162.50,lanthanide,Solid\n67,Ho,Holmium,164.93,lanthanide,Solid\n68,Er,Erbium,167.26,lanthanide,Solid\n69,Tm,Thulium,168.93,lanthanide,Solid\n70,Yb,Ytterbium,173.05,lanthanide,Solid\n71,Lu,Lutetium,174.97,lanthanide,Solid\n72,Hf,Hafnium,178.49,transition-metal,Solid\n73,Ta,Tantalum,180.95,transition-metal,Solid\n74,W,Tungsten,183.84,transition-metal,Solid\n75,Re,Rhenium,186.21,transition-metal,Solid\n76,Os,Osmium,190.23,transition-metal,Solid\n77,Ir,Iridium,192.22,transition-metal,Solid\n78,Pt,Platinum,195.08,transition-metal,Solid\n79,Au,Gold,196.97,transition-metal,Solid\n80,Hg,Mercury,200.59,transition-metal,Liquid\n81,Tl,Thallium,204.38,post-transition-metal,Solid\n82,Pb,Lead,207.2,post-transition-metal,Solid\n83,Bi,Bismuth,208.98,post-transition-metal,Solid\n84,Po,Polonium,209,post-transition-metal,Solid\n85,At,Astatine,210,halogen,Solid\n86,Rn,Radon,222,noble-gas,Gas\n87,Fr,Francium,223,alkali-metal,Solid\n88,Ra,Radium,226,alkaline-earth-metal,Solid\n89,Ac,Actinium,227,actinide,Solid\n90,Th,Thorium,232.04,actinide,Solid\n91,Pa,Protactinium,231.04,actinide,Solid\n92,U,Uranium,238.03,actinide,Solid\n93,Np,Neptunium,237,actinide,Synthetic\n94,Pu,Plutonium,244,actinide,Synthetic\n95,Am,Americium,243,actinide,Synthetic\n96,Cm,Curium,247,actinide,Synthetic\n97,Bk,Berkelium,247,actinide,Synthetic\n98,Cf,Californium,251,actinide,Synthetic\n99,Es,Einsteinium,252,actinide,Synthetic\n100,Fm,Fermium,257,actinide,Synthetic\n101,Md,Mendelevium,258,actinide,Synthetic\n102,No,Nobelium,259,actinide,Synthetic\n103,Lr,Lawrencium,266,actinide,Synthetic\n104,Rf,Rutherfordium,267,transition-metal,Synthetic\n105,Db,Dubnium,268,transition-metal,Synthetic\n106,Sg,Seaborgium,269,transition-metal,Synthetic\n107,Bh,Bohrium,270,transition-metal,Synthetic\n108,Hs,Hassium,277,transition-metal,Synthetic\n109,Mt,Meitnerium,278,unknown,Synthetic\n110,Ds,Darmstadtium,281,unknown,Synthetic\n111,Rg,Roentgenium,282,unknown,Synthetic\n112,Cn,Copernicium,285,transition-metal,Synthetic\n113,Nh,Nihonium,286,unknown,Synthetic\n114,Fl,Flerovium,289,unknown,Synthetic\n115,Mc,Moscovium,290,unknown,Synthetic\n116,Lv,Livermorium,293,unknown,Synthetic\n117,Ts,Tennessine,294,unknown,Synthetic\n118,Og,Oganesson,294,unknown,Synthetic`;
-
-
-
         const elementDatabase = {};
-
         const periodicLayout = [];
-
         let orderedElements = [];
-
-
-
         function getGridPosition(atomic) {
-
             if (atomic === 1) return { r: 1, c: 1 };
-
             if (atomic === 2) return { r: 1, c: 18 };
-
             if (atomic >= 3 && atomic <= 4) return { r: 2, c: atomic - 2 };
-
             if (atomic >= 5 && atomic <= 10) return { r: 2, c: atomic + 8 };
-
             if (atomic >= 11 && atomic <= 12) return { r: 3, c: atomic - 10 };
-
             if (atomic >= 13 && atomic <= 18) return { r: 3, c: atomic }; 
-
             if (atomic >= 19 && atomic <= 36) return { r: 4, c: atomic - 18 };
-
             if (atomic >= 37 && atomic <= 54) return { r: 5, c: atomic - 36 };
-
             if (atomic >= 55 && atomic <= 56) return { r: 6, c: atomic - 54 };
-
             if (atomic >= 57 && atomic <= 71) return { r: 9, c: atomic - 53 };
-
             if (atomic >= 72 && atomic <= 86) return { r: 6, c: atomic - 68 }; 
-
             if (atomic >= 87 && atomic <= 88) return { r: 7, c: atomic - 86 };
-
             if (atomic >= 89 && atomic <= 103) return { r: 10, c: atomic - 85 };
-
             if (atomic >= 104 && atomic <= 118) return { r: 7, c: atomic - 100 }; 
-
             return { r: 1, c: 1 };
-
         }
-
-
-
         elementsCSV.split('\n').forEach(line => {
-
             const [atomicStr, symbol, name, weight, group, phase] = line.trim().split(',');
-
             if(!symbol) return;
-
             const atomic = parseInt(atomicStr);
-
-            
-
             elementDatabase[symbol] = {
-
                 symbol, name, atomic, weight, group, phase,
-
                 bio: `A fascinating element categorized as a ${group.replace(/-/g, ' ')}. With an atomic weight of ${weight}, it plays a critical role in the chemical composition of the universe.`
-
             };
-
             periodicLayout.push({ symbol, ...getGridPosition(atomic) });
-
         });
-
-
-
         orderedElements = Object.values(elementDatabase).sort((a,b) => a.atomic - b.atomic);
-
-
-
         const baseSquareUrl = "https://raw.githubusercontent.com/ChemistryC/chemistryelements/15620d67144ed1c448e1898e30bbfb9dd5e6f34f/";
-
         const baseArtUrl = "https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/";
-
-
-
         for (const key in elementDatabase) {
-
             const el = elementDatabase[key];
-
             el.imgSquare = `${baseSquareUrl}${el.atomic}.webp`;
-
             el.imgArt = `${baseArtUrl}${el.atomic}%20${el.name}.webp`;
-
         }
-
-
-
         // ==========================================
-
         //  ELEMENT MODAL LOGIC (New Minimal Fullscreen matching image)
-
         // ==========================================
-
         let currentModalAtomic = 1;
         let modalNavigationLocked = false;
-
         function openElementModal(atomic, options = {}) {
-
             playSound('click');
-
             currentModalAtomic = atomic;
             const gameIsOpen = document.getElementById('view-game-fullscreen').classList.contains('flex');
             modalNavigationLocked = options.lockNavigation === true || gameIsOpen;
@@ -2015,323 +1439,140 @@
             const nextButton = document.getElementById('modalNextButton');
             if(prevButton) prevButton.classList.toggle('hidden', modalNavigationLocked);
             if(nextButton) nextButton.classList.toggle('hidden', modalNavigationLocked);
-
             const el = orderedElements[atomic - 1]; // array is 0-indexed
-
             if(!el) return;
-
-
-
             const content = document.getElementById('modalContentWrapper');
-
             content.innerHTML = `
-
                 <!-- Main Title -->
-
                 <h2 class="font-sans font-bold text-5xl sm:text-6xl text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] mb-8 tracking-wide">${el.name}</h2>
-
-                
-
                 <!-- Central App Icon Card -->
-
                 <div class="relative w-72 h-72 sm:w-80 sm:h-80 bg-slate-100/60 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] backdrop-blur-xl border border-white/60 flex items-center justify-center mb-12">
-
-                    
-
                     <!-- Atomic Number (Top Left) -->
-
                     <div class="absolute top-6 left-6 font-sans font-bold text-5xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] leading-none">
-
                         ${el.atomic}
-
                     </div>
-
-                    
-
                     <!-- 3D Element Image (Bigger) -->
-
                     <div class="w-[85%] h-[85%] relative animate-[float-medium_4s_ease-in-out_infinite]">
-
                         <img src="${el.imgArt}" class="w-full h-full object-contain drop-shadow-2xl">
-
                     </div>
-
-
-
                     <!-- Element Name & Group (Bottom Left) -->
-
                     <div class="absolute bottom-6 left-6 text-left leading-tight">
-
                         <div class="font-sans font-bold text-lg sm:text-xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">${el.name}</div>
-
                         <div class="font-sans text-xs sm:text-sm text-white/90 font-semibold tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] capitalize">${el.group.replace(/-/g, " ")}</div>
-
                     </div>
-
-
-
                     <!-- Symbol (Bottom Right) -->
-
                     <div class="absolute bottom-4 right-6 font-sans font-bold text-6xl sm:text-7xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] leading-none">
-
                         ${el.symbol}
-
                     </div>
-
                 </div>
-
-
-
                 <!-- Bottom Stats Grid -->
-
                 <div class="flex justify-center gap-8 sm:gap-20 w-full max-w-2xl mx-auto">
-
                     <div class="flex flex-col items-center">
-
                         <span class="text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] text-[10px] sm:text-xs uppercase tracking-widest font-bold mb-2">Atomic #</span>
-
                         <span class="font-sans text-2xl sm:text-4xl text-white font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">${el.atomic}</span>
-
                     </div>
-
                     <div class="flex flex-col items-center">
-
                         <span class="text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] text-[10px] sm:text-xs uppercase tracking-widest font-bold mb-2">Symbol</span>
-
                         <span class="font-sans text-2xl sm:text-4xl text-white font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">${el.symbol}</span>
-
                     </div>
-
                     <div class="flex flex-col items-center">
-
                         <span class="text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] text-[10px] sm:text-xs uppercase tracking-widest font-bold mb-2">Weight</span>
-
                         <span class="font-sans text-2xl sm:text-4xl text-white font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">${el.weight}</span>
-
                     </div>
-
                     <div class="flex flex-col items-center">
-
                         <span class="text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] text-[10px] sm:text-xs uppercase tracking-widest font-bold mb-2">Phase</span>
-
                         <span class="font-sans text-2xl sm:text-4xl text-white font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] capitalize">${el.phase}</span>
-
                     </div>
-
                 </div>
-
             `;
-
-            
-
             const modal = document.getElementById('elementModal');
-
             modal.classList.remove('hidden');
-
             modal.classList.add('flex');
-
-            
-
             // Lock body scroll
-
             document.body.style.overflow = 'hidden';
-
         }
-
-
-
         function closeElementModal() {
-
             playSound('click');
-
             const modal = document.getElementById('elementModal');
-
             modal.classList.add('hidden');
-
             modal.classList.remove('flex');
-
-            
-
             // Only restore scrolling if we aren't inside the fullscreen game
-
             if(!document.getElementById('view-game-fullscreen').classList.contains('flex')) {
-
                 document.body.style.overflow = 'auto';
-
             }
-
         }
-
-
-
         function navigateElement(direction) {
             if(modalNavigationLocked) return;
-
             let newAtomic = currentModalAtomic + direction;
-
             if(newAtomic < 1) newAtomic = 118;
-
             if(newAtomic > 118) newAtomic = 1;
-
             openElementModal(newAtomic);
-
         }
-
         document.addEventListener('keydown', (event) => {
             if(event.key === 'Escape' && document.getElementById('elementModal').classList.contains('flex')) closeElementModal();
         });
-
-
-
         // ==========================================
-
         //  PERIODIC TABLE LOGIC
-
         // ==========================================
-
         function generatePeriodicTable() {
-
             const tableContainer = document.getElementById("periodicGrid");
-
             tableContainer.innerHTML = "";
-
             tableContainer.className = "periodic-grid"; // Reset to standard grid
-
-
-
             for (let r = 1; r <= 10; r++) {
-
                 for (let c = 1; c <= 18; c++) {
-
                     const matched = periodicLayout.find(item => item.r === r && item.c === c);
-
-
-
                     if (matched) {
-
                         const el = elementDatabase[matched.symbol];
-
                         const btn = document.createElement("button");
-
-                        
-
                         btn.className = `w-full aspect-square flex items-center justify-center transition-all transform hover:scale-[1.15] hover:z-10 relative cursor-pointer`;
-
                         btn.onclick = () => openElementModal(el.atomic);
-
-
-
                         btn.innerHTML = `
-
                             <img src="${el.imgSquare}" class="w-full h-full object-contain drop-shadow-sm hover:drop-shadow-xl" alt="${el.name}">
-
                         `;
-
-                        
-
                         tableContainer.appendChild(btn);
-
                     } else if (r === 6 && c === 3) {
-
                         const marker = document.createElement("div");
-
                         marker.className = "hidden sm:flex items-center justify-center text-[9px] font-normal text-slate-400 bg-slate-50 border border-slate-200 rounded-lg";
-
                         marker.textContent = "57-71";
-
                         tableContainer.appendChild(marker);
-
                     } else if (r === 7 && c === 3) {
-
                         const marker = document.createElement("div");
-
                         marker.className = "hidden sm:flex items-center justify-center text-[9px] font-normal text-slate-400 bg-slate-50 border border-slate-200 rounded-lg";
-
                         marker.textContent = "89-103";
-
                         tableContainer.appendChild(marker);
-
                     } else {
-
                         const spacer = document.createElement("div");
-
                         spacer.className = "hidden sm:block opacity-0 pointer-events-none";
-
                         tableContainer.appendChild(spacer);
-
                     }
-
                 }
-
             }
-
         }
-
-
-
         function sortPeriodicTable(sortType) {
-
             const container = document.getElementById("periodicGrid");
-
             container.innerHTML = "";
-
-            
-
             let sortedArray = [...orderedElements];
-
-            
-
             if (sortType === 'standard') {
-
                 generatePeriodicTable();
         refreshDexStats();
         renderDex();
-
                 return;
-
             } else if (sortType === 'alphabetical') {
-
                 sortedArray.sort((a, b) => a.name.localeCompare(b.name));
-
             } else if (sortType === 'weight') {
-
                 sortedArray.sort((a, b) => parseFloat(a.weight) - parseFloat(b.weight));
-
             }
-
-
-
             container.className = "flex flex-wrap gap-2 justify-center py-8";
-
-            
-
             sortedArray.forEach(el => {
-
                 const btn = document.createElement("button");
-
                 btn.className = `w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center transition-transform hover:scale-[1.15] cursor-pointer hover:z-10`;
-
                 btn.onclick = () => openElementModal(el.atomic);
-
-
-
                 btn.innerHTML = `
-
                     <img src="${el.imgSquare}" class="w-full h-full object-contain drop-shadow-sm hover:drop-shadow-lg" alt="${el.name}">
-
                 `;
-
                 container.appendChild(btn);
-
             });
-
         }
-
-
-
-
-
-
         // ==========================================
         //  ELEMENT DEX
         // ==========================================
@@ -2349,7 +1590,6 @@
                 }
             };
         }
-
         function refreshDexStats() {
             const stats = readPlayerStats();
             const set = (id, value) => { const node = document.getElementById(id); if(node) node.textContent = value; };
@@ -2364,7 +1604,6 @@
             const pulses = [stats.classic.pulse, stats.time.pulse].filter(value => value > 0);
             set('dexOverallPulse', pulses.length ? Math.min(...pulses).toFixed(2) + 's' : '0s');
         }
-
         function renderDex() {
             const grid = document.getElementById('dexGrid');
             if(!grid) return;
@@ -2387,39 +1626,22 @@
             `).join('');
             if(!visible.length) grid.innerHTML = '<div class="col-span-full text-center text-slate-400 py-16">No elements match that search.</div>';
         }
-
         // ==========================================
-
         //  GAMES & STATS LOGIC
-
         // ==========================================
-
-        
-
         let currentGameMode = 'classic';
-
         let currentAtomicIndex = 0;
-
         let hearts = 3;
-
         let streak = 0;
-
         let maxStreak = 0;
-
         let correctAnswers = 0;
-
         let totalTime = 0;
-
         let questionStartTime = 0;
-
         let timeAttackTimer = null;
-
         let isGameOver = false;
-
         let awaitingNextRound = false;
         let lastGameSummary = null;
         let clickedElementHistory = [];
-
         // Shared mute state for effects and music.
         let allAudioMuted = localStorage.getItem('titanAllAudioMuted') === 'true';
         let audioContext = null;
@@ -2427,7 +1649,6 @@
         let musicTrackIndex = 0;
         let musicErrorSkips = 0;
         let currentMusicMode = null;
-
         // Direct audio streams corresponding to the Suno song IDs supplied for each mode.
         const classicMusicPlaylist = [
             'https://cdn1.suno.ai/77cbc8e2-f86d-4b88-a7a8-caadd22d1169.mp3',
@@ -2437,7 +1658,6 @@
             'https://cdn1.suno.ai/58128c6b-c924-42f1-ad8c-8fd91ec3b6b5.mp3',
             'https://cdn1.suno.ai/ce67ad20-7e30-461a-90f9-0ec185279ec5.mp3'
         ];
-
         const timeAttackMusicPlaylist = [
             'https://cdn1.suno.ai/aaed5ac4-6187-49f1-ab35-a8e76e67601e.mp3',
             'https://cdn1.suno.ai/b4646cfd-fd05-4f7a-9d7c-0c3b7ad487b3.mp3',
@@ -2445,9 +1665,6 @@
             'https://cdn1.suno.ai/b1396955-a976-4df2-8a57-3df0d70a4faa.mp3',
             'https://cdn1.suno.ai/29c3f522-d529-4f35-baa6-99ab62fbb205.mp3'
         ];
-
-
-
         function ensureAudioContext() {
             if(!audioContext) {
                 const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -2458,12 +1675,10 @@
             }
             return audioContext;
         }
-
         function playRewardTone() {
             if(allAudioMuted) return;
             const ctx = ensureAudioContext();
             if(!ctx) return;
-
             const now = ctx.currentTime;
             const risingSteps = window.currentGameMode === 'time-attack' ? Math.min(streak, 28) : 0;
             const base = window.currentGameMode === 'time-attack'
@@ -2472,7 +1687,6 @@
             const notes = window.currentGameMode === 'time-attack'
                 ? [base, base * 1.26, base * 1.5]
                 : [base, base * 1.25, base * 1.5];
-
             notes.forEach((frequency, index) => {
                 const oscillator = ctx.createOscillator();
                 const gain = ctx.createGain();
@@ -2487,12 +1701,10 @@
                 oscillator.stop(now + index * 0.055 + 0.18);
             });
         }
-
         function playLoseTone() {
             if(allAudioMuted) return;
             const ctx = ensureAudioContext();
             if(!ctx) return;
-
             const now = ctx.currentTime;
             [320, 245, 180].forEach((frequency, index) => {
                 const oscillator = ctx.createOscillator();
@@ -2508,7 +1720,6 @@
                 oscillator.stop(now + index * 0.10 + 0.24);
             });
         }
-
         function playSound(type) {
             if(allAudioMuted) return;
             if(type === 'correct') {
@@ -2519,7 +1730,6 @@
                 playLoseTone();
                 return;
             }
-
             try {
                 const sound = document.getElementById(`${type}-sound`);
                 if(sound) {
@@ -2529,22 +1739,18 @@
                 }
             } catch(e) {}
         }
-
         function updateAudioToggleUI() {
             const button = document.getElementById('audioToggleButton');
             const icon = document.getElementById('audioToggleIcon');
             if(!button || !icon) return;
-
             icon.className = allAudioMuted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high';
             button.classList.toggle('audio-toggle-active', !allAudioMuted);
             button.setAttribute('aria-label', allAudioMuted ? 'Unmute sound effects and music' : 'Mute sound effects and music');
             button.title = allAudioMuted ? 'Unmute sound effects and music' : 'Mute sound effects and music';
         }
-
         function toggleAllAudio() {
             allAudioMuted = !allAudioMuted;
             localStorage.setItem('titanAllAudioMuted', String(allAudioMuted));
-
             const music = document.getElementById('bg-music');
             if(music) {
                 music.muted = allAudioMuted;
@@ -2552,44 +1758,36 @@
                     music.play().catch(() => {});
                 }
             }
-
             updateAudioToggleUI();
         }
-
         function loadCurrentMusicTrack(shouldPlay = true) {
             const music = document.getElementById('bg-music');
             if(!music || activeMusicPlaylist.length === 0) return;
-
             musicTrackIndex = ((musicTrackIndex % activeMusicPlaylist.length) + activeMusicPlaylist.length) % activeMusicPlaylist.length;
             music.src = activeMusicPlaylist[musicTrackIndex];
             music.muted = allAudioMuted;
             music.load();
-
             if(shouldPlay && !allAudioMuted) {
                 music.play().catch(() => {});
             }
         }
-
         function advanceMusicTrack() {
             if(activeMusicPlaylist.length === 0) return;
             musicTrackIndex = (musicTrackIndex + 1) % activeMusicPlaylist.length;
             loadCurrentMusicTrack(true);
         }
-
         function playMusic() {
             try {
                 const music = document.getElementById('bg-music');
                 if(!music) return;
                 const requestedMode = window.currentGameMode === 'time-attack' ? 'time-attack' : 'classic';
                 const requestedPlaylist = requestedMode === 'time-attack' ? timeAttackMusicPlaylist : classicMusicPlaylist;
-
                 // Restarting the same mode keeps the current song and playback position.
                 if(currentMusicMode === requestedMode && activeMusicPlaylist === requestedPlaylist && music.src) {
                     music.muted = allAudioMuted;
                     if(!allAudioMuted) music.play().catch(() => {});
                     return;
                 }
-
                 currentMusicMode = requestedMode;
                 activeMusicPlaylist = requestedPlaylist;
                 musicTrackIndex = Math.floor(Math.random() * activeMusicPlaylist.length);
@@ -2597,7 +1795,6 @@
                 loadCurrentMusicTrack(true);
             } catch(e) {}
         }
-
         function stopMusic() {
             try {
                 const music = document.getElementById('bg-music');
@@ -2608,217 +1805,98 @@
                 }
             } catch(e) {}
         }
-
-
         function viewStats() {
-
             playSound('click');
-
             document.getElementById("statsViewerContainer").classList.remove("hidden");
-
             document.getElementById('statsViewerContainer').scrollIntoView({behavior: 'smooth', block: 'nearest'});
-
-            
-
             const cs = parseInt(localStorage.getItem('largestStreakMax')) || 0;
-
             const cp = parseFloat(localStorage.getItem('pulseTimeMax')) || 0;
-
             const ce = parseInt(localStorage.getItem('unlockedElementsMax')) || 0;
-
-
-
             const ts = parseInt(localStorage.getItem('largestStreakTimeAttack')) || 0;
-
             const tp = parseFloat(localStorage.getItem('pulseTimeTimeAttack')) || 0;
-
             const te = parseInt(localStorage.getItem('unlockedElementsTimeAttack')) || 0;
-
-
-
             document.getElementById('statClassicStreak').innerText = cs;
-
             document.getElementById('statClassicPulse').innerText = cp > 0 ? cp.toFixed(2) + 's' : '0s';
-
             document.getElementById('statClassicElement').innerText = ce;
-
-
-
             document.getElementById('statTimeAttackStreak').innerText = ts;
-
             document.getElementById('statTimeAttackPulse').innerText = tp > 0 ? tp.toFixed(2) + 's' : '0s';
-
             document.getElementById('statTimeAttackElement').innerText = te;
-
         }
-
-
-
         function startActiveGame(mode) {
-
             if(mode) window.currentGameMode = mode;
-
             currentAtomicIndex = 0;
-
             hearts = 3;
-
             streak = 0;
-
             maxStreak = 0;
-
             correctAnswers = 0;
-
             totalTime = 0;
-
             isGameOver = false;
-
             awaitingNextRound = false;
             clickedElementHistory = [];
             renderClickedElementHistory();
             setGameFeedback("Start!");
             setupHistoryScrollbarReveal();
-
-
-
             navigateTo('view-game-fullscreen');
-
             document.getElementById("activeGameContainer").classList.remove("hidden");
-
             document.getElementById("gameOverContainer").classList.add("hidden");
-
-
-
             const modeLabel = document.getElementById("gameModeLabel");
-
             const heartsUI = document.getElementById("gameHearts");
-
             const timerUI = document.getElementById("timerBarWrapper");
-
             const grid = document.getElementById("gameOptionsGrid");
-
-
-
             if(window.currentGameMode === 'classic') {
-
                 modeLabel.textContent = "CLASSIC MODE";
-
                 heartsUI.classList.remove("hidden");
-
                 timerUI.classList.add("hidden");
-
                 grid.className = "game-options-lowered grid grid-cols-2 gap-3 sm:gap-4 mb-7 w-full"; // 4 options in a 2 x 2 grid on mobile and desktop
-
             } else if (window.currentGameMode === 'time-attack') {
-
                 modeLabel.textContent = "TIME ATTACK";
-
                 heartsUI.classList.add("hidden");
-
                 timerUI.classList.remove("hidden");
-
                 grid.className = "game-options-lowered grid grid-cols-2 gap-3 sm:gap-4 mb-7 w-full"; // 2 options side by side
-
             }
-
-
-
             updateHeartsUI();
             updateAudioToggleUI();
-
             playMusic();
-
             loadGameRound();
-
         }
-
-
-
         function exitFullscreenGame() {
-
             clearTimeout(timeAttackTimer);
-
             isGameOver = true;
-
             stopMusic();
-
             navigateTo('view-games-hub');
-
         }
-
         function goHomeFromGame() {
-
             clearTimeout(timeAttackTimer);
-
             isGameOver = true;
-
             stopMusic();
-
             navigateTo('view-home');
-
         }
-
-
-
         function updateHeartsUI() {
-
             const container = document.getElementById("gameHearts");
-
             container.innerHTML = "";
-
             for(let i=0; i<3; i++) {
-
                 if(i < hearts) container.innerHTML += `<i class="fa-solid fa-heart animate-pulse drop-shadow-sm"></i>`;
-
                 else container.innerHTML += `<i class="fa-regular fa-heart opacity-30"></i>`;
-
             }
-
         }
-
-
-
         function startTimerVisual() {
-
             clearTimeout(timeAttackTimer);
-
             const fill = document.getElementById("timerBarFill");
-
-            
-
             fill.style.transition = "none";
-
             fill.style.width = "100%";
-
             void fill.offsetWidth; // reflow
-
-            
-
             fill.style.transition = "width 1s linear"; // 1 Second
-
             fill.style.width = "0%";
-
-
-
             timeAttackTimer = setTimeout(() => {
-
                 if(!isGameOver && !awaitingNextRound) {
-
                     playSound('wrong');
-
                     endGame(false, orderedElements[currentAtomicIndex]);
-
                 }
-
             }, 1000);
-
         }
-
-
-
         function renderClickedElementHistory() {
             const history = document.getElementById("answerHistory");
             if(!history) return;
-
             history.innerHTML = clickedElementHistory.map((entry, index) => `
                 <button
                     type="button"
@@ -2830,58 +1908,47 @@
                     <img src="${entry.selected.imgSquare}" alt="${entry.selected.name}">
                 </button>
             `).join("");
-
             requestAnimationFrame(() => {
                 history.scrollTo({ left: history.scrollWidth, behavior: 'smooth' });
                 updateHistoryScrollbar();
                 setTimeout(updateHistoryScrollbar, 260);
             });
         }
-
         function setGameFeedback(message, isCorrect = null) {
             const feedback = document.getElementById("gameFeedbackText");
             if(!feedback) return;
-
             feedback.textContent = message;
             feedback.className = `h-8 sm:h-10 mt-1 flex items-center justify-center text-xl sm:text-3xl font-orbitron ${
                 isCorrect === true ? 'text-emerald-600' : isCorrect === false ? 'text-rose-600' : 'text-blue-600'
             }`;
-
             feedback.classList.remove("game-feedback-pop");
             void feedback.offsetWidth;
             feedback.classList.add("game-feedback-pop");
         }
-
         function updateHistoryScrollbar() {
             const history = document.getElementById("answerHistory");
             const thumb = document.getElementById("historyScrollbarThumb");
             if(!history || !thumb) return;
-
             const maxScroll = Math.max(0, history.scrollWidth - history.clientWidth);
             const ratio = history.scrollWidth > 0 ? Math.min(1, history.clientWidth / history.scrollWidth) : 1;
             const thumbPercent = Math.max(16, ratio * 100);
             const travelPercent = 100 - thumbPercent;
             const progress = maxScroll > 0 ? history.scrollLeft / maxScroll : 0;
-
             thumb.style.width = `${thumbPercent}%`;
             thumb.style.transform = `translateX(${progress * travelPercent / (thumbPercent / 100)}%)`;
         }
-
         function setupHistoryScrollbarReveal() {
             const history = document.getElementById("answerHistory");
             const stage = document.getElementById("answerHistoryWrapper");
             if(!history || !stage || history.dataset.scrollbarReady === "true") return;
-
             history.dataset.scrollbarReady = "true";
             let hideTimer = null;
-
             const reveal = () => {
                 stage.classList.add("scrollbar-visible");
                 updateHistoryScrollbar();
                 clearTimeout(hideTimer);
                 hideTimer = setTimeout(() => stage.classList.remove("scrollbar-visible"), 1200);
             };
-
             stage.addEventListener("mouseenter", reveal, { passive: true });
             stage.addEventListener("pointerdown", reveal, { passive: true });
             stage.addEventListener("touchstart", reveal, { passive: true });
@@ -2895,74 +1962,40 @@
             window.addEventListener("resize", updateHistoryScrollbar, { passive: true });
             updateHistoryScrollbar();
         }
-
         function flashNextAnswerTile(index) {
             const grid = document.getElementById("gameOptionsGrid");
             if(!grid || !grid.children.length) return;
-
             const safeIndex = Math.max(0, Math.min(index, grid.children.length - 1));
             const tile = grid.children[safeIndex];
             if(!tile) return;
-
             tile.classList.remove("next-answer-glow");
             void tile.offsetWidth;
             tile.classList.add("next-answer-glow");
-
             window.setTimeout(() => {
                 if(tile && tile.isConnected) tile.classList.remove("next-answer-glow");
             }, 540);
         }
-
         function loadGameRound() {
-
             if(isGameOver) return;
-
             awaitingNextRound = false;
-
             const targetElement = orderedElements[currentAtomicIndex];
-
-
-
             document.getElementById("gameScore").innerHTML = `Streak: <span class="${window.currentGameMode === 'classic' ? 'text-blue-600' : 'text-rose-600'}">${streak}</span>`;
-
             document.getElementById("gameProgressTracker").textContent = `${currentAtomicIndex}/118`;
-
             document.getElementById("gameProgressFill").style.width = `${(currentAtomicIndex/118)*100}%`;
-
             // Setup Options
-
             let options = [targetElement];
-
             let numOptions = window.currentGameMode === 'classic' ? 4 : 2;
-
-            
-
             while(options.length < numOptions) {
-
                 let rand = orderedElements[Math.floor(Math.random() * orderedElements.length)];
-
                 if(!options.includes(rand)) options.push(rand);
-
             }
-
             options.sort(() => Math.random() - 0.5);
-
-
-
             // Render Buttons
-
             const grid = document.getElementById("gameOptionsGrid");
-
             grid.innerHTML = "";
-
-            
-
             options.forEach(opt => {
-
                 let btn = document.createElement("button");
-
                 btn.className = `option-btn game-option-glass w-full min-h-[74px] px-3 py-3 sm:px-4 sm:py-3.5 rounded-2xl sm:rounded-[1.4rem] transition-all duration-75 grid grid-cols-[3.25rem_minmax(0,1fr)_3.25rem] sm:grid-cols-[3.5rem_minmax(0,1fr)_3.5rem] items-center group`;
-
                 btn.innerHTML = `
                     <span class="game-option-symbol w-12 h-12 sm:w-14 sm:h-14 rounded-2xl font-orbitron font-medium text-blue-600 text-lg sm:text-xl flex items-center justify-center transition-all shrink-0">
                         ${opt.symbol}
@@ -2970,43 +2003,26 @@
                     <span class="block px-2 text-center text-slate-800 text-base sm:text-lg font-normal overflow-hidden text-ellipsis whitespace-nowrap">${opt.name}</span>
                     <span aria-hidden="true"></span>
                 `;
-
                 btn.onclick = () => handleAnswer(opt, targetElement, btn);
-
                 grid.appendChild(btn);
-
             });
-
-
-
             questionStartTime = Date.now();
-
             if(window.currentGameMode === 'time-attack') {
-
                 startTimerVisual();
-
             }
-
         }
-
-
-
         function handleAnswer(selected, correct, btn) {
             if(isGameOver || awaitingNextRound || btn.disabled) return;
-
             // The next choices are clickable even while their blue success wash is running.
             btn.classList.remove("next-answer-glow");
             const grid = document.getElementById("gameOptionsGrid");
             const clickedTileIndex = grid ? Array.from(grid.children).indexOf(btn) : 0;
-
             const timeTaken = (Date.now() - questionStartTime) / 1000;
             const isCorrect = selected.atomic === correct.atomic;
-
             if(!isCorrect) {
                 streak = 0;
                 setGameFeedback("Wrong!", false);
                 playSound('wrong');
-
                 // Time Attack still ends immediately after one wrong answer.
                 if(window.currentGameMode === 'time-attack') {
                     awaitingNextRound = true;
@@ -3014,28 +2030,23 @@
                     endGame(false, correct);
                     return;
                 }
-
                 // Classic mode: lose one life, but stay on the same question.
                 hearts--;
                 updateHeartsUI();
                 document.getElementById("gameScore").innerHTML = `Streak: <span class="text-blue-600">0</span>`;
-
                 // Give instant feedback and prevent the same wrong option being reused.
                 btn.classList.add("wrong");
                 btn.disabled = true;
                 btn.setAttribute("aria-disabled", "true");
-
                 if(hearts <= 0) {
                     awaitingNextRound = true;
                     endGame(false, correct);
                 }
                 return;
             }
-
             // Only correct choices enter the visual element history.
             clickedElementHistory.push({ selected });
             renderClickedElementHistory();
-
             // Correct answer: show instant feedback and advance with no artificial delay.
             setGameFeedback("Correct!", true);
             awaitingNextRound = true;
@@ -3046,25 +2057,19 @@
             if(streak > maxStreak) maxStreak = streak;
             playSound('correct');
             currentAtomicIndex++;
-
             if(currentAtomicIndex >= 118) {
                 endGame(true, correct);
                 return;
             }
-
             // Render the next choices first, so the tile immediately contains the next
             // answer name and symbol. Only its blue background/glow animates.
             loadGameRound();
             flashNextAnswerTile(clickedTileIndex);
         }
-
-
-
         function endGame(isWin, correctElementObj) {
             isGameOver = true;
             clearTimeout(timeAttackTimer);
             saveStats();
-
             const averageTap = correctAnswers > 0 ? totalTime / correctAnswers : 0;
             const reached = Math.min(currentAtomicIndex, 118);
             const progress = Math.round((reached / 118) * 100);
@@ -3078,12 +2083,10 @@
                 progress,
                 element: displayElement
             };
-
             document.getElementById('activeGameContainer').classList.add('hidden');
             const overScreen = document.getElementById('gameOverContainer');
             overScreen.classList.remove('hidden');
             overScreen.classList.add('flex');
-
             const title = document.getElementById('gameOverTitle');
             const subtitle = document.getElementById('gameOverSubtitle');
             title.textContent = isWin ? 'Correct!' : 'Wrong!';
@@ -3097,14 +2100,11 @@
             document.getElementById('resultRunStreak').textContent = maxStreak;
             document.getElementById('resultProgressLabel').textContent = `${progress}%`;
             document.getElementById('resultProgressFill').style.width = `${progress}%`;
-
             playSound(isWin ? 'win' : 'lose');
         }
-
         function openLastResultElement() {
             if(lastGameSummary?.element) openElementModal(lastGameSummary.element.atomic, { lockNavigation: true });
         }
-
         function roundRectPath(ctx, x, y, width, height, radius) {
             const r = Math.min(radius, width / 2, height / 2);
             ctx.beginPath();
@@ -3115,7 +2115,6 @@
             ctx.arcTo(x, y, x + width, y, r);
             ctx.closePath();
         }
-
         function loadShareImage(src) {
             return new Promise((resolve, reject) => {
                 const image = new Image();
@@ -3125,13 +2124,11 @@
                 image.src = src;
             });
         }
-
         async function shareGameResult() {
             if(!lastGameSummary) return;
             const button = document.getElementById('shareResultButton');
             const original = button?.innerHTML;
             if(button) { button.disabled = true; button.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Creating'; }
-
             try {
                 const canvas = document.createElement('canvas');
                 canvas.width = 1200;
@@ -3144,15 +2141,13 @@
                 roundRectPath(ctx, 24, 24, 1152, 1152, 80);
                 ctx.fillStyle = gradient;
                 ctx.fill();
-
                 ctx.fillStyle = 'rgba(255,255,255,.92)';
                 roundRectPath(ctx, 72, 72, 1056, 1056, 64);
                 ctx.fill();
-
                 ctx.textAlign = 'center';
                 ctx.fillStyle = '#2563eb';
                 ctx.font = '700 38px Arial, sans-serif';
-                ctx.fillText('TITAN CHEMISTRY', 600, 145);
+                ctx.fillText('Titan Chemistry', 600, 145);
                 ctx.fillStyle = '#0f172a';
                 ctx.font = '700 68px Arial, sans-serif';
                 const reachedText = lastGameSummary.isWin ? 'I arranged all 118 elements!' : `I reached element #${Math.min(lastGameSummary.reached + 1, 118)}!`;
@@ -3160,17 +2155,14 @@
                 ctx.fillStyle = '#475569';
                 ctx.font = '400 34px Arial, sans-serif';
                 ctx.fillText('Try it too on Titan Chemistry', 600, 290);
-
                 try {
                     const art = await loadShareImage(lastGameSummary.element.imgArt);
                     const size = 430;
                     ctx.drawImage(art, 600 - size / 2, 320, size, size);
                 } catch(e) {}
-
                 ctx.fillStyle = '#0f172a';
                 ctx.font = '700 48px Arial, sans-serif';
                 ctx.fillText(`${lastGameSummary.element.name}  ${lastGameSummary.element.symbol}`, 600, 790);
-
                 const cards = [
                     ['Reached', `${lastGameSummary.reached}/118`],
                     ['Average tap', lastGameSummary.averageTap > 0 ? `${lastGameSummary.averageTap.toFixed(2)}s` : '0s'],
@@ -3188,19 +2180,16 @@
                     ctx.font = '700 40px Arial, sans-serif';
                     ctx.fillText(card[1], x + 145, 945);
                 });
-
                 ctx.fillStyle = '#64748b';
                 ctx.font = '400 25px Arial, sans-serif';
                 const shareUrl = location.protocol.startsWith('http') ? location.href.split('#')[0] : 'Titan Chemistry';
                 ctx.fillText(shareUrl, 600, 1065);
-
                 const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', .95));
                 if(!blob) throw new Error('Could not create share image');
                 const file = new File([blob], 'titan-chemistry-result.png', { type: 'image/png' });
                 const shareText = lastGameSummary.isWin
                     ? 'I arranged all 118 elements on Titan Chemistry! Try it too.'
                     : `I reached ${lastGameSummary.reached}/118 on Titan Chemistry! Try it too.`;
-
                 if(navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
                     await navigator.share({ title: 'Titan Chemistry result', text: shareText, files: [file], url: location.protocol.startsWith('http') ? location.href : undefined });
                 } else {
@@ -3216,53 +2205,25 @@
                 if(button) { button.disabled = false; button.innerHTML = original; }
             }
         }
-
         function saveStats() {
-
             let pulseTime = correctAnswers > 0 ? (totalTime / correctAnswers) : 0;
-
             let elementsUnlocked = currentAtomicIndex;
-
-
-
             if(window.currentGameMode === 'classic') {
-
                 let lsMax = parseInt(localStorage.getItem('largestStreakMax')) || 0;
-
                 let ptMax = parseFloat(localStorage.getItem('pulseTimeMax')) || Infinity;
-
                 let ueMax = parseInt(localStorage.getItem('unlockedElementsMax')) || 0;
-
-
-
                 if(maxStreak > lsMax) localStorage.setItem('largestStreakMax', maxStreak);
-
                 if(pulseTime > 0 && pulseTime < ptMax) localStorage.setItem('pulseTimeMax', pulseTime);
-
                 if(elementsUnlocked > ueMax) localStorage.setItem('unlockedElementsMax', elementsUnlocked);
-
             } else if (window.currentGameMode === 'time-attack') {
-
                 let lsMax = parseInt(localStorage.getItem('largestStreakTimeAttack')) || 0;
-
                 let ptMax = parseFloat(localStorage.getItem('pulseTimeTimeAttack')) || Infinity;
-
                 let ueMax = parseInt(localStorage.getItem('unlockedElementsTimeAttack')) || 0;
-
-
-
                 if(maxStreak > lsMax) localStorage.setItem('largestStreakTimeAttack', maxStreak);
-
                 if(pulseTime > 0 && pulseTime < ptMax) localStorage.setItem('pulseTimeTimeAttack', pulseTime);
-
                 if(elementsUnlocked > ueMax) localStorage.setItem('unlockedElementsTimeAttack', elementsUnlocked);
-
             }
-
         }
-
-
-
         const backgroundMusic = document.getElementById('bg-music');
         if(backgroundMusic) {
             backgroundMusic.addEventListener('ended', () => {
@@ -3278,200 +2239,102 @@
             });
         }
         updateAudioToggleUI();
-
         // ==========================================
-
         //  BACKGROUND PARTICLES
-
         // ==========================================
-
-
-
         const canvas = document.getElementById("particleCanvas");
-
         const ctx = canvas.getContext("2d");
-
         let particles = [];
-
-
-
         function resizeCanvas() {
-
             canvas.width = window.innerWidth;
-
             canvas.height = window.innerHeight;
-
         }
-
-
-
         class Particle {
-
             constructor() {
-
                 this.x = Math.random() * canvas.width;
-
                 this.y = Math.random() * canvas.height;
-
                 this.radius = Math.random() * 2.5 + 1.5;
-
                 this.vx = (Math.random() - 0.5) * 0.45;
-
                 this.vy = (Math.random() - 0.5) * 0.45;
-
                 this.color = Math.random() > 0.5 ? '#3b82f6' : '#0284c7'; 
-
             }
-
             draw() {
-
                 ctx.beginPath();
-
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-
                 ctx.fillStyle = this.color;
-
                 ctx.fill();
-
             }
-
             update() {
-
                 this.x += this.vx;
-
                 this.y += this.vy;
-
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
             }
-
         }
-
-
-
         function initParticles() {
-
             particles = [];
-
             const count = Math.min(Math.floor(window.innerWidth / 15), 100);
-
             for (let i = 0; i < count; i++) {
-
                 particles.push(new Particle());
-
             }
-
         }
-
-
-
         function animate() {
-
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             particles.forEach(p => {
-
                 p.update();
-
                 p.draw();
-
             });
-
-
-
             for (let i = 0; i < particles.length; i++) {
-
                 for (let j = i + 1; j < particles.length; j++) {
-
                     const dx = particles[i].x - particles[j].x;
-
                     const dy = particles[i].y - particles[j].y;
-
                     const distance = Math.sqrt(dx * dx + dy * dy);
-
-
-
                     if (distance < 130) {
-
                         ctx.beginPath();
-
                         ctx.moveTo(particles[i].x, particles[i].y);
-
                         ctx.lineTo(particles[j].x, particles[j].y);
-
                         ctx.strokeStyle = `rgba(37, 99, 235, ${0.1 * (1 - distance / 130)})`;
-
                         ctx.stroke();
-
                     }
-
                 }
-
             }
-
             requestAnimationFrame(animate);
-
         }
-
-
-
         // Mobile Menu Toggling
-
         const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-
         const mobileMenu = document.getElementById("mobileMenu");
-
         if (mobileMenuBtn && mobileMenu) {
-
             mobileMenuBtn.onclick = () => {
-
                 mobileMenu.classList.toggle("hidden");
-
             };
-
             mobileMenu.querySelectorAll("button").forEach(link => {
-
                 link.addEventListener('click', () => {
-
                     mobileMenu.classList.add("hidden");
-
                 });
-
             });
-
         }
-
-
-
         // Initialization
-
         window.onload = function() {
-
             resizeCanvas();
-
             initParticles();
-
             animate();
-
             generatePeriodicTable();
             setupHistoryScrollbarReveal();
-
-
-
             window.addEventListener('resize', () => {
-
                 resizeCanvas();
-
                 initParticles();
-
             });
-
         };
-
     </script>
-
+<script>
+function updateCleanNavigation(){document.querySelectorAll('#mainHeader nav button').forEach(button=>{const match=button.getAttribute('onclick').match(/navigateTo\('([^']+)'\)/);button.classList.toggle('is-current',!!match&&!document.getElementById(match[1]).classList.contains('hidden'));});}
+const originalNavigation=navigateTo;
+navigateTo=function(view){originalNavigation(view);updateCleanNavigation();};
+updateCleanNavigation();
+document.getElementById('elementModal').setAttribute('role','dialog');
+document.getElementById('elementModal').setAttribute('aria-modal','true');
+document.getElementById('elementModal').setAttribute('aria-label','Element details');
+document.querySelectorAll('button').forEach(button=>{if(!button.textContent.trim()&&!button.hasAttribute('aria-label'))button.setAttribute('aria-label',button.getAttribute('onclick')?.includes('close')?'Close':'Back');});
+</script>
 </body>
-
 </html>
