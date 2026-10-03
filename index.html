@@ -1472,7 +1472,134 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
 @keyframes escapingElementDust{0%,50%{opacity:0;transform:translate(0,0) scale(.5)}58%{opacity:.9}100%{opacity:0;transform:translate(var(--dust-x,50px),var(--dust-y,-100px)) scale(.2)}}
 @media(prefers-reduced-motion:reduce){.crystal-scene>.element-dust{display:none}}
 </style>
-<style id="navigation-text-hover">#mainHeader nav button:hover,html[data-theme=dark] #mainHeader nav button:hover{background:transparent!important;box-shadow:none!important;color:#3478ef!important}html[data-theme=dark] #mainHeader nav button:hover{color:#83b4ff!important}</style><style id="liquid-navigation">.nav-slider{transform-origin:center;border-radius:999px;transition:width .35s cubic-bezier(.2,.8,.2,1);background:linear-gradient(130deg,#ffffffdc,#ffffff9c);box-shadow:inset 0 1px 2px #ffffff,0 3px 8px #223c6410}html[data-theme=dark] .nav-slider{background:linear-gradient(130deg,#505058,#3b3b42);box-shadow:inset 0 1px 1px #ffffff16,0 3px 8px #00000020}</style></head>
+<style id="navigation-text-hover">#mainHeader nav button:hover,html[data-theme=dark] #mainHeader nav button:hover{background:transparent!important;box-shadow:none!important;color:#3478ef!important}html[data-theme=dark] #mainHeader nav button:hover{color:#83b4ff!important}</style><style id="liquid-navigation">.nav-slider{transform-origin:center;border-radius:999px;transition:width .35s cubic-bezier(.2,.8,.2,1);background:linear-gradient(130deg,#ffffffdc,#ffffff9c);box-shadow:inset 0 1px 2px #ffffff,0 3px 8px #223c6410}html[data-theme=dark] .nav-slider{background:linear-gradient(130deg,#505058,#3b3b42);box-shadow:inset 0 1px 1px #ffffff16,0 3px 8px #00000020}</style><style id="opening-question">#openingGamePrompt{text-align:center;font-family:Outfit,sans-serif;font-size:23px;line-height:1.3;color:var(--ink);margin:22px 0 0;flex-shrink:0}#openingGamePrompt[hidden]{display:none}@media(max-width:640px){#openingGamePrompt{font-size:19px;margin-top:20px}}</style><style id="larger-memory-reveal">#memoryRevealImage{width:210px;height:210px}@media(max-width:640px){#memoryRevealImage{width:145px;height:185px}.memory-art-row{gap:6px}.memory-art-row #memorySilhouette{width:175px}}</style><style id="banner-word-spacing">.preview-message span{display:inline-block;margin-right:.25em;animation:bannerWordArrival .55s cubic-bezier(.16,.8,.3,1) both}.preview-message span:last-child{margin-right:0}@keyframes bannerWordArrival{0%{opacity:0;transform:translateY(16px) rotate(-5deg) scale(.92)}70%{opacity:1;transform:translateY(-2px) rotate(1deg) scale(1.02)}100%{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.preview-message span{animation:none}}</style><style id="separated-floor-reflection">#elementModal.is-3d .block-reflection{top:calc(100% + 58px);height:100%;opacity:.27;mask-image:linear-gradient(to top,#000b 0%,#0008 24%,#0003 50%,transparent 78%);-webkit-mask-image:linear-gradient(to top,#000b 0%,#0008 24%,#0003 50%,transparent 78%)}#elementModal.is-3d .crystal-floor{bottom:-36px;opacity:.65}@media(max-width:640px){#elementModal.is-3d .block-reflection{top:calc(100% + 46px)}}</style><style id="contained-element-panel">
+#elementModal>div.absolute,html[data-theme=dark] #elementModal>div.absolute{background:#18233130!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#modalContentWrapper{width:min(680px,calc(100vw - 28px));height:min(760px,calc(100dvh - 36px));max-width:680px;padding:85px 44px 30px;border-radius:32px;background:#f6f8fa;border:1px solid #fff;box-shadow:0 24px 85px #10273d30;justify-content:center;overflow:hidden}
+html[data-theme=dark] #modalContentWrapper{background:#25252a;border-color:#494950;box-shadow:0 24px 85px #00000050}
+#elementModal>.element-view-toggle{top:max(34px,calc((100dvh - 760px)/2 + 24px))}
+#elementModal>button:not(.element-view-toggle):not(#modalPrevButton):not(#modalNextButton){top:max(30px,calc((100dvh - 760px)/2 + 20px));right:max(28px,calc((100vw - 680px)/2 + 20px));width:38px;height:38px;font-size:25px}
+#modalPrevButton{left:max(12px,calc((100vw - 680px)/2 + 8px))!important;font-size:35px!important;width:40px!important}
+#modalNextButton{right:max(12px,calc((100vw - 680px)/2 + 8px))!important;font-size:35px!important;width:40px!important}
+.crystal-scene{width:min(350px,56vw);flex-shrink:0;margin-bottom:32px}
+.crystal-details,.crystal-hint{flex-shrink:0}
+@media(max-width:640px){#modalContentWrapper{padding:72px 30px 25px;border-radius:25px}.crystal-scene{width:min(290px,62vw)}#elementModal>.element-view-toggle{top:34px}#elementModal>button:not(.element-view-toggle):not(#modalPrevButton):not(#modalNextButton){top:30px;right:27px}.crystal-details{gap:30px}}
+@media(max-height:650px){.crystal-scene{width:min(250px,46vw);margin-bottom:20px}#modalContentWrapper{padding-top:65px;padding-bottom:18px}.crystal-hint{margin-top:12px}}
+</style><style id="wider-glass-panel">
+#modalContentWrapper{width:min(780px,calc(100vw - 40px));max-width:780px;background:rgba(246,248,250,.9);border-color:#ffffffc9;transform:translateX(26px);box-shadow:0 24px 85px #10273d25,inset 0 1px 0 #fff}
+html[data-theme=dark] #modalContentWrapper{background:rgba(37,37,42,.9);border-color:#ffffff25}
+#elementModal>.element-view-toggle{left:calc(50% + 26px)}
+#elementModal>button:not(.element-view-toggle):not(#modalPrevButton):not(#modalNextButton){right:max(28px,calc((100vw - 780px)/2 - 26px + 20px))}
+#modalPrevButton{left:max(12px,calc((100vw - 780px)/2 + 26px + 8px))!important}
+#modalNextButton{right:max(12px,calc((100vw - 780px)/2 - 26px + 8px))!important}
+@media(max-width:900px){#modalContentWrapper{transform:translateX(10px);width:calc(100vw - 48px)}#elementModal>.element-view-toggle{left:calc(50% + 10px)}#modalPrevButton{left:32px!important}#modalNextButton{right:12px!important}#elementModal>button:not(.element-view-toggle):not(#modalPrevButton):not(#modalNextButton){right:25px}}
+@media(max-width:640px){#modalContentWrapper{width:calc(100vw - 24px);transform:none}#elementModal>.element-view-toggle{left:50%}#modalPrevButton{left:13px!important}#modalNextButton{right:13px!important}#elementModal>button:not(.element-view-toggle):not(#modalPrevButton):not(#modalNextButton){right:25px}}
+</style><style id="panel-inner-blur-offset">
+#modalContentWrapper{backdrop-filter:blur(10px) saturate(115%);-webkit-backdrop-filter:blur(10px) saturate(115%);transform:translateX(100px)}
+#elementModal>.element-view-toggle{left:calc(50% + 100px)}
+#elementModal>button:not(.element-view-toggle):not(#modalPrevButton):not(#modalNextButton){right:max(24px,calc((100vw - 780px)/2 - 100px + 20px))}
+#modalPrevButton{left:max(12px,calc((100vw - 780px)/2 + 100px + 8px))!important}
+#modalNextButton{right:max(12px,calc((100vw - 780px)/2 - 100px + 8px))!important}
+@media(max-width:1000px){#modalContentWrapper{transform:translateX(14px);width:calc(100vw - 56px)}#elementModal>.element-view-toggle{left:calc(50% + 14px)}#modalPrevButton{left:38px!important}#modalNextButton{right:12px!important}#elementModal>button:not(.element-view-toggle):not(#modalPrevButton):not(#modalNextButton){right:25px}}
+@media(max-width:640px){#modalContentWrapper{transform:none;width:calc(100vw - 24px)}#elementModal>.element-view-toggle{left:50%}#modalPrevButton{left:13px!important}#modalNextButton{right:13px!important}}
+</style><style id="white-glove-game-cursor">@media(hover:hover) and (pointer:fine){#view-game-fullscreen,#view-game-fullscreen *{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20stroke%3D%22%2325252a%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M19%2030V9c0-5%207-5%207%200v13l3-3c2-2%205-1%205%202%203-2%206%200%205%203%204%200%205%203%203%206l-5%2010H22L12%2030c-4-4%201-9%205-5l2%202z%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M21%2038h17v7H21z%22%2F%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M28%2027v6m6-7-1%207m-9%207h10%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 22 4,pointer!important}}</style><style id="smaller-cartoon-glove">@media(hover:hover) and (pointer:fine){#view-game-fullscreen,#view-game-fullscreen *{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20stroke%3D%22%2325252a%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M19%2029V10c0-6%208-6%208%200v12c5-5%209-3%208%201%206-2%209%203%206%206%204%202%201%207-1%2010-3%205-16%205-20%200L10%2029c-5-6%202-11%207-5l2%203z%22%2F%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M19%2038q10%204%2020%200l-1%208H20z%22%2F%3E%3Cpath%20fill%3D%22none%22%20d%3D%22m25%2029%201%205m5-6-1%206m5-5-2%205%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 14 3,pointer!important}}</style><style id="gameplay-recording">
+#recordGameplayButton{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:115;border-radius:999px;padding:10px 16px;background:#ffffff90;border:1px solid #d9e4ef;color:#52657e;font-size:12px}
+#recordGameplayButton[data-recording=true]{color:#e52c49;border-color:#e98b9d;background:#fff0f2}
+#gameplayExport{margin-bottom:16px;padding:12px 20px;border-radius:16px;background:#ffffff50;border:1px solid #cddff2}
+#gameplayExport[hidden]{display:none}
+#gameplayExport p{font-size:14px;margin-bottom:7px}
+#downloadGameplayButton{border-radius:999px;padding:9px 20px;background:linear-gradient(120deg,#2869ea,#41a5ee);color:#fff;font-size:12px}
+#gameplayFormatLabel{display:block;font-size:10px;color:var(--muted);margin-top:5px}
+html[data-theme=dark] #recordGameplayButton{background:#303038;border-color:#595961;color:#ededf4}
+html[data-theme=dark] #gameplayExport{background:#303038;border-color:#595961}
+@media(max-width:640px){#recordGameplayButton{top:20px;padding:8px 12px;font-size:11px}}
+</style>
+<style>@media(hover:hover) and (pointer:fine){#view-game-fullscreen,#view-game-fullscreen *{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20stroke%3D%22%2325252a%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M18%2029V10c0-6%208-6%208%200v13c0-5%207-5%207%200v3c0-5%207-5%207%200v2c0-4%206-4%206%200v5c0%208-6%2011-14%2011-7%200-11-3-14-7L9%2028c-4-5%202-10%206-5l3%204Z%22%2F%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M20%2038q10%205%2021%200l-1%208H21Z%22%2F%3E%3Cpath%20fill%3D%22none%22%20d%3D%22m25%2029%201%205m6-5-1%205m7-4-2%205%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 14 3,pointer!important}}</style><style id="simple-mobile-menu-play">.clean-primary{min-width:190px;padding-left:38px;padding-right:38px}#mobileMenu button i{color:#64748b!important}html[data-theme=dark] #mobileMenu button i{color:#b6b6c3!important}@media(max-width:640px){.clean-primary{min-width:180px}}</style><style id="three-dot-game-menu">
+#gameSettingsToggle{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#ffffff85;border:1px solid #d5e0ee;color:#5a6b81}
+#gameSettingsMenu{position:relative}
+#gameSettingsPanel{position:absolute;right:0;top:52px;width:185px;padding:6px;background:#fffffff0;backdrop-filter:blur(14px);border:1px solid #dbe4ef;border-radius:16px;box-shadow:0 12px 30px #16273a1a}
+#gameSettingsPanel[hidden]{display:none}
+#gameSettingsPanel button,#gameSettingsPanel #recordGameplayButton{position:static;transform:none;width:100%;padding:12px 10px;border:0;background:transparent;color:#52657e;text-align:left;font-size:12px;border-radius:10px;display:flex;gap:10px;align-items:center}
+#gameSettingsPanel button:hover{background:#eef4fd}
+html[data-theme=dark] #gameSettingsToggle,html[data-theme=dark] #gameSettingsPanel{background:#2c2c34ee;border-color:#53535d;color:#eee}
+html[data-theme=dark] #gameSettingsPanel button,html[data-theme=dark] #gameSettingsPanel #recordGameplayButton{background:transparent;color:#ddd}
+html[data-theme=dark] #gameSettingsPanel button:hover{background:#41414b}
+</style>
+<style id="gameplay-library-style">
+#gameplayExport{display:none!important}
+.gameplay-library{width:100%;max-width:760px;margin:25px auto 0;text-align:left;border-top:1px solid var(--line);padding-top:18px}
+.gameplay-library[hidden]{display:none}
+.gameplay-library h3{font:500 20px Outfit,sans-serif;margin-bottom:12px;color:var(--ink)}
+.gameplay-row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 14px;margin-bottom:8px;border:1px solid var(--line);border-radius:14px;background:#ffffff85;color:var(--ink)}
+.gameplay-row strong{display:block;font-size:13px;font-weight:600}.gameplay-row small{display:block;font-size:10px;color:var(--muted);margin-top:4px}
+.gameplay-row button{border-radius:999px;padding:9px 16px;background:linear-gradient(120deg,#2869ea,#41a5ee);color:#fff;font-size:12px;flex-shrink:0}
+html[data-theme=dark] .gameplay-row{background:#2c2c3485}
+#gameOverContainer{padding-bottom:25px!important}
+</style>
+<style id="refined-glove-wrist">@media(hover:hover) and (pointer:fine){#view-game-fullscreen,#view-game-fullscreen *{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20stroke%3D%22%2325252a%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M18%2027V8c0-5%207-5%207%200v14c0-5%206-5%206%200v2c0-5%206-5%206%200v2c0-4%206-4%206%200v5c0%205-3%208-7%2010H23c-3-2-5-5-7-8l-7-7c-4-4%201-9%205-5l4%205Z%22%2F%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M23%2039h12v5H23Z%22%2F%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M20%2042q9%202%2018%200v5H20Z%22%2F%3E%3Cpath%20fill%3D%22none%22%20d%3D%22m25%2028%201%205m6-5-1%205m6-4-2%205%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 13 2,pointer!important}}</style><style id="tidy-gameplay-library">
+.gameplays-toggle{margin-top:18px;border:1px solid var(--line);border-radius:999px;padding:9px 22px;background:#ffffff55;font-size:12px;color:var(--ink)}
+.gameplay-row{transition:transform .7s cubic-bezier(.2,.8,.3,1),box-shadow .7s,background .7s}
+.gameplay-row.newest-gameplay{transform:translateY(-9px);box-shadow:0 8px 22px #3478ef20;border-color:#84b8ff;background:#eaf3ff}
+html[data-theme=dark] .gameplay-row.newest-gameplay{background:#343d50}
+@media(prefers-reduced-motion:reduce){.gameplay-row{transition:none}.gameplay-row.newest-gameplay{transform:none}}
+</style><style>@media(hover:hover) and (pointer:fine){#view-game-fullscreen,#view-game-fullscreen *{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20stroke%3D%22%2325252a%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M18%2027V8c0-5%207-5%207%200v14c0-5%206-5%206%200v2c0-5%206-5%206%200v2c0-4%206-4%206%200v5c0%205-3%208-7%2010H23c-3-2-5-5-7-8l-7-7c-4-4%201-9%205-5l4%205Z%22%2F%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M20%2039q9%203%2018%200v7H20Z%22%2F%3E%3Cpath%20fill%3D%22none%22%20d%3D%22m25%2028%201%205m6-5-1%205m6-4-2%205%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 13 2,pointer!important}}</style>
+<style id="popup-game-menu-separation">body:has(#elementModal:not(.hidden)) #gameSettingsMenu{visibility:hidden!important;pointer-events:none}</style><style id="result-history-gameplay-tabs">
+.gameplays-toggle{display:none!important}
+.result-tab-shell{width:100%;max-width:650px;margin:22px auto 0}
+.result-tab-bar{display:flex;position:relative;isolation:isolate;background:#e5ebf480;border:1px solid var(--line);border-radius:999px;padding:4px;width:260px;margin:0 auto 18px}
+.result-tab-bar button{width:50%;padding:10px 16px;color:var(--muted);font-size:13px;position:relative;z-index:1;border-radius:999px}
+.result-tab-bar button[aria-selected=true]{color:var(--ink);font-weight:700}
+.result-tab-slider{position:absolute;left:4px;top:4px;bottom:4px;width:calc(50% - 4px);background:#ffffffc9;border-radius:999px;box-shadow:0 2px 7px #23394a12;transition:transform .35s cubic-bezier(.2,.8,.3,1)}
+.result-tab-shell[data-tab=gameplay] .result-tab-slider{transform:translateX(100%)}
+.result-tab-panel[hidden]{display:none!important}
+.result-tab-panel .gameplay-library{border:0;margin-top:0;padding-top:0}
+.history-image-download{padding:12px 24px;border-radius:999px;background:linear-gradient(120deg,#2869ea,#41a5ee);color:#fff;font-size:12px;margin-top:15px}
+.empty-gameplay{font-size:13px;color:var(--muted);text-align:center;padding:20px}
+html[data-theme=dark] .result-tab-slider{background:#4b4b55}
+</style>
+<style id="plain-result-tabs">
+.result-tab-bar{border:0;background:none;width:260px;padding:0;border-radius:0;border-bottom:1px solid var(--line);margin-bottom:16px}
+.result-tab-bar button{border-radius:0;padding:12px 16px;background:none}
+.result-tab-slider,html[data-theme=dark] .result-tab-slider{top:auto;bottom:-1px;left:0;width:50%;height:2px;border-radius:0;background:#3478ef;box-shadow:none}
+.result-tab-shell[data-tab=gameplay] .result-tab-slider{transform:translateX(100%)}
+.text-run-row,.gameplay-row{display:flex;gap:16px;align-items:center;justify-content:space-between;border:0;border-bottom:1px solid var(--line);border-radius:0;background:none!important;padding:15px 0;margin:0;box-shadow:none}
+.text-run-row strong{display:block;font-size:13px;color:var(--ink);font-weight:600}.text-run-row small{display:block;font-size:11px;color:var(--muted);margin-top:5px;line-height:1.6}
+.text-run-row button,.gameplay-row button{border:0;border-radius:0;background:none;color:#3478ef;padding:7px 0;font-size:12px;flex-shrink:0}
+html[data-theme=dark] .text-run-row button,html[data-theme=dark] .gameplay-row button{color:#8ab7ff}
+.gameplay-library h3{display:none}
+@media(max-width:640px){.text-run-row{gap:10px}.text-run-row button{max-width:105px;text-align:right;line-height:1.4}}
+</style>
+<style id="direct-game-controls-and-downloads">
+#directGameControls{position:fixed;right:22px;top:22px;z-index:120;display:flex;gap:9px;align-items:center}
+#directGameControls button,#directGameControls #recordGameplayButton{position:static;transform:none;width:40px;height:40px;display:flex;align-items:center;justify-content:center;padding:0;border:1px solid #dce4ee;border-radius:999px;background:#ffffffaa;color:#66768b;font-size:15px}
+#directGameControls #recordGameplayButton .record-dot{width:12px;height:12px;border-radius:50%;background:#ed3652;box-shadow:0 0 0 3px #ef365214}
+#directGameControls #recordGameplayButton[data-recording=true] .record-dot{border-radius:3px;width:10px;height:10px}
+html[data-theme=dark] #directGameControls button{background:#303038!important;border-color:#55555f;color:#ddd}
+body:has(#elementModal:not(.hidden)) #directGameControls{visibility:hidden!important}
+.text-run-row button,.gameplay-row button{background:linear-gradient(120deg,#2869ea,#41a5ee)!important;color:white!important;border-radius:999px;width:42px;height:36px;padding:8px;display:flex;align-items:center;justify-content:center}
+.text-run-row button svg,.gameplay-row button svg{width:19px;height:19px}
+.text-run-row>div>small{display:flex;gap:17px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.history-score{font:600 24px Outfit,sans-serif;color:var(--ink)}.history-score small{display:inline!important;font:400 12px Nunito,sans-serif;color:var(--muted)}
+.history-metric{display:flex;flex-direction:column;font-size:10px}.history-metric b{font-size:13px;color:var(--ink);font-weight:600}
+.card-design-choice{display:flex;gap:12px;margin-bottom:14px;font-size:12px;color:var(--muted)}.card-design-choice button[aria-pressed=true]{color:var(--blue);font-weight:700}
+.compact-cards .alternate-card{display:flex;align-items:center;border-radius:20px;overflow:hidden}.compact-cards .alternate-wallpaper{width:145px;min-width:145px;height:145px;margin:0;border-radius:0}.compact-cards .alternate-wallpaper img{width:190px;height:190px;right:-30px;top:-20px}.compact-cards .wallpaper-symbol{font-size:40px;left:12px;top:10px}.compact-cards .alternate-info{flex:1;padding:18px;flex-wrap:wrap;gap:14px}.compact-cards .alternate-info h2{font-size:22px}.compact-cards .preview-message{font-size:15px;inset:20px 12px auto;z-index:4}.compact-cards .alternate-wallpaper.has-message img{opacity:.35}
+@media(max-width:640px){#directGameControls{right:15px;top:17px;gap:6px}#directGameControls button,#directGameControls #recordGameplayButton{width:36px;height:36px}.compact-cards .alternate-wallpaper{width:120px;min-width:120px}.compact-cards .alternate-info h2{font-size:19px}.text-run-row>div>small{gap:13px}}
+</style>
+<style id="neutral-recording-dot">#directGameControls #recordGameplayButton .record-dot{background:#34343c;box-shadow:0 0 0 3px #34343c12}html[data-theme=dark] #directGameControls #recordGameplayButton .record-dot{background:#fff;box-shadow:0 0 0 3px #ffffff16}</style><style id="airy-gameplay-history">
+.result-tab-shell{max-width:680px;margin-top:28px}
+.result-tab-bar{margin-bottom:24px;width:240px}
+.text-run-row,.gameplay-row{position:relative;padding:20px 12px;margin-bottom:12px;border:0!important;border-radius:14px;background:#ffffff40!important;gap:24px;box-shadow:none!important}
+html[data-theme=dark] .text-run-row,html[data-theme=dark] .gameplay-row{background:#ffffff05!important}
+.text-run-row strong,.gameplay-row strong{font-family:Outfit,sans-serif;font-size:15px;font-weight:500;letter-spacing:-.02em}
+.text-run-row>div>small{margin-top:12px;gap:24px}
+.gameplay-row small{margin-top:9px;font-size:11px;line-height:1.6;opacity:.8}
+.history-score{font-size:26px}.history-metric b{font-weight:500}
+.gameplay-row.newest-gameplay{transform:none!important;background:#3e8cff0b!important}
+.gameplay-row.newest-gameplay::after{content:'';position:absolute;left:12px;right:12px;bottom:0;height:3px;border-radius:999px;background:linear-gradient(90deg,#2669ee,#59b8ff);box-shadow:0 2px 10px #3487ee35;animation:recentVideoUnderline 6.5s ease-out both}
+@keyframes recentVideoUnderline{0%{opacity:0;transform:scaleX(.3)}8%,80%{opacity:1;transform:scaleX(1)}100%{opacity:0;transform:scaleX(1)}}
+.gameplay-library{border:0;padding-top:0}
+@media(max-width:640px){.text-run-row,.gameplay-row{padding:17px 10px;gap:14px}.text-run-row>div>small{gap:18px}}
+@media(prefers-reduced-motion:reduce){.gameplay-row.newest-gameplay::after{animation:none}}
+</style></head>
 <body class="min-h-screen relative flex flex-col">
     <!-- Particle Canvas background (Subtle) -->
     <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-15"></canvas>
@@ -1555,7 +1682,7 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
  <div class="clean-hero-copy"><span class="clean-eyebrow">118 elements. Endless discovery.</span>
  <h1>A little curiosity.<br><span>A whole universe.</span></h1>
  <p>Explore the elements. Find your streak.</p>
- <div class="clean-actions"><button class="clean-primary" onclick="navigateTo('view-games-hub')">PLAY</button><a href="#periodic-table-section">Explore the table <span aria-hidden="true">↓</span></a></div></div>
+ <div class="clean-actions"><button class="clean-primary" onclick="navigateTo('view-games-hub')">PLAY</button></div></div>
  <button class="clean-feature" onclick="openElementModal(1)" aria-label="Explore Hydrogen">
  <span class="clean-feature-top"><span>ELEMENT / 001</span><span>↗</span></span>
  <img src="https://raw.githubusercontent.com/ChemistryC/ElementsG/accee36c4f5bddeec3869f80b93b16489a1c75a6/1%20Hydrogen.webp" alt="Hydrogen character">
@@ -1730,11 +1857,10 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
                 </button>
             </div>
             <div class="fixed top-4 sm:top-6 right-4 sm:right-6 z-[110]">
-                <button id="audioToggleButton" onclick="toggleAllAudio()" aria-label="Mute sound effects and music" title="Mute sound effects and music" class="game-glass-pill flex items-center justify-center w-11 h-11 rounded-full text-slate-700 hover:text-blue-600 hover:bg-white transition-all">
-                    <i id="audioToggleIcon" class="fa-solid fa-volume-high"></i>
-                </button>
+<div id="gameSettingsMenu"><button id="gameSettingsToggle" onclick="toggleGameSettings()" aria-label="Game settings" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button><div id="gameSettingsPanel" hidden><button id="audioToggleButton" onclick="toggleAllAudio();syncGameSettings()"><i id="audioToggleIcon" class="fa-solid fa-volume-high"></i><span id="soundMenuText">Sound on</span></button><button onclick="toggleGameMusic()"><i class="fa-solid fa-music"></i><span id="musicMenuText">Music on</span></button><button id="recordGameplayButton" onclick="toggleGameplayRecording()">Record gameplay</button></div></div>
             </div>
-            <!-- Game content has its own scrolling space and cannot be covered by the site footer -->
+            
+<!-- Game content has its own scrolling space and cannot be covered by the site footer -->
             <div class="min-h-[100dvh] w-full max-w-4xl mx-auto px-4 sm:px-8 pt-20 pb-6 sm:pt-24 sm:pb-10 flex items-center justify-center relative z-[105]">
                 <div class="game-glass-shell w-full max-w-3xl rounded-[2rem] sm:rounded-[2.5rem] p-5 sm:p-8 md:p-10 relative flex flex-col">
                     
@@ -1761,7 +1887,7 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
                         </div>
                         
 <!-- Fixed-size history strip: four larger bare images, then horizontal scrolling -->
-                        <div id="memoryStage"><span>Which element?</span><div class="memory-art-row"><div id="memoryReveal" hidden><img id="memoryRevealImage" alt=""><small id="memoryRevealName"></small></div><img id="memorySilhouette" alt="Blue element silhouette"></div></div>
+                        <p id="openingGamePrompt" hidden>Which is the first element of the periodic table?</p><div id="memoryStage"><span>Which element?</span><div class="memory-art-row"><div id="memoryReveal" hidden><img id="memoryRevealImage" alt=""><small id="memoryRevealName"></small></div><img id="memorySilhouette" alt="Blue element silhouette"></div></div>
 <div id="answerHistoryWrapper" class="answer-history-stage">
                             <div id="answerHistory" class="answer-history-scroll" aria-label="Selected element history" tabindex="0"></div>
                             <div class="history-scrollbar" aria-hidden="true"><span id="historyScrollbarThumb" class="history-scrollbar-thumb"></span></div>
@@ -1780,7 +1906,7 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
                     </div>
                     <!-- Result state with correct element, run preview, and share card -->
                     <div id="gameOverContainer" class="hidden flex-col items-center text-center py-3 sm:py-5 relative z-10 w-full h-full">
-                        <h3 id="gameOverTitle" class="font-orbitron text-4xl sm:text-5xl text-slate-900 mb-1">Wrong!</h3>
+                        <div id="gameplayExport" hidden><p>Share your gameplay!</p><button id="downloadGameplayButton" onclick="downloadGameplay()">Export video</button><small id="gameplayFormatLabel"></small></div><h3 id="gameOverTitle" class="font-orbitron text-4xl sm:text-5xl text-slate-900 mb-1">Wrong!</h3>
                         <p id="gameOverSubtitle" class="text-xs sm:text-sm text-slate-500 mb-1">The correct element is</p>
                         <button id="gameOverElementButton" class="group flex flex-col items-center" onclick="openLastResultElement()">
                             <img id="gameOverElementImage" class="result-element-art group-hover:scale-105 transition-transform" alt="Correct element">
@@ -1901,6 +2027,7 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
             const el = orderedElements[atomic - 1]; // array is 0-indexed
             if(!el) return;
             const content = document.getElementById('modalContentWrapper');
+            const isFreshOpen = document.getElementById("elementModal").classList.contains("hidden");
             content.innerHTML = `
                 <div class="crystal-scene">
                     
@@ -1926,6 +2053,9 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
             const modal = document.getElementById('elementModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+            if(isFreshOpen && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                content.animate([{opacity:0,scale:".83 .75",clipPath:"inset(12% 18% round 32px)"},{offset:.75,opacity:1,scale:"1.01 1.015",clipPath:"inset(0% 0% round 32px)"},{opacity:1,scale:"1",clipPath:"inset(0% 0% round 32px)"}],{duration:430,easing:"cubic-bezier(.16,.8,.25,1)"});
+            }
             // Lock body scroll
             document.body.style.overflow = 'hidden';
         }
@@ -2081,6 +2211,7 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
         let lastGameSummary = null;
         let clickedElementHistory = [];
         // Shared mute state for effects and music.
+        let gameMusicMuted = localStorage.getItem("titanMusicMuted") === "true";
         let allAudioMuted = localStorage.getItem('titanAllAudioMuted') === 'true';
         let audioContext = null;
         let activeMusicPlaylist = [];
@@ -2191,8 +2322,8 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
             localStorage.setItem('titanAllAudioMuted', String(allAudioMuted));
             const music = document.getElementById('bg-music');
             if(music) {
-                music.muted = allAudioMuted;
-                if(!allAudioMuted && document.getElementById('view-game-fullscreen').classList.contains('flex')) {
+                music.muted = gameMusicMuted;
+                if(!gameMusicMuted && document.getElementById('view-game-fullscreen').classList.contains('flex')) {
                     music.play().catch(() => {});
                 }
             }
@@ -2203,9 +2334,9 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
             if(!music || activeMusicPlaylist.length === 0) return;
             musicTrackIndex = ((musicTrackIndex % activeMusicPlaylist.length) + activeMusicPlaylist.length) % activeMusicPlaylist.length;
             music.src = activeMusicPlaylist[musicTrackIndex];
-            music.muted = allAudioMuted;
+            music.muted = gameMusicMuted;
             music.load();
-            if(shouldPlay && !allAudioMuted) {
+            if(shouldPlay && !gameMusicMuted) {
                 music.play().catch(() => {});
             }
         }
@@ -2222,8 +2353,8 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
                 const requestedPlaylist = requestedMode === 'time-attack' ? timeAttackMusicPlaylist : classicMusicPlaylist;
                 // Restarting the same mode keeps the current song and playback position.
                 if(currentMusicMode === requestedMode && activeMusicPlaylist === requestedPlaylist && music.src) {
-                    music.muted = allAudioMuted;
-                    if(!allAudioMuted) music.play().catch(() => {});
+                    music.muted = gameMusicMuted;
+                    if(!gameMusicMuted) music.play().catch(() => {});
                     return;
                 }
                 currentMusicMode = requestedMode;
@@ -2428,6 +2559,8 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
         function loadGameRound() {
             if(isGameOver) return;
             awaitingNextRound = false;
+            const prompt=document.getElementById("openingGamePrompt");
+            prompt.hidden = currentAtomicIndex !== 0 || window.currentGameMode === "memory";
             const targetElement = window.currentGameMode==='memory'?memoryRoundOrder[currentAtomicIndex]:orderedElements[currentAtomicIndex];
             if(window.currentGameMode==='memory'){
                 const image=document.getElementById('memorySilhouette');
@@ -2460,8 +2593,9 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
                 btn.onclick = () => handleAnswer(opt, targetElement, btn);
                 grid.appendChild(btn);
             });
+            if(window.currentGameMode === "time-attack" && currentAtomicIndex === 0) { document.getElementById("timerBarFill").style.transition="none"; document.getElementById("timerBarFill").style.width="100%"; }
             questionStartTime = Date.now();
-            if(window.currentGameMode === 'time-attack') {
+            if(window.currentGameMode === 'time-attack' && currentAtomicIndex > 0) {
                 startTimerVisual();
             }
         }
@@ -2529,9 +2663,10 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
         }
         function endGame(isWin, correctElementObj) {
             isGameOver = true;
+            finishGameplayRecording();
             clearTimeout(timeAttackTimer);
             saveStats();
-            document.getElementById("resultReached").parentElement.parentElement.classList.toggle("hidden", window.currentGameMode === "classic");
+            document.getElementById("resultReached").parentElement.parentElement.classList.remove("hidden");
             const averageTap = correctAnswers > 0 ? totalTime / correctAnswers : 0;
             const reached = Math.min(currentAtomicIndex, 118);
             const progress = Math.round((reached / 118) * 100);
@@ -2545,6 +2680,8 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
                 progress,
                 element: displayElement
             };
+            lastGameSummary.reachedElement=clickedElementHistory.at(-1)?.selected || lastGameSummary.element;
+            saveTextGameHistory(lastGameSummary);
             document.getElementById('activeGameContainer').classList.add('hidden');
             const overScreen = document.getElementById('gameOverContainer');
             overScreen.classList.remove('hidden');
@@ -2586,8 +2723,9 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
                 image.src = src;
             });
         }
-        async function shareGameResult() {
-            if(!lastGameSummary) return;
+        async function shareGameResult(downloadOnly = false, savedSummary = null) {
+            const summary=savedSummary || lastGameSummary;
+            if(!summary) return;
             const button = document.getElementById('shareResultButton');
             const original = button?.innerHTML;
             if(button) { button.disabled = true; button.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Creating'; }
@@ -2596,63 +2734,31 @@ html[data-theme=dark] #elementModal>div.absolute{background:#10101470!important}
                 canvas.width = 1200;
                 canvas.height = 1200;
                 const ctx = canvas.getContext('2d');
-                const gradient = ctx.createLinearGradient(0, 0, 1200, 1200);
-                gradient.addColorStop(0, '#1d4ed8');
-                gradient.addColorStop(.55, '#38bdf8');
-                gradient.addColorStop(1, '#f8fafc');
-                roundRectPath(ctx, 24, 24, 1152, 1152, 80);
-                ctx.fillStyle = gradient;
-                ctx.fill();
-                ctx.fillStyle = 'rgba(255,255,255,.92)';
-                roundRectPath(ctx, 72, 72, 1056, 1056, 64);
-                ctx.fill();
-                ctx.textAlign = 'center';
-                ctx.fillStyle = '#2563eb';
-                ctx.font = '700 38px Arial, sans-serif';
-                ctx.fillText('Titan Chemistry', 600, 145);
-                ctx.fillStyle = '#0f172a';
-                ctx.font = '700 68px Arial, sans-serif';
-                const reachedText = lastGameSummary.isWin ? 'I arranged all 118 elements!' : `I reached element #${Math.min(lastGameSummary.reached + 1, 118)}!`;
-                ctx.fillText(reachedText, 600, 235);
-                ctx.fillStyle = '#475569';
-                ctx.font = '400 34px Arial, sans-serif';
-                ctx.fillText('Try it too on Titan Chemistry', 600, 290);
-                try {
-                    const art = await loadShareImage(lastGameSummary.element.imgArt);
-                    const size = 430;
-                    ctx.drawImage(art, 600 - size / 2, 320, size, size);
-                } catch(e) {}
-                ctx.fillStyle = '#0f172a';
-                ctx.font = '700 48px Arial, sans-serif';
-                ctx.fillText(`${lastGameSummary.element.name}  ${lastGameSummary.element.symbol}`, 600, 790);
-                const cards = [
-                    ['Reached', `${lastGameSummary.reached}/118`],
-                    ['Average tap', lastGameSummary.averageTap > 0 ? `${lastGameSummary.averageTap.toFixed(2)}s` : '0s'],
-                    ['Best streak', String(lastGameSummary.streak)]
-                ];
-                cards.forEach((card, index) => {
-                    const x = 125 + index * 330;
-                    ctx.fillStyle = '#eff6ff';
-                    roundRectPath(ctx, x, 835, 290, 150, 28);
-                    ctx.fill();
-                    ctx.fillStyle = '#64748b';
-                    ctx.font = '400 24px Arial, sans-serif';
-                    ctx.fillText(card[0], x + 145, 885);
-                    ctx.fillStyle = '#2563eb';
-                    ctx.font = '700 40px Arial, sans-serif';
-                    ctx.fillText(card[1], x + 145, 945);
-                });
-                ctx.fillStyle = '#64748b';
-                ctx.font = '400 25px Arial, sans-serif';
-                const shareUrl = location.protocol.startsWith('http') ? location.href.split('#')[0] : 'Titan Chemistry';
-                ctx.fillText(shareUrl, 600, 1065);
+                await document.fonts.ready;
+                const mode=summary.mode;
+                const palette=mode==='time-attack'?['#c91446','#ff4561','#ff896c']:mode==='memory'?['#5730ca','#9560fa','#c293ff']:['#1742d4','#247df6','#38c2f1'];
+                const element=summary.reachedElement || summary.element;
+                const gradient=ctx.createLinearGradient(0,0,1200,1200);palette.forEach((color,i)=>gradient.addColorStop(i/2,color));ctx.fillStyle=gradient;ctx.fillRect(0,0,1200,1200);
+                ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=2;
+                for(let r=240;r<=720;r+=100){ctx.beginPath();ctx.arc(940,350,r,0,Math.PI*2);ctx.stroke();}
+                ctx.textAlign='left';ctx.fillStyle='white';ctx.font='600 30px Outfit, Arial';ctx.fillText('Titan Chemistry',76,88);
+                ctx.font='500 21px Nunito, Arial';ctx.fillStyle='rgba(255,255,255,.8)';ctx.fillText(mode==='time-attack'?'TIME ATTACK':mode==='memory'?'MEMORISE THE ELEMENT':'CLASSIC',76,132);
+                ctx.fillStyle='rgba(255,255,255,.12)';ctx.font='700 270px Outfit, Arial';ctx.fillText(element.symbol,62,460);
+                try{const art=await loadShareImage(element.imgArt);ctx.save();ctx.shadowColor='rgba(12,25,75,.28)';ctx.shadowBlur=35;ctx.shadowOffsetY=20;ctx.drawImage(art,285,125,800,800);ctx.restore();}catch(e){}
+                ctx.fillStyle='white';ctx.font='600 57px Outfit, Arial';ctx.fillText('Congratulations!',76,814);
+                ctx.font='500 37px Outfit, Arial';ctx.fillText(`You reached ${element.name}`,76,871);
+                ctx.font='400 26px Nunito, Arial';ctx.fillStyle='rgba(255,255,255,.86)';ctx.fillText('on Titan Chemistry',76,918);
+                ctx.fillStyle='rgba(255,255,255,.95)';roundRectPath(ctx,76,991,1048,123,32);ctx.fill();
+                ctx.fillStyle=palette[0];ctx.font='600 48px Outfit, Arial';ctx.fillText(`${summary.reached} / 118`,110,1070);
+                ctx.textAlign='right';ctx.fillStyle='#536378';ctx.font='500 24px Nunito, Arial';ctx.fillText('How far can you go?',1088,1063);
+                ctx.textAlign='left';ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='400 18px Nunito, Arial';ctx.fillText('Explore. Learn. Play.',76,1160);
                 const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', .95));
                 if(!blob) throw new Error('Could not create share image');
                 const file = new File([blob], 'titan-chemistry-result.png', { type: 'image/png' });
-                const shareText = lastGameSummary.isWin
+                const shareText = summary.isWin
                     ? 'I arranged all 118 elements on Titan Chemistry! Try it too.'
-                    : `I reached ${lastGameSummary.reached}/118 on Titan Chemistry! Try it too.`;
-                if(navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+                    : `I reached ${summary.reached}/118 on Titan Chemistry! Try it too.`;
+                if(!downloadOnly && navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
                     await navigator.share({ title: 'Titan Chemistry result', text: shareText, files: [file], url: location.protocol.startsWith('http') ? location.href : undefined });
                 } else {
                     const link = document.createElement('a');
@@ -2847,7 +2953,7 @@ document.addEventListener('keydown',function(event){
     const outgoing=img.animate([{transform:'rotate(0deg)',opacity:1},{transform:'rotate(-32deg)',opacity:0}],{duration:350,easing:'ease-in',fill:'forwards'});
     outgoing.onfinish=()=>{
      img.src=el.imgArt;symbol.textContent=index===3?'?':el.symbol;
-     const textBeat=(++beat%3===0);message.hidden=!textBeat;message.replaceChildren(...lines[index].split(' ').map((word,i)=>{const span=document.createElement('span');span.textContent=word+' ';span.style.animationDelay=(i*65)+'ms';return span;}));card.querySelector('.alternate-wallpaper').classList.toggle('has-message',textBeat);
+     const textBeat=(++beat%3===0);message.hidden=!textBeat;message.replaceChildren(...lines[index].split(' ').map((word,i)=>{const span=document.createElement('span');span.textContent=word;span.className='story-word';span.style.animationDelay=(i*65)+'ms';return span;}));card.querySelector('.alternate-wallpaper').classList.toggle('has-message',textBeat);
      outgoing.cancel();
      const incoming=img.animate([{transform:'rotate(32deg)',opacity:0},{transform:'rotate(0deg)',opacity:1}],{duration:480,easing:'cubic-bezier(.16,.8,.3,1)'});
      incoming.onfinish=()=>busy=false;
@@ -2896,7 +3002,7 @@ modal.addEventListener('touchend',e=>{if(startY===null||modalNavigationLocked)re
 })();
 </script>
 <script id="element-view-switch">
-let element3DEnabled=true;
+let element3DEnabled=false;
 function refreshElementView(){
  const modal=document.getElementById('elementModal');modal.classList.toggle('is-3d',element3DEnabled);
  const b=modal.querySelector('.element-view-toggle');if(b)b.setAttribute('aria-pressed',String(element3DEnabled));
@@ -2940,6 +3046,122 @@ setInterval(()=>{
  const movement=motions[Math.floor(Math.random()*motions.length)];
  image.animate([{rotate:'0 1 0 0deg'},{offset:.4,rotate:movement===motions[1]?'1 0 0 12deg':'0 1 0 -16deg'},{offset:.7,rotate:movement===motions[2]?'0 0 1 5deg':'0 1 0 10deg'},{rotate:'0 1 0 0deg'}],{duration:1900,easing:'ease-in-out'});
 },8500);
+</script>
+<script id="restore-page-on-refresh">
+(function(){
+ const save=value=>{try{sessionStorage.setItem('titanCurrentScreen',JSON.stringify(value));}catch(e){}};
+ const previousNavigate=navigateTo;
+ navigateTo=function(view){previousNavigate(view);save({view,mode:window.currentGameMode||'classic'});};
+ const previousStart=startActiveGame;
+ startActiveGame=function(mode){previousStart(mode);save({view:'view-game-fullscreen',mode:window.currentGameMode||'classic'});};
+ window.addEventListener('load',()=>{
+  try{const saved=JSON.parse(sessionStorage.getItem('titanCurrentScreen')||'null');if(!saved)return;
+   if(saved.view==='view-game-fullscreen'&&['classic','time-attack','memory'].includes(saved.mode))startActiveGame(saved.mode);
+   else if(['view-home','view-games-hub','view-dex'].includes(saved.view))navigateTo(saved.view);
+  }catch(e){}
+ });
+})();
+</script><script id="gameplay-video-recorder">
+let gameplayRecorder=null,gameplayStream=null,gameplayChunks=[],gameplayVideo=null,gameplayVideoUrl=null;
+function recordingButton(active){const b=document.getElementById('recordGameplayButton');b.dataset.recording=String(active);b.textContent=active?'● Stop recording':'Record gameplay';}
+async function toggleGameplayRecording(){
+ if(gameplayRecorder?.state==='recording'){finishGameplayRecording();return;}
+ if(!navigator.mediaDevices?.getDisplayMedia||!window.MediaRecorder){alert('Gameplay recording is not available in this browser. Open this HTML in Chrome or Edge on desktop.');return;}
+ const b=document.getElementById('recordGameplayButton');b.disabled=true;
+ try{
+  const stream=await navigator.mediaDevices.getDisplayMedia({video:{width:{ideal:1920},height:{ideal:1080},frameRate:{ideal:60,max:60},displaySurface:'browser',cursor:'always'},audio:true,preferCurrentTab:true});
+  const track=stream.getVideoTracks()[0];track.contentHint='motion';
+  const formats=['video/webm;codecs=vp8,opus','video/webm'];
+  const mime=formats.find(type=>MediaRecorder.isTypeSupported(type));if(!mime)throw new Error('No supported video recording format.');
+  gameplayStream=stream;gameplayChunks=[];gameplayVideo=null;if(gameplayVideoUrl){URL.revokeObjectURL(gameplayVideoUrl);gameplayVideoUrl=null;}
+  document.getElementById('gameplayExport').hidden=true;
+  const recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:12000000,audioBitsPerSecond:192000}); gameplayRecorder=recorder; const chunks=[];
+  recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
+  const dimensions=track.getSettings();const hasAudio=stream.getAudioTracks().length>0;
+  recorder.onstop=()=>{
+   gameplayVideo=new Blob(chunks,{type:recorder.mimeType});gameplayVideoUrl=URL.createObjectURL(gameplayVideo);
+   stream.getTracks().forEach(t=>t.stop());recordingButton(false);document.getElementById("gameSettingsMenu").style.visibility="";
+   const mp4=gameplayVideo.type.includes('mp4');document.getElementById('downloadGameplayButton').textContent='Export '+(mp4?'MP4':'WebM');
+   document.getElementById('gameplayFormatLabel').textContent=`${dimensions.width} × ${dimensions.height} · ${hasAudio?'Audio included':'No capture audio selected'}${mp4?'':' · WebM · compatible browser recording'}`;
+   saveGameplayRecording(gameplayVideo,dimensions,hasAudio,window.currentGameMode).catch(error=>console.warn('Could not save recording locally',error));
+  };
+  track.addEventListener('ended',finishGameplayRecording,{once:true});
+  document.getElementById('gameSettingsPanel').hidden=true;
+  document.getElementById('gameSettingsToggle').setAttribute('aria-expanded','false');
+  document.getElementById('gameSettingsMenu').style.visibility='hidden';
+  document.getElementById("directGameControls").style.visibility="hidden";
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  recorder.start();recordingButton(true);
+  // Start a fresh run after permission so setup time is excluded from the gameplay.
+  // Continue the current run without resetting progress.
+ }catch(error){gameplayStream?.getTracks().forEach(t=>t.stop());recordingButton(false);if(error.name!=='NotAllowedError'&&error.name!=='AbortError')alert(error.message);}
+ finally{b.disabled=false;if(gameplayRecorder?.state!=="recording")document.getElementById("gameSettingsMenu").style.visibility="";}
+}
+function finishGameplayRecording(){if(gameplayRecorder?.state==='recording')gameplayRecorder.stop();}
+function downloadGameplay(){if(!gameplayVideoUrl)return;const a=document.createElement('a');a.href=gameplayVideoUrl;a.download='titan-gameplay.'+(gameplayVideo.type.includes('mp4')?'mp4':'webm');a.click();}
+window.addEventListener('pagehide',()=>{gameplayStream?.getTracks().forEach(t=>t.stop());});
+</script>
+<script id="game-settings-actions">
+function syncGameSettings(){document.getElementById('soundMenuText').textContent=allAudioMuted?'Sound off':'Sound on';document.getElementById('musicMenuText').textContent=gameMusicMuted?'Music off':'Music on';}
+function toggleGameSettings(){const panel=document.getElementById('gameSettingsPanel');panel.hidden=!panel.hidden;document.getElementById('gameSettingsToggle').setAttribute('aria-expanded',String(!panel.hidden));syncGameSettings();}
+function toggleGameMusic(){gameMusicMuted=!gameMusicMuted;localStorage.setItem('titanMusicMuted',String(gameMusicMuted));const music=document.getElementById('bg-music');music.muted=gameMusicMuted;if(!gameMusicMuted)music.play().catch(()=>{});syncGameSettings();}
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#gameSettingsMenu')){document.getElementById('gameSettingsPanel').hidden=true;document.getElementById('gameSettingsToggle').setAttribute('aria-expanded','false');}});
+syncGameSettings();
+</script>
+<script id="local-gameplay-library">
+const gameplayDatabase=new Promise((resolve,reject)=>{const request=indexedDB.open('titan-gameplay-library',1);request.onupgradeneeded=()=>request.result.createObjectStore('recordings',{keyPath:'id',autoIncrement:true});request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});
+const libraries=[];
+for(const parent of [document.getElementById('gameOverContainer'),document.querySelector('#view-games-hub>.max-w-7xl')]){if(!parent)continue;const section=document.createElement('section');section.className='gameplay-library';section.hidden=true;const h=document.createElement('h3');h.textContent='Your gameplays';const list=document.createElement('div');section.append(h,list);parent.appendChild(section);if(parent.id==='gameOverContainer'){section.dataset.endScreen='true';const toggle=document.createElement('button');toggle.className='gameplays-toggle';toggle.textContent='Gameplays';toggle.setAttribute('aria-expanded','false');toggle.onclick=()=>{section.hidden=!section.hidden;section.dataset.expanded=String(!section.hidden);toggle.setAttribute('aria-expanded',String(!section.hidden));};parent.insertBefore(toggle,section);}libraries.push({section,list});}
+async function saveGameplayRecording(blob,dimensions,audio,mode){
+ const db=await gameplayDatabase;const entry={blob,width:dimensions.width,height:dimensions.height,fps:dimensions.frameRate,audio,mode,created:Date.now()};
+ await new Promise((resolve,reject)=>{const tx=db.transaction('recordings','readwrite');tx.objectStore('recordings').add(entry);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});await renderGameplayLibrary(true);const tabs=document.querySelector(".result-tab-shell");tabs.dataset.tab="gameplay";document.getElementById("runHistoryPanel").hidden=true;document.getElementById("savedGameplayPanel").hidden=false;tabs.querySelectorAll("[data-result-tab]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.resultTab==="gameplay")));
+}
+async function renderGameplayLibrary(highlightNewest=false){const db=await gameplayDatabase;const records=await new Promise((resolve,reject)=>{const r=db.transaction('recordings').objectStore('recordings').getAll();r.onsuccess=()=>resolve(r.result.reverse());r.onerror=()=>reject(r.error);});
+ for(const {section,list} of libraries){section.hidden=!records.length || (section.dataset.endScreen==='true' && !highlightNewest && section.dataset.expanded!=='true');if(highlightNewest)section.dataset.expanded='true';list.replaceChildren();for(const entry of records){const row=document.createElement('div');row.className='gameplay-row';if(highlightNewest && entry===records[0]){row.classList.add('newest-gameplay');setTimeout(()=>row.classList.remove('newest-gameplay'),6500);}const info=document.createElement('div'),title=document.createElement('strong'),details=document.createElement('small'),button=document.createElement('button');
+ title.textContent=({'classic':'Classic','time-attack':'Time Attack','memory':'Memorise the Element'}[entry.mode]||'Gameplay')+' · '+new Date(entry.created).toLocaleString();
+ details.textContent=`${entry.width} × ${entry.height} · ${Math.round(entry.fps||60)} fps · ${(entry.blob.size/1048576).toFixed(1)} MB${entry.audio?' · Audio':''}`;
+ button.textContent='Download';button.onclick=()=>{const url=URL.createObjectURL(entry.blob),a=document.createElement('a');a.href=url;a.download='titan-'+entry.mode+'-'+entry.id+(entry.blob.type.includes('mp4')?'.mp4':'.webm');a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};info.append(title,details);row.append(info,button);list.appendChild(row);
+ }}
+}
+renderGameplayLibrary().catch(()=>{});
+</script>
+<script id="result-tabs-setup">
+(function(){
+ const over=document.getElementById('gameOverContainer'),shell=document.createElement('section');shell.className='result-tab-shell';shell.dataset.tab='history';
+ shell.innerHTML='<div class="result-tab-bar" role="tablist" aria-label="Run details"><span class="result-tab-slider" aria-hidden="true"></span><button role="tab" aria-selected="true" data-result-tab="history">History</button><button role="tab" aria-selected="false" data-result-tab="gameplay">Gameplay</button></div><div class="result-tab-panel" id="runHistoryPanel" role="tabpanel"></div><div class="result-tab-panel" id="savedGameplayPanel" role="tabpanel" hidden><p class="empty-gameplay">Your saved recordings appear here.</p></div>';
+ const history=shell.querySelector('#runHistoryPanel'),gameplay=shell.querySelector('#savedGameplayPanel');
+ const stats=document.getElementById('resultReached').parentElement.parentElement;history.appendChild(stats);
+ const progress=document.getElementById('resultProgressLabel').parentElement.parentElement;history.appendChild(progress);
+ const download=document.createElement('button');download.className='history-image-download';download.textContent='Download result image';download.onclick=()=>shareGameResult(true);history.appendChild(download);
+ const library=over.querySelector('.gameplay-library');if(library){library.dataset.endScreen='false';gameplay.appendChild(library);}
+ over.querySelector('.gameplays-toggle')?.remove();over.appendChild(shell);
+ const share=document.getElementById('shareResultButton');share.style.display='none';share.parentElement.style.gridTemplateColumns='1fr';
+ shell.querySelectorAll('[data-result-tab]').forEach(button=>button.onclick=()=>{const tab=button.dataset.resultTab;shell.dataset.tab=tab;history.hidden=tab!=='history';gameplay.hidden=tab!=='gameplay';shell.querySelectorAll('[data-result-tab]').forEach(b=>b.setAttribute('aria-selected',String(b===button)));if(tab==='gameplay')renderGameplayLibrary().catch(()=>{});});
+ if(library)new MutationObserver(()=>{gameplay.querySelector('.empty-gameplay').hidden=library.querySelectorAll('.gameplay-row').length>0;}).observe(library,{childList:true,subtree:true});
+})();
+</script>
+<script id="completed-game-text-history">
+let completedGameHistory=[];
+try{completedGameHistory=JSON.parse(localStorage.getItem('titanRunHistory')||'[]');if(!Array.isArray(completedGameHistory))completedGameHistory=[];}catch(e){}
+function saveTextGameHistory(summary){const entry=JSON.parse(JSON.stringify(summary));entry.created=Date.now();completedGameHistory.unshift(entry);completedGameHistory=completedGameHistory.slice(0,500);try{localStorage.setItem('titanRunHistory',JSON.stringify(completedGameHistory));}catch(e){}renderTextGameHistory();}
+function renderTextGameHistory(){const panel=document.getElementById('runHistoryPanel');if(!panel)return;panel.replaceChildren();
+ if(!completedGameHistory.length){const empty=document.createElement('p');empty.className='empty-gameplay';empty.textContent='Your completed games appear here.';panel.appendChild(empty);return;}
+ for(const run of completedGameHistory){const row=document.createElement('div');row.className='text-run-row';const info=document.createElement('div'),title=document.createElement('strong'),detail=document.createElement('small'),download=document.createElement('button');title.textContent=({'classic':'Classic','time-attack':'Time Attack','memory':'Memorise the Element'}[run.mode]||'Game')+' · '+new Date(run.created).toLocaleString();detail.innerHTML=`<span class="history-score">${run.reached}<small>/118</small></span><span class="history-metric"><b>${run.streak}</b> best streak</span><span class="history-metric"><b>${Number(run.averageTap).toFixed(2)}s</b> avg tap</span>`;download.textContent='Download result image';download.onclick=()=>shareGameResult(true,run);info.append(title,detail);row.append(info,download);panel.appendChild(row);}
+}
+const hiddenRunStats=document.createElement("div");hiddenRunStats.hidden=true;const initialHistoryPanel=document.getElementById("runHistoryPanel");while(initialHistoryPanel.firstChild)hiddenRunStats.appendChild(initialHistoryPanel.firstChild);document.body.appendChild(hiddenRunStats);
+renderTextGameHistory();</script>
+<script id="direct-control-ui">
+const imageDownloadIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/></svg>';
+const videoDownloadIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m10 8 6 4-6 4Z"/></svg>';
+function decorateDownloads(){document.querySelectorAll('.text-run-row button').forEach(b=>{b.innerHTML=imageDownloadIcon;b.title='Download result image';b.setAttribute('aria-label',b.title);});document.querySelectorAll('.gameplay-row button').forEach(b=>{b.innerHTML=videoDownloadIcon;b.title='Download gameplay video';b.setAttribute('aria-label',b.title);});}
+new MutationObserver(decorateDownloads).observe(document.getElementById('runHistoryPanel'),{childList:true,subtree:false});
+document.querySelectorAll('.gameplay-library').forEach(section=>new MutationObserver(decorateDownloads).observe(section.querySelector('div'),{childList:true}));decorateDownloads();
+const controls=document.createElement('div');controls.id='directGameControls';
+const sound=document.getElementById('audioToggleButton');sound.querySelector('span').hidden=true;controls.appendChild(sound);
+const music=document.querySelector('#gameSettingsPanel button[onclick="toggleGameMusic()"]');music.querySelector('span').hidden=true;music.title='Toggle music';music.setAttribute('aria-label','Toggle music');controls.appendChild(music);
+const recording=document.getElementById('recordGameplayButton');controls.appendChild(recording);document.getElementById('view-game-fullscreen').appendChild(controls);document.getElementById('gameSettingsMenu').hidden=true;
+recordingButton=function(active){recording.dataset.recording=String(active);recording.innerHTML='<span class="record-dot" aria-hidden="true"></span>';recording.title=active?'Stop recording':'Start recording';recording.setAttribute('aria-label',recording.title);controls.style.visibility=active?'hidden':'';};recordingButton(false);
+const grid=document.querySelector('.alternate-grid');const choice=document.createElement('div');choice.className='card-design-choice';choice.innerHTML='<button aria-pressed="true">Current cards</button><button aria-pressed="false">Compact cards</button>';grid.before(choice);choice.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{grid.classList.toggle('compact-cards',i===1);choice.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
 </script>
 </body>
 </html>
